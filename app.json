@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "informaCAA",
+    "name": "InformaCAA",
     "slug": "informaCAA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconApp.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/telaInicial.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0A3472"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +22,17 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/iconApp.png"
+      },
+      "package": "com.lucashenriqi.informaCAA"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0249201b-8e73-466f-8a7f-ec91a5a7ee29"
+      }
     }
   }
 }
