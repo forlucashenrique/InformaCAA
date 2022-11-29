@@ -4,6 +4,8 @@
 
 [Menu Lateral](/assets/appImages/sideMenu.jpeg "Menu Lateral")
 
+<a href="https://play.google.com/store/apps/details?id=com.lucashenriqi.informaCAA"><img src="https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white"/></a>
+
 #### Objetivo
 
 O projeto tem como objetivo reunir as principais informações do [Centro Acadêmico do Agreste](https://www.ufpe.br/caa) da Universidade Federal de Pernambuco. No entanto, não é uma ferramenta oficial da instituição. É uma iniciativa totalmente voluntária. 
