@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/iconApp.png",
     "userInterfaceStyle": "light",
+    "scheme": "com.lucashenriqi.informaCAA",
     "splash": {
       "image": "./assets/telaInicial.png",
       "resizeMode": "contain",
@@ -33,6 +34,13 @@
       "eas": {
         "projectId": "0249201b-8e73-466f-8a7f-ec91a5a7ee29"
       }
-    }
+    },
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigpPaths": true
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

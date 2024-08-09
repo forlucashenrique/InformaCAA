@@ -31,7 +31,7 @@ import Contacts from './src/pages/Home/Contacts';
 
 
 
-function getRouteName(route) {
+function getRouteName(route: any) {
 
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'HomeApp';
 
@@ -58,7 +58,7 @@ function getRouteName(route) {
 }
 
 
-function HomeScreenStack({route, navigation}) {
+function HomeScreenStack() {
   
 
   const Stack = createNativeStackNavigator();
@@ -114,9 +114,10 @@ export default function App() {
               width: 240,
             },
             drawerItemStyle: {
-                borderWidth: .2,
-                borderColor: '#0A3472',
+              borderWidth: .2,
+              borderColor: '#0A3472',
               color: '#0A3472',
+              
               borderRadius: 5,
             }
         }}
