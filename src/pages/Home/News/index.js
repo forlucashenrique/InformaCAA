@@ -62,6 +62,7 @@ export default function News({ navigation }) {
     setIsError(false);
     setReload(!reload);
   }
+  
   return (
     <View style={styles.containerNews}>
       {
