@@ -3,10 +3,14 @@ import { Link, useNavigation } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function HomeScreen() {
-    const navigation = useNavigation();
-
-    
     return (
-        <Home navigation={navigation} />
+        // <Home navigation={navigation} />
+        <View>
+            <Text>Home</Text>
+            <Link href='/details'>
+                <Text>Go to Menu</Text>
+            </Link>
+        </View>
+        
     )
 }
