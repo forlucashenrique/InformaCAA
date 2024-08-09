@@ -1,16 +1,19 @@
-import Home from "@/pages/DrawerMenu/Home";
+
+import Home from "@/componentes/screens/home";
 import { Link, useNavigation } from "expo-router";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+
 
 export default function HomeScreen() {
     return (
-        // <Home navigation={navigation} />
-        <View>
-            <Text>Home</Text>
-            <Link href='/details'>
-                <Text>Go to Menu</Text>
-            </Link>
-        </View>
-        
+        <ScrollView 
+            style={{
+                flex: 1,
+            }}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        > 
+            <Home />
+        </ScrollView>
     )
 }

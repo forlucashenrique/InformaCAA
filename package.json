@@ -10,6 +10,8 @@
     "build-dev": "eas build --profile development --platform android"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.3",
+    "@expo-google-fonts/montserrat": "^0.2.3",
     "@expo/html-elements": "^0.2.2",
     "@react-native-community/netinfo": "11.3.1",
     "@react-navigation/drawer": "^6.5.0",
@@ -19,8 +21,10 @@
     "expo": "^51.0.25",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.21",
+    "expo-font": "~12.0.9",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.21",
+    "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "moment": "^2.29.4",
     "react": "18.2.0",
