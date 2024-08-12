@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function SettingsScreen () {
+export default function SigaaScreen () {
     return (
         <View>
-            <Text>Menu</Text>
+            <Text>Sigaa</Text>
         </View>
     )
 }

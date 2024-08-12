@@ -26,7 +26,7 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen 
-                name='menu' 
+                name='(menu)/index' 
                 options={{
                     tabBarIcon: () => <MenuOutline />
                 }}
