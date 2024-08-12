@@ -46,7 +46,6 @@ export default function Home () {
         >   
             <Text style={HomeStyles.newsTitles}>Últimas Novidades</Text>
 
-
             <View style={{
                 width: '100%',
                 height: 155,
@@ -63,8 +62,13 @@ export default function Home () {
 
             <View style={HomeStyles.newsContainer}>
               {
-                isLoading && !news ? (
-                  <ActivityIndicator size="large" color="#0B3472" />
+                isLoading ? (
+
+                  <View style={{
+                    width: '100%',
+                  }}>
+                    <ActivityIndicator size="large" color="#0B3472" />
+                  </View>
                 ) : (
                     news.map((news: any) => (
                       <NewsCard title={news.title} date={formatDate(news.published)} key={news.id} />
@@ -72,18 +76,6 @@ export default function Home () {
                   )
               }
 
-                {/* <NewsCard title="Secretário de Esporte e Lazer da UFPE, visitou o CAA" date="09/08/2024" />
-                <NewsCard title="O CAA celebrou 18 anos de fundação, transformado a interiorização da UFPE"  date="09/08/2024"/>
-                <NewsCard title="Restaurante Universitário do CAA convoca usuários para recadastramento biométrico" date="09/08/2024"/>
-                <NewsCard title="Secretário de Esporte e Lazer da UFPE, visitou o CAA" date="09/08/2024"/>
-                <NewsCard title="O CAA celebrou 18 anos de fundação, transformado a interiorização da UFPE" date="09/08/2024"/>
-                <NewsCard title="Restaurante Universitário do CAA convoca usuários para recadastramento biométrico" date="09/08/2024"/>
-                <NewsCard title="Secretário de Esporte e Lazer da UFPE, visitou o CAA"  date="09/08/2024"/>
-                <NewsCard title="O CAA celebrou 18 anos de fundação, transformado a interiorização da UFPE" date="09/08/2024"/>
-                <NewsCard title="Restaurante Universitário do CAA convoca usuários para recadastramento biométrico" date="09/08/2024"/>
-                <NewsCard title="Secretário de Esporte e Lazer da UFPE, visitou o CAA" date="09/08/2024"/>
-                <NewsCard title="O CAA celebrou 18 anos de fundação, transformado a interiorização da UFPE" date="09/08/2024"/>
-                <NewsCard title="Restaurante Universitário do CAA convoca usuários para recadastramento biométrico" date="09/08/2024"/> */}
             </View>
             
         </View>

@@ -23,7 +23,7 @@ export const HomeStyles = StyleSheet.create({
 
     newsContainer: {
         width: '100%',
-        gap: 20
+        gap: 20,
     }
 
 })
