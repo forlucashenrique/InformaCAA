@@ -1,17 +1,17 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, PressableProps } from "react-native";
 import { MealButtonStyles } from "./styles";
-import { ReactNode } from "react";
+import { ReactNode, } from "react";
 
 type MealButtonProps = {
     mealTitle: string
     openHour: string
     closeHour: string
     icon: ReactNode
-}
+} & PressableProps;
 
-export default function MealButton({ mealTitle, openHour, closeHour, icon }: MealButtonProps) {
+export default function MealButton({ mealTitle, openHour, closeHour, icon, ...props}: MealButtonProps) {
     return (
-        <Pressable style={MealButtonStyles.buttonContainer}>
+        <Pressable style={MealButtonStyles.buttonContainer} {...props} >
             <View style={MealButtonStyles.iconContainer}>
                 {icon}
             </View>
