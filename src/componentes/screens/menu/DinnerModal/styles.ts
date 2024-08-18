@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const LunchModalStyles = StyleSheet.create({
+export const DinnerModalStyles = StyleSheet.create({
     shadowContainer: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -22,7 +22,7 @@ export const LunchModalStyles = StyleSheet.create({
     
     },
 
-    lunchTitle: {
+    dinnerTitle: {
         color: '#0B3472',
         fontSize: 24,
         fontFamily: 'Montserrat_700Bold',
@@ -39,10 +39,11 @@ export const LunchModalStyles = StyleSheet.create({
     menuItem: {
         color: '#0B3472',
         fontSize: 16,
-        fontFamily: 'Montserrat_500Medium',
+        fontFamily: 'Montserrat_400Regular',
         textAlign: 'center',
-        width: '100%',
         borderRadius: 10,
+        width: '100%',
         padding: 4,
+
     }
 })

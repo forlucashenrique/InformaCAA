@@ -1,10 +1,10 @@
 import StarOutline from "@/componentes/icons/StarOutline";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, PressableProps } from "react-native";
 import { RatingButtonStyles } from "./styles";
 
-export default function RatingButton () {
+export default function RatingButton ({...props}: PressableProps) {
     return (
-        <Pressable style={RatingButtonStyles.container}>
+        <Pressable style={RatingButtonStyles.container} {...props}>
             <Text style={RatingButtonStyles.text}>Avalie aqui a refeição!</Text>
             <StarOutline />
         </Pressable>

@@ -30,7 +30,13 @@ export function LunchModal({
 
                     <View style={LunchModalStyles.menuItemContainer}>
                        {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
-                            <Text key={index} style={LunchModalStyles.menuItem}>{item}</Text>
+                            <Text key={index} style={[
+                                LunchModalStyles.menuItem, 
+                                {
+                                    backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
+                                    color: index % 2 === 0 ? '#fff' : '#0B3472'
+                                }
+                            ]}>{item}</Text>
                        ) )}
                     </View>     
                 </View>
