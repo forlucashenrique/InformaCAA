@@ -1,14 +1,12 @@
-import BusFill from '@/componentes/icons/BusFill';
-import BusOutline from '@/componentes/icons/BusOutline';
-import HomeFill from '@/componentes/icons/HomeFill';
-import HomeOutline from '@/componentes/icons/HomeOutline';
-import MapFill from '@/componentes/icons/MapFill';
-import MapOutline from '@/componentes/icons/MapOutline';
-import MenuFill from '@/componentes/icons/MenuFill';
-import MenuOutline from '@/componentes/icons/MenuOutline';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import BusFill from '@/componentes/icons/Filled/BusFill';
+import BusOutline from '@/componentes/icons/Outline/BusOutline';
+import HomeFill from '@/componentes/icons/Filled/HomeFill';
+import HomeOutline from '@/componentes/icons/Outline/HomeOutline';
+import MapFill from '@/componentes/icons/Filled/MapFill';
+import MapOutline from '@/componentes/icons/Outline/MapOutline';
+import MenuFill from '@/componentes/icons/Filled/MenuFill';
+import MenuOutline from '@/componentes/icons/Outline/MenuOutline';
 import { Tabs } from 'expo-router';
-import { View } from 'react-native';
 
 export default function TabLayout() {
 
@@ -36,8 +34,7 @@ export default function TabLayout() {
                 }} 
             />
             <Tabs.Screen 
-                
-                name='bus' 
+                name='(bus)/index' 
                 options={{
                     tabBarIcon: ({ focused }) => focused ? <BusFill /> : <BusOutline />
                 }}

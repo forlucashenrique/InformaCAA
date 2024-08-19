@@ -10,7 +10,6 @@ import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync()
 
-
 export default function RootLayout () {
 
     const [fontsLoaded, error] = useFonts({
@@ -32,9 +31,9 @@ export default function RootLayout () {
     }
 
     useEffect(() => {
+    
         if (fontsLoaded || error) {
             SplashScreen.hideAsync()
-          
         }
 
     }, [fontsLoaded, error])

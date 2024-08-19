@@ -3,9 +3,9 @@ import { RatingModalStyles } from "./styles";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Dropdown } from "react-native-element-dropdown";
 import { useState } from "react";
-import StarOutline from "@/componentes/icons/StarOutline";
-import RatingStar from "@/componentes/icons/RatingStar";
-import RatingStarFilled from "@/componentes/icons/RatingStarFilled";
+import StarOutline from "@/componentes/icons/Outline/StarOutline";
+import RatingStar from "@/componentes/icons/Outline/RatingStar";
+import RatingStarFilled from "@/componentes/icons/Filled/RatingStarFilled";
 import { Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 

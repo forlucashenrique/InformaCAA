@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import 'moment/locale/pt-br'
 import MealButton from "./MealButton";
-import SunOutline from "@/componentes/icons/SunOutline";
-import MoonOutline from "@/componentes/icons/MoonOutline";
+import SunOutline from "@/componentes/icons/Outline/SunOutline";
+import MoonOutline from "@/componentes/icons/Outline/MoonOutline";
 import RatingButton from "./RatingButton";
 import { LunchModal } from "./LunchModal";
 import api from "@/service";

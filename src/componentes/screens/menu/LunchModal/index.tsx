@@ -1,4 +1,4 @@
-import XOutline from "@/componentes/icons/XOutline";
+import XOutline from "@/componentes/icons/Outline/XOutline";
 import { Modal, Text, View } from "react-native";
 import { LunchModalStyles } from "./styles";
 

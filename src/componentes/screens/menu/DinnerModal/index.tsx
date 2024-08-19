@@ -1,6 +1,6 @@
 import { Modal, Text, View } from "react-native"
 import { DinnerModalStyles } from "./styles"
-import XOutline from "@/componentes/icons/XOutline"
+import XOutline from "@/componentes/icons/Outline/XOutline"
 
 type DinnerModalProps = {
     visible: boolean

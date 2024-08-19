@@ -1,4 +1,4 @@
-import StarOutline from "@/componentes/icons/StarOutline";
+import StarOutline from "@/componentes/icons/Outline/StarOutline";
 import { Pressable, Text, PressableProps } from "react-native";
 import { RatingButtonStyles } from "./styles";
 
