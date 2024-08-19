@@ -2,7 +2,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from "expo-router/drawer"
 import { usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import {Montserrat_800ExtraBold, Montserrat_700Bold, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_300Light, useFonts } from '@expo-google-fonts/montserrat';
+import {
+    Montserrat_800ExtraBold, 
+    Montserrat_700Bold, 
+    Montserrat_400Regular, 
+    Montserrat_500Medium, 
+    Montserrat_600SemiBold, 
+    Montserrat_300Light, 
+    useFonts} from '@expo-google-fonts/montserrat';
 import { useEffect } from 'react';
 import { CustomDrawerContent } from '@/componentes/screens/layout/DrawerContent';
 import { SafeAreaView } from 'react-native';
@@ -31,7 +38,6 @@ export default function RootLayout () {
     }
 
     useEffect(() => {
-    
         if (fontsLoaded || error) {
             SplashScreen.hideAsync()
         }

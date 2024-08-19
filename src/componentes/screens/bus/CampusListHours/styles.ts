@@ -3,11 +3,12 @@ import { StyleSheet } from "react-native";
 export const CampusListHoursStyles = StyleSheet.create({
     container: {
         flex: 1,
-        
     },
 
     hourContainer: {
         width: '100%',
+        height: 50,
+      
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -32,6 +33,6 @@ export const CampusListHoursStyles = StyleSheet.create({
     nextBusText: {
         color: '#fff',
         fontSize: 14,
-        fontFamily: 'Montserrat_600SemiBold',
+        //fontFamily: 'Montserrat_600SemiBold',
     }
 })
