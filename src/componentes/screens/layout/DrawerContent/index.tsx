@@ -2,12 +2,13 @@ import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItem } from
 import { useRouter } from "expo-router";
 import { Image, Text, View } from "react-native";
 import { DrawerContentStyles } from "./styles";
-import GraduationOutline from "@/componentes/icons/GraduationOutline";
-import BooksOutline from "@/componentes/icons/BooksOutline";
-import CloseOutline from "@/componentes/icons/CloseOutline";
-import ContactsOutline from "@/componentes/icons/ContactsOutline";
-import ConfigOutline from "@/componentes/icons/ConfigOutline";
-import InfoOutline from "@/componentes/icons/InfoOutline";
+import GraduationOutline from "@/componentes/icons/Outline/GraduationOutline";
+import BooksOutline from "@/componentes/icons/Outline/BooksOutline";
+
+import ContactsOutline from "@/componentes/icons/Outline/ContactsOutline";
+import ConfigOutline from "@/componentes/icons/Outline/ConfigOutline";
+import InfoOutline from "@/componentes/icons/Outline/InfoOutline";
+import CloseOutline from "@/componentes/icons/Outline/CloseOutline";
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const router = useRouter();

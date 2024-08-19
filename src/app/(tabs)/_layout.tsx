@@ -1,10 +1,12 @@
-import BusOutline from '@/componentes/icons/BusOutline';
-import HomeOutline from '@/componentes/icons/HomeOutline';
-import MapOutline from '@/componentes/icons/MapOutline';
-import MenuOutline from '@/componentes/icons/MenuOutline';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import BusFill from '@/componentes/icons/Filled/BusFill';
+import BusOutline from '@/componentes/icons/Outline/BusOutline';
+import HomeFill from '@/componentes/icons/Filled/HomeFill';
+import HomeOutline from '@/componentes/icons/Outline/HomeOutline';
+import MapFill from '@/componentes/icons/Filled/MapFill';
+import MapOutline from '@/componentes/icons/Outline/MapOutline';
+import MenuFill from '@/componentes/icons/Filled/MenuFill';
+import MenuOutline from '@/componentes/icons/Outline/MenuOutline';
 import { Tabs } from 'expo-router';
-import { View } from 'react-native';
 
 export default function TabLayout() {
 
@@ -22,26 +24,26 @@ export default function TabLayout() {
             <Tabs.Screen 
                 name='(home)' 
                 options={{
-                    tabBarIcon: () => <HomeOutline />
+                    tabBarIcon: ({ focused }) => focused ? <HomeFill />  : <HomeOutline />,
                 }}
             />
             <Tabs.Screen 
                 name='(menu)/index' 
                 options={{
-                    tabBarIcon: () => <MenuOutline />
-                }}
+                    tabBarIcon: ({ focused }) => focused ? <MenuFill /> :<MenuOutline />
+                }} 
             />
             <Tabs.Screen 
-                name='bus' 
+                name='(bus)/index' 
                 options={{
-                    tabBarIcon: () => <BusOutline />
+                    tabBarIcon: ({ focused }) => focused ? <BusFill /> : <BusOutline />
                 }}
             />
 
             <Tabs.Screen 
                 name='map' 
                 options={{
-                    tabBarIcon: () => <MapOutline />
+                    tabBarIcon: ({ focused }) => focused ? <MapFill /> : <MapOutline />
                 }}
             />
         </Tabs>
