@@ -55,22 +55,22 @@ export default function RootLayout () {
         }}>
             <StatusBar style='light'/>
             <GestureHandlerRootView style={{ flex: 1 }}>
-            <Drawer
-                screenOptions={{
-                    headerStyle: {
-                        backgroundColor: '#0B3472'
-                    },
-                    headerTitle: '',
-                    headerTintColor: 'white',
-                    }}
+                <Drawer
+                    screenOptions={{
+                        headerStyle: {
+                            backgroundColor: '#0B3472'
+                        },
+                        headerTitle: '',
+                        headerTintColor: 'white',
+                        }}
 
-                drawerContent={(props) => <CustomDrawerContent {...props} />}
-            >
-                <Drawer.Screen name='(tabs)' options={({route}) => ({
-                    headerShown: showHeader(pathname)
-                }) }/>
+                    drawerContent={(props) => <CustomDrawerContent {...props} />}
+                >
+                    <Drawer.Screen name='(tabs)' options={({route}) => ({
+                        headerShown: showHeader(pathname)
+                    }) }/>
 
-            </Drawer>
+                </Drawer>
             </GestureHandlerRootView>
         </SafeAreaView>
     )

@@ -15,6 +15,10 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
+type CampusListHoursProps = {
+    hours: string[]
+}
+
 const ItemTextDisabledStyle = {
     color: '#0b3472a0'
 }
@@ -33,28 +37,28 @@ const ItemContainerCurrentTime = {
 }
 
 
-export default function CampusListHours() {
+export default function ListHours({hours} : CampusListHoursProps) {
 
     const [scrollToPosition, setScrollToPosition] = useState(0);
     const ref = useRef<Animated.FlatList<string>>(null);
 
     function compareAfterHours(timeString: string) {
         const [hour, minute] = timeString.split(':').map(Number)
-        const now = dayjs().utc(true).tz('America/Recife').hour(10).minute(0)
+        const now = dayjs().utc(true).tz('America/Recife')
         const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hour).minute(minute)
         return now.isAfter(formattedItemDate)
     }
 
     function getNextBusTime() {
-        const now = dayjs().utc(true).tz('America/Recife').hour(10).minute(0)
-        const nextBus = hours.campus.find(hour => {
+        const now = dayjs().utc(true).tz('America/Recife')
+        const nextBus = hours.find(hour => {
             const [hourSplit, minute] = hour.split(':').map(Number)
             const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hourSplit).minute(minute)
             return now.isBefore(formattedItemDate)
         })
         return nextBus || ''
     }
-    const [scrollToIndex, setScrollToIndex] = useState(hours.campus.indexOf(getNextBusTime()));
+    const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
 
     const ItemView = ( item: string, key: number ) => {
         const isAfter = compareAfterHours(item)
@@ -114,7 +118,7 @@ export default function CampusListHours() {
              style={CampusListHoursStyles.container}
         >
             <Animated.FlatList 
-            data={hours.campus}
+            data={hours}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => ItemView(item, index)}
             
@@ -131,7 +135,7 @@ export default function CampusListHours() {
                     }}
                 >
                     {
-                        hours.campus.map(ItemView)
+                        hours.map(ItemView)
                     }
                 </View>
                
