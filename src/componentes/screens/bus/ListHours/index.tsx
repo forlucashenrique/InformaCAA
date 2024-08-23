@@ -1,17 +1,23 @@
-import { ScrollView, Text, View } from "react-native";
+import {  InteractionManager, Text, View } from "react-native";
 import { CampusListHoursStyles } from "./styles";
 import WheelChair from "@/componentes/icons/Outline/WheelChair";
 import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
 
 import { hours } from "@/data/busHours";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
+import Animated, { scrollTo, useAnimatedRef } from "react-native-reanimated";
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+
+type CampusListHoursProps = {
+    hours: string[]
+}
 
 const ItemTextDisabledStyle = {
     color: '#0b3472a0'
@@ -31,51 +37,43 @@ const ItemContainerCurrentTime = {
 }
 
 
-export default function CampusListHours() {
+export default function ListHours({hours} : CampusListHoursProps) {
 
-    const [scrollToIndex, setScrollToIndex] = useState(0);
-    const [dataSourceCords, setDataSourceCords] = useState<number[]>([]);
-    
-    const [ref, setRef] = useState<ScrollView | null>(null);
+    const [scrollToPosition, setScrollToPosition] = useState(0);
+    const ref = useRef<Animated.FlatList<string>>(null);
 
     function compareAfterHours(timeString: string) {
         const [hour, minute] = timeString.split(':').map(Number)
-        const now = dayjs().utc(true).tz('America/Recife').hour(6).minute(50)
+        const now = dayjs().utc(true).tz('America/Recife')
         const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hour).minute(minute)
         return now.isAfter(formattedItemDate)
     }
 
     function getNextBusTime() {
-        const now = dayjs().utc(true).tz('America/Recife').hour(6).minute(50)
-        const nextBus = hours.campus.find(hour => {
+        const now = dayjs().utc(true).tz('America/Recife')
+        const nextBus = hours.find(hour => {
             const [hourSplit, minute] = hour.split(':').map(Number)
             const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hourSplit).minute(minute)
             return now.isBefore(formattedItemDate)
         })
-        return nextBus
+        return nextBus || ''
     }
-
+    const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
 
     const ItemView = ( item: string, key: number ) => {
-
         const isAfter = compareAfterHours(item)
-
         const isCurrentTime = getNextBusTime() === item
-
-        if (isCurrentTime) {
-            setScrollToIndex(key)
-        }
-
         return (
             <View 
                 key={key} 
                 style={[CampusListHoursStyles.hourContainer, isCurrentTime ? ItemContainerCurrentTime : {}]}
-                onLayout={(event) => {
-                    const layout = event.nativeEvent.layout;
-                    dataSourceCords[key] = layout.y;
-                    setDataSourceCords(dataSourceCords);
-                    //console.log(dataSourceCords);
-                }}    
+                // onLayout={(event) => {
+                //     const layout = event.nativeEvent.layout;
+            
+                //     if (scrollToIndex === key) {
+                //         setScrollToPosition(layout.y)
+                //     }
+                // }}    
             >
                 <Text style={[CampusListHoursStyles.hourText, isCurrentTime ? ItemTextCurrentTime : {}, isAfter ? ItemTextDisabledStyle :  {} ]}>
                     {item}
@@ -93,35 +91,56 @@ export default function CampusListHours() {
         )
     };
 
-    // useEffect(() => {
-    //     function scrollHandler () {
-    //         if (dataSourceCords.length > 0 && ref) {
-    //             ref.scrollTo({
-    //                 y: dataSourceCords[scrollToIndex],
-    //                 animated: true
-    //             })
-    //         } else {
-    //             console.log('No data')
-    //         }
-    //     }
+     function scrollHandler () {
+        if (ref.current) {
+            ref.current.scrollToIndex({
+                index: scrollToIndex,
+                animated: true,
+                viewPosition: 0.5
+            })
+        }
+     }
+     
+     const ITEM_HEIGHT = 50;
 
-    //     scrollHandler()
-    // }, [])
+     const getItemLayout = (data: any, index: number) => ({
+        length: ITEM_HEIGHT, // Altura de cada item
+        offset: ITEM_HEIGHT * index, // Posição do item
+        index, // Índice do item
+      });
+
+     useEffect(() => {
+        scrollHandler()
+     }, [])
 
     return (
-        <ScrollView 
-            style={CampusListHoursStyles.container}
-            ref={ref => setRef(ref)}    
+        <Animated.View
+             style={CampusListHoursStyles.container}
         >
-                <View style={{
-                    flex: 1,
-                    gap: 14
-                }}>
+            <Animated.FlatList 
+            data={hours}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => ItemView(item, index)}
+            
+            ref={ref}
+            contentContainerStyle={{
+                gap: 14,
+            }}
+            getItemLayout={getItemLayout}
+        >
+                <View 
+                    style={{
+                        flex: 1,
+                        gap: 14
+                    }}
+                >
                     {
-                        hours.campus.map(ItemView)
+                        hours.map(ItemView)
                     }
                 </View>
                
-        </ScrollView>
+            </Animated.FlatList>
+        </Animated.View>
+        
     )
 }

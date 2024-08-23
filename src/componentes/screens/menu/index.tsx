@@ -74,6 +74,7 @@ export default function Menu () {
             setMenu(data);
 
         } catch(error) {
+            console.log(error)
             console.log('Erro ao carregar o cardápio');
 
         }

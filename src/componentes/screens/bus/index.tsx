@@ -6,15 +6,19 @@ import ArrowRight from "@/componentes/icons/Filled/ArrowRight";
 import BuildingOutline from "@/componentes/icons/Outline/BuildingOutline";
 import BuildingFill from "@/componentes/icons/Filled/BuildingFill";
 import DegreeOutline from "@/componentes/icons/Outline/DegreeOutline";
-import CampusListHours from "./CampusListHours";
-import WheelChair from "@/componentes/icons/Outline/WheelChair";
-import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
+import { hours } from "@/data/busHours";
+import ListHours from "./ListHours";
+
+import RouteViewCENTER from "./RouteViewCENTER";
+import RouteViewUFPE from "./RouteViewUFPE";
 
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
     const [rightText, setRightText] = useState('CENTRO');
-
     const [isHourPressed, setIsHourPressed] = useState(true);
+
+    const [widthView, setWidthView] = useState(0);
+    const [heightWiew, setHeightWiew] = useState(0);
 
 
     function changeDirection() {
@@ -96,8 +100,40 @@ export default function BusHours() {
                 flex: 1,
                 marginTop: 20,
             }}>
-
-                <CampusListHours />
+                {
+                    isHourPressed ?  
+                        leftText === 'UFPE' ? <ListHours hours={hours.campus}/> : <ListHours hours={hours.center}/> : (
+                            <View style={{
+                                borderWidth: 0.5,
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                overflow: 'hidden',
+                                borderRadius: 10,
+                            }}
+                                onLayout={(event) => {
+                                    const layout = event.nativeEvent.layout;
+                                    setWidthView(layout.width);
+                                    setHeightWiew(layout.height);
+                                }}
+                            >
+                                { leftText === 'UFPE' ? 
+                                    <RouteViewUFPE
+                                        widthView={widthView} 
+                                        heightWiew={heightWiew}
+                                        
+                                    /> : 
+                                    <RouteViewCENTER 
+                                        widthView={widthView} 
+                                        heightWiew={heightWiew}
+                                      
+                                    />
+                                }
+                            </View>
+                        )
+                      
+                }
+              
             </View>
         </View>
     )
