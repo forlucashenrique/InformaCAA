@@ -17,6 +17,9 @@ import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync()
 
+const pathPattern = /^\/[0-9]{1,7}$/
+
+
 export default function RootLayout () {
 
     const [fontsLoaded, error] = useFonts({
@@ -31,8 +34,12 @@ export default function RootLayout () {
     const pathname = usePathname()
 
     function showHeader(path: string) {
+
+
         switch (path) {
             case '/sigaa': 
+                return false
+            case pathPattern.test(path) ? path : '':
                 return false
         }
     }

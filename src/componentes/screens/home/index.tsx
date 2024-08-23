@@ -1,24 +1,37 @@
-import { Text, ScrollView, View, ActivityIndicator } from "react-native";
+import { Text, ScrollView, View, ActivityIndicator, ImageBackground } from "react-native";
 import { HomeStyles } from "./styles";
 import NewsCard from "./NewsCard";
 import api from "@/service";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
+
+type News = {
+  id: number;
+  title: string;
+  published: string;
+  idNews: number;
+  img?: string;
+}
+
 export default function Home () {
 
-    const [news, setNews] = useState<any[]>([]);
+    const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [textError, setTextError] = useState<string>('');
     const [isError, setIsError] = useState(false);
     const [reload, setReload] = useState(false);
 
+    const [newsImage, setNewsImage] = useState<string>('');
+
     const getNews = async () => {
       try {
         const response = await api.get('/noticias');
         const data = response.data.result;
-  
+        
+        console.log(data[0].img)
         setNews(data);
+        setNewsImage(data[0].img);
       } catch (err) {
         setTextError(`Não foi possível carregar`);
         setIsError(true);
@@ -38,7 +51,11 @@ export default function Home () {
     useEffect(() => {
       getNews();
     }, [reload])
-  
+    
+
+    const handleError = (e: any) => { console.log(e.nativeEvent.error); };
+
+ 
 
     return (
         <View
@@ -46,38 +63,83 @@ export default function Home () {
         >   
             <Text style={HomeStyles.newsTitles}>Últimas Novidades</Text>
 
-            <View style={{
-                width: '100%',
-                height: 155,
-                backgroundColor: '#0B3472',
-                marginTop: 20,
-                marginBottom: 30,
-                borderRadius: 12,
 
-            }}>
+            {
+              isLoading ? (
+                <View style={{
+                  width: '100%',
+                }}>
+                  <ActivityIndicator size="large" color="#0B3472" />
+                </View>
+              ) : (
 
-            </View>
+                <>
+                <View style={{
+                  width: '100%',
+                  height: 155,
+                  borderWidth: 1,
+                  marginTop: 20,
+                  marginBottom: 30,
+                  borderRadius: 12,
+                }}>
+                    <ImageBackground
+                      onError={handleError}
+                      src="https://www.ufpe.br/documents/40687/5497091/Snapinsta.png"
+                      style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                        padding: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      // source={{
+                      //   uri: newsImage
+                      // }}
+                      resizeMode="cover"
+                    
+                    >
+                      <Text>legal</Text>
+                    </ImageBackground>
+                </View>
+                    
 
-            <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
+                    {/* <Image 
+                      source={{
+                        uri: 'https://www.ufpe.br/documents/40687/5497091/Snapinsta.png'
+                      }}
 
-            <View style={HomeStyles.newsContainer}>
-              {
-                isLoading ? (
+                      contentFit="cover"
+                      style={{
+                        width: '100%',
+                        height: 155,
+                        marginTop: 20,
+                        marginBottom: 30,
+                        borderRadius: 12,
+                        borderWidth: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    /> */}
+                      <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
 
-                  <View style={{
-                    width: '100%',
-                  }}>
-                    <ActivityIndicator size="large" color="#0B3472" />
-                  </View>
-                ) : (
-                    news.map((news: any) => (
-                      <NewsCard title={news.title} date={formatDate(news.published)} key={news.id} />
-                    ))
-                  )
-              }
-
-            </View>
+                      <View style={HomeStyles.newsContainer}>
+                      {
+                        news.map((news: News) => (
+                          <NewsCard 
+                            title={news.title} 
+                            date={formatDate(news.published)} 
+                            key={news.id} 
+                            idNews={news.idNews}
+                            />
+                        ))
+          
+                      }
+                      </View>
+                    </>
+                
+              )
             
+            }
         </View>
     )
 }

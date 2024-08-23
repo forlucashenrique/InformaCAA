@@ -26,6 +26,7 @@ export default function TabLayout() {
                 options={{
                     tabBarIcon: ({ focused }) => focused ? <HomeFill />  : <HomeOutline />,
                 }}
+                
             />
             <Tabs.Screen 
                 name='(menu)/index' 

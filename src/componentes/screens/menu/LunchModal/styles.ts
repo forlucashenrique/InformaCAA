@@ -38,9 +38,8 @@ export const LunchModalStyles = StyleSheet.create({
 
     menuItem: {
         color: '#0B3472',
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: 'Montserrat_500Medium',
-        textAlign: 'center',
         width: '100%',
         borderRadius: 10,
         padding: 4,

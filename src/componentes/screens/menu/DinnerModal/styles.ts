@@ -38,12 +38,10 @@ export const DinnerModalStyles = StyleSheet.create({
 
     menuItem: {
         color: '#0B3472',
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: 'Montserrat_400Regular',
-        textAlign: 'center',
         borderRadius: 10,
         width: '100%',
         padding: 4,
-
     }
 })

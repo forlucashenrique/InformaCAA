@@ -39,7 +39,6 @@ const ItemContainerCurrentTime = {
 
 export default function ListHours({hours} : CampusListHoursProps) {
 
-    const [scrollToPosition, setScrollToPosition] = useState(0);
     const ref = useRef<Animated.FlatList<string>>(null);
 
     function compareAfterHours(timeString: string) {
@@ -58,7 +57,7 @@ export default function ListHours({hours} : CampusListHoursProps) {
         })
         return nextBus || ''
     }
-    const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
+   // const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
 
     const ItemView = ( item: string, key: number ) => {
         const isAfter = compareAfterHours(item)
@@ -94,7 +93,7 @@ export default function ListHours({hours} : CampusListHoursProps) {
      function scrollHandler () {
         if (ref.current) {
             ref.current.scrollToIndex({
-                index: scrollToIndex,
+                index: 1,
                 animated: true,
                 viewPosition: 0.5
             })
@@ -121,12 +120,13 @@ export default function ListHours({hours} : CampusListHoursProps) {
             data={hours}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => ItemView(item, index)}
-            
+            initialScrollIndex={1}
             ref={ref}
             contentContainerStyle={{
                 gap: 14,
             }}
             getItemLayout={getItemLayout}
+            
         >
                 <View 
                     style={{
