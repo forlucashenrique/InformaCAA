@@ -35,7 +35,7 @@ export default function TabLayout() {
                 }} 
             />
             <Tabs.Screen 
-                name='(bus)/index' 
+                name='(bus)/bus' 
                 options={{
                     tabBarIcon: ({ focused }) => focused ? <BusFill /> : <BusOutline />
                 }}

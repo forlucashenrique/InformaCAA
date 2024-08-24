@@ -3,9 +3,10 @@ import { NewsDetailsStyles } from "./styles";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import api from "@/service";
-import RenderHTML from "react-native-render-html";
+
 import HTMLView from "react-native-htmlview";
-import { Image } from "expo-image";
+
+import WebView from "react-native-webview";
 
 
 type Content = {
@@ -18,7 +19,6 @@ export default function NewsDetails() {
     const [newsContent, setNewsContent] = useState<Content>({} as Content);
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log(id)
     async function getNewsContent() {
         try {
             const response = await api.get(`/noticias/${id}`);
@@ -37,8 +37,9 @@ export default function NewsDetails() {
     function renderNodeImage(node: any, index: any, siblings: any, parent: any,  defaultRenderer: any) {
         if (node.name === 'img') {
             const a = node.attribs;
+            const img = `<img src="${a.src}" width="100%" height="500"></img>`;
             return (
-                <Image source={{ uri: a.src }} style={{ width: width - 20, height: 200 }} />
+                <WebView key={index} source={{ html: img}} style={{ width: width - 20, height: 500 }} />
             )
         }
     }
@@ -51,35 +52,25 @@ export default function NewsDetails() {
     return (
         <View style={NewsDetailsStyles.container}>
             {
-                isLoading ?
-                    <Text>Carregando...</Text>
-                    :
-                    (
-                        <View style={{
-                            flex: 1,
-                            padding: 10,
-                        }}> 
-                             <HTMLView
-                                value={newsContent.html}
-                                stylesheet={{
-                                    p: {
-                                        textAlign: 'justify',
-                                    }
-                                }}
-                                renderNode={renderNodeImage}
-                            />
-
-                        </View>
-                    )
-                   
-                    // (
-                    //     <View style={{
-                    //         flex: 1
-                    //     }}>
-                    //         <Text>{newsContent}</Text>
-                    //     </View>
-                    // )
-
+            isLoading ?
+                <Text>Carregando...</Text>
+                :
+                (
+                    <View style={{
+                        flex: 1,
+                        padding: 10,
+                    }}> 
+                        <HTMLView
+                            value={newsContent.html}
+                            stylesheet={{
+                                p: {
+                                    textAlign: 'justify',
+                                }
+                            }}
+                            renderNode={renderNodeImage}
+                        />
+                    </View>
+                )
             }
             
         </View>

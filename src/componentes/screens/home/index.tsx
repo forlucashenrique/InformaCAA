@@ -4,6 +4,7 @@ import NewsCard from "./NewsCard";
 import api from "@/service";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { LinearGradient } from "expo-linear-gradient";
 
 
 type News = {
@@ -76,21 +77,21 @@ export default function Home () {
                 <>
                 <View style={{
                   width: '100%',
-                  height: 155,
-                  borderWidth: 1,
+                  height: 200,
+    
                   marginTop: 20,
                   marginBottom: 30,
                   borderRadius: 12,
+                  overflow: 'hidden',
+                  backgroundColor: '#f5f5f5',
                 }}>
                     <ImageBackground
                       onError={handleError}
                       src="https://www.ufpe.br/documents/40687/5497091/Snapinsta.png"
                       style={{
                         flex: 1,
-                        overflow: 'hidden',
-                        padding: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        overflow: 'hidden',            
+                        justifyContent: 'flex-end',
                       }}
                       // source={{
                       //   uri: newsImage
@@ -98,7 +99,19 @@ export default function Home () {
                       resizeMode="cover"
                     
                     >
-                      <Text>legal</Text>
+                      <View style={{
+                        width: '100%',
+                      }}>
+
+                        <LinearGradient
+                          colors={['rgba(0, 0, 0, 0.5)', 'transparent']}
+                        >
+                          <Text style={{
+                            color: 'white',
+                          }}>{news[0].title}</Text>
+                        </LinearGradient>
+                        
+                      </View>
                     </ImageBackground>
                 </View>
                     

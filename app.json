@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "scheme": "com.lucashenriqi.informaCAA",
     "splash": {
-      "image": "./assets/telaInicial.png",
+      "image": "./assets/splash-v22.png",
       "resizeMode": "contain",
       "backgroundColor": "#0A3472"
     },
