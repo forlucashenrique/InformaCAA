@@ -8,8 +8,8 @@
     "userInterfaceStyle": "light",
     "scheme": "com.lucashenriqi.informaCAA",
     "splash": {
-      "image": "./assets/splash-v22.png",
-      "resizeMode": "contain",
+      "image": "./assets/splash-v2.png",
+      "resizeMode": "cover",
       "backgroundColor": "#0A3472"
     },
     "updates": {

@@ -116,8 +116,6 @@ export default function App() {
             drawerItemStyle: {
               borderWidth: .2,
               borderColor: '#0A3472',
-              color: '#0A3472',
-              
               borderRadius: 5,
             }
         }}
