@@ -7,8 +7,15 @@ import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import Entypo from '@expo/vector-icons/Entypo';
-import * as WebBrowser from 'expo-web-browser';
+//import * as WebBrowser from 'expo-web-browser';
 
+import * as Linking from 'expo-linking';
+
+
+
+type CustomWebViewProps = {
+    url?: string
+} & WebViewProps
 
 
 function LoadingView() {
@@ -20,7 +27,7 @@ function LoadingView() {
     )
 }
 
-function OpenUrlError() {
+function OpenUrlError({url}: {url: string | undefined}) {
     return (
         <View style={CustomWebViewStyles.openUrlError}>
             <View style={CustomWebViewStyles.openUrlErrorMessageContainer}>
@@ -28,31 +35,37 @@ function OpenUrlError() {
                 <Text style={CustomWebViewStyles.openUrlErrorText}>
                     Erro ao abrir a URL do site, tente pelo seu navegador padrão.
                 </Text>
+                <Pressable 
+                    style={CustomWebViewStyles.openBrowserButton}
+                    onPress={() => {
+                        if (url) {
+                            Linking.openURL(url)
+                        } else {
+                            Linking.openURL('https://www.google.com')
+                        }
+                    }}>
+                    <Text 
+                        style={CustomWebViewStyles.openBrowserButtonText}
+                    >
+                        Abrir no Browser
+                    </Text>
+                </Pressable>
             </View>
         </View>
     )
 }
 
 
-function OpenBrowserButton () {
-    return (
-        <Pressable>
-            <Text>Abrir no Browser</Text>
-        </Pressable>
-    )
-}
+export default function CustomWebView({ url, ...props}: CustomWebViewProps) {
 
-
-export default function CustomWebView({...props}: WebViewProps) {
     const netInfo = useNetInfo()
-
-    const [resultBrowser, setResultBrowser] = useState<WebBrowser.WebBrowserResult | null>(null)
+    //const [resultBrowser, setResultBrowser] = useState<WebBrowser.WebBrowserResult | null>(null)
     const [appConnected, setAppConnected] = useState(true)
 
-    const _handleOpenWithWebBrowser = async () => {
-        let result = await WebBrowser.openBrowserAsync('https://www.google.com');
-        setResultBrowser(result)
-    }
+    // const _handleOpenWithWebBrowser = async () => {
+    //     let result = await WebBrowser.openBrowserAsync('https://www.google.com');
+    //     setResultBrowser(result)
+    // }
 
 
     useEffect(() => {
@@ -72,7 +85,7 @@ export default function CustomWebView({...props}: WebViewProps) {
                         {...props}
                         startInLoadingState={true}
                         renderLoading={() => <LoadingView />}
-                        renderError={() => <OpenUrlError />}
+                        renderError={() => <OpenUrlError url={url}/>}
                     />
                 ) : (
                     <View style={CustomWebViewStyles.netWorkErrorContainer}>
@@ -81,7 +94,7 @@ export default function CustomWebView({...props}: WebViewProps) {
                             <Text style={CustomWebViewStyles.netWorkErrorText}>
                                 Sem conexão com a internet
                             </Text>
-                            <OpenBrowserButton />
+                            
                         </View>
                     </View>
                 )

@@ -23,6 +23,7 @@ export const CustomWebViewStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 10,
     },
 
     netWorkErrorText: {
@@ -39,13 +40,28 @@ export const CustomWebViewStyles = StyleSheet.create({
 
     openUrlErrorText: {
         fontSize: 20,
+        color: "0B3472",
         fontFamily: 'Montserrat_700Bold',
+        textAlign: 'center',
     },
 
     openUrlErrorMessageContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         gap: 10,
+        padding: 10,
+    },
+
+    openBrowserButton: {
+        backgroundColor: '#0B3472',
+        padding: 10,
+        borderRadius: 5,
+    },
+
+    openBrowserButtonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontFamily: 'Montserrat_700Bold',
     }
     
 })

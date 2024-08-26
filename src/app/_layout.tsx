@@ -77,6 +77,7 @@ export default function RootLayout () {
                         headerShown: showHeader(pathname)
                     }) }/>
 
+
                 </Drawer>
             </GestureHandlerRootView>
         </SafeAreaView>
