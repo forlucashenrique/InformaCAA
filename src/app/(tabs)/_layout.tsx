@@ -26,6 +26,7 @@ export default function TabLayout() {
                 options={{
                     tabBarIcon: ({ focused }) => focused ? <HomeFill />  : <HomeOutline />,
                 }}
+                
             />
             <Tabs.Screen 
                 name='(menu)/index' 
@@ -34,7 +35,7 @@ export default function TabLayout() {
                 }} 
             />
             <Tabs.Screen 
-                name='(bus)/index' 
+                name='(bus)/bus' 
                 options={{
                     tabBarIcon: ({ focused }) => focused ? <BusFill /> : <BusOutline />
                 }}

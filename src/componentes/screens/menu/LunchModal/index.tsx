@@ -33,8 +33,8 @@ export function LunchModal({
                             <Text key={index} style={[
                                 LunchModalStyles.menuItem, 
                                 {
-                                    backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
-                                    color: index % 2 === 0 ? '#fff' : '#0B3472'
+                                    //backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
+                                    //color: index % 2 === 0 ? '#fff' : '#0B3472'
                                 }
                             ]}>{item}</Text>
                        ) )}

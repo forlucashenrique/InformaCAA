@@ -20,10 +20,18 @@ export default function HomeLayout () {
                headerShown: false
             }} />
 
+            <Stack.Screen name='[id]' options={{
+               title: '',
+             
+            }} />
+            
             <Stack.Screen name='sigaa' options={{
                title: 'SIGAA',
              
             }} />
+
+             
+           
            
         </Stack>
     )

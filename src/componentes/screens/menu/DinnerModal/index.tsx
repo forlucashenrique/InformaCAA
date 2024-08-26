@@ -31,8 +31,8 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                             style={[
                                 DinnerModalStyles.menuItem, 
                                 {
-                                   backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
-                                      color: index % 2 === 0 ? '#fff' : '#0B3472'
+                                 // backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
+                                     // color: index % 2 === 0 ? '#fff' : '#0B3472'
                                    
                                 }
                             ]}>
