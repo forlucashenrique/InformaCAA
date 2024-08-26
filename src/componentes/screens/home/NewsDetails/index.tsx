@@ -3,10 +3,7 @@ import { NewsDetailsStyles } from "./styles";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import api from "@/service";
-
-import HTMLView from "react-native-htmlview";
-
-import WebView from "react-native-webview";
+import HTMLView from "react-native-htmlview";;
 import { Image } from "expo-image";
 
 

@@ -34,10 +34,10 @@ export default function RootLayout () {
     const pathname = usePathname()
 
     function showHeader(path: string) {
-
-
         switch (path) {
             case '/sigaa': 
+                return false
+            case '/pergamum':
                 return false
             case pathPattern.test(path) ? path : '':
                 return false

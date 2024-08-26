@@ -1,9 +1,11 @@
-import { Text, View } from "react-native";
+
+import CustomWebView from "@/componentes/screens/drawer/sigaa/CustomWebView";
+
 
 export default function SigaaScreen () {
     return (
-        <View>
-            <Text>Sigaa</Text>
-        </View>
+        <CustomWebView 
+            source={{ uri: "https://sigaa.ufpe.br/sigaa/mobile/touch/login.jsf"}}
+        />
     )
 }
