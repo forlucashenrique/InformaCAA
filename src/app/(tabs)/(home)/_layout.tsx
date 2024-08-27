@@ -27,7 +27,14 @@ export default function HomeLayout () {
             
             <Stack.Screen name='sigaa' options={{
                title: 'SIGAA',
-             
+            }} />
+
+            <Stack.Screen name='pergamum' options={{
+               title: 'Pergamum',
+            }} />
+
+            <Stack.Screen name='about' options={{
+               title: 'Sobre',
             }} />
 
              
