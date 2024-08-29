@@ -43,6 +43,8 @@ export default function RootLayout () {
                 return false
             case '/about': 
                 return false
+            case '/contacts':
+                return false
             case pathPattern.test(path) ? path : '':
                 return false
         }

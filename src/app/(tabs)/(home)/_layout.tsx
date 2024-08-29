@@ -32,6 +32,10 @@ export default function HomeLayout () {
             <Stack.Screen name='pergamum' options={{
                title: 'Pergamum',
             }} />
+            
+            <Stack.Screen name='contacts' options={{
+               title: 'Contatos',
+            }} />
 
             <Stack.Screen name='about' options={{
                title: 'Sobre',
