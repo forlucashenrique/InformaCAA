@@ -12,8 +12,10 @@ import {
     useFonts} from '@expo-google-fonts/montserrat';
 import { useEffect } from 'react';
 import { CustomDrawerContent } from '@/componentes/screens/layout/DrawerContent';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+
+import CustomDrawerHeader from '@/componentes/screens/layout/DrawerHeader';
 
 SplashScreen.preventAutoHideAsync()
 
@@ -38,6 +40,10 @@ export default function RootLayout () {
             case '/sigaa': 
                 return false
             case '/pergamum':
+                return false
+            case '/about': 
+                return false
+            case '/contacts':
                 return false
             case pathPattern.test(path) ? path : '':
                 return false
@@ -64,13 +70,14 @@ export default function RootLayout () {
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <Drawer
                     screenOptions={{
-                        headerStyle: {
-                            backgroundColor: '#0B3472'
-                        },
-                        headerTitle: '',
-                        headerTintColor: 'white',
+                        // headerStyle: {
+                        //     backgroundColor: '#0B3472'
+                        // },
+                        // headerTitle: '',
+                        // headerTintColor: 'white',
+                            header: (props) => <CustomDrawerHeader {...props}/>
                         }}
-
+                    
                     drawerContent={(props) => <CustomDrawerContent {...props} />}
                 >
                     <Drawer.Screen name='(tabs)' options={({route}) => ({
