@@ -116,15 +116,15 @@ export default function Menu () {
                 <MealButton 
                     mealTitle="Almoço" 
                     icon={<SunOutline />} 
-                    openHour="12:00" 
-                    closeHour="14:00" 
+                    openHour="11:00" 
+                    closeHour="14:30" 
                     onPress={openLunchModal}
                 />
                 <MealButton 
                     mealTitle="Jantar" 
                     icon={<MoonOutline />} 
-                    openHour="17:00" 
-                    closeHour="20:00"
+                    openHour="17:30" 
+                    closeHour="20:45"
                     onPress={openDinnerModal}
                 />
 
