@@ -1,13 +1,15 @@
 import { Text, View } from "react-native";
+import MapView, { UrlTile, PROVIDER_GOOGLE } from "react-native-maps";
 
-import { MapView } from "@rnmapbox/maps";
 
 export default function SettingsScreen () {
     return (
         <View>
             <MapView
-                styleURL=""
+                provider={PROVIDER_GOOGLE}
             >
+
+               
 
             </MapView>
         </View>

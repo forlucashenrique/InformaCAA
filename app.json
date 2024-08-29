@@ -42,12 +42,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      [
-        "@rnmapbox/maps", 
-        {
-          "RNMapboxMapsVersion": "11.4.0"
-        }
-      ]
+      "@maplibre/maplibre-react-native"
     ]
   }
 }
