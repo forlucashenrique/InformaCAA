@@ -5,8 +5,6 @@ import InformaIcon from "@/assets/screens/about/InformaIcon";
 
 export default function AboutScreen () {
 
-    
-
     return (
         <View style={styles.container}>
             <Logo />

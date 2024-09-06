@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { MenuStyles } from "./stylest";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -18,14 +18,12 @@ const daysLabel = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 type Menu = {[key: string]: {lunch: string[], dinner: string[]}}
 
 export default function Menu () {
-
-    
+    moment.locale('pt-br')  
     const [menu, setMenu] = useState<Menu>({})
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [visbileLunchModal, setVisibleLunchModal] = useState(false)
     const [visibleDinnerModal, setVisibleModal] = useState(false)
     const [visibleRatingModal, setVisibleRatingModal] = useState(false)
-
 
     function openLunchModal() {
         setVisibleLunchModal(true)
@@ -52,12 +50,8 @@ export default function Menu () {
         setVisibleRatingModal(false)
     }
 
-    moment.locale('pt-br')  
 
     const currentDay = moment().format('ddd')
-
-
-
     const [selectedDay, setSelectedDay] = useState(() => {
         return daysLabel.find(day => day.toLowerCase() === currentDay) || 'Seg'
     })
@@ -68,7 +62,6 @@ export default function Menu () {
 
     async function getMenu() {
         try {
-
             const res = await api.get('/cardapio');      
             const data = res.data.result;
             setMenu(data);
@@ -76,15 +69,15 @@ export default function Menu () {
         } catch(error) {
             console.log(error)
             console.log('Erro ao carregar o cardápio');
-
+        } finally {
+            setLoading(false)
         }
+
     }
 
     useEffect(() => {
         getMenu()
     }, [])
-
-
 
     return (
         <View style={MenuStyles.screenContainer}>
@@ -112,43 +105,58 @@ export default function Menu () {
                 }
             </View>
 
-            <View style={MenuStyles.buttonsContainer}>
-                <MealButton 
-                    mealTitle="Almoço" 
-                    icon={<SunOutline />} 
-                    openHour="12:00" 
-                    closeHour="14:00" 
-                    onPress={openLunchModal}
-                />
-                <MealButton 
-                    mealTitle="Jantar" 
-                    icon={<MoonOutline />} 
-                    openHour="17:00" 
-                    closeHour="20:00"
-                    onPress={openDinnerModal}
-                />
+            {
+                loading ? (
+                    <View style={{
+                        width: '100%',
+                        marginTop: 20,
+                      }}>
+                        <ActivityIndicator size="large" color="#0B3472" />
+                      </View>
+                ) : (
+                    <>
+                        <View style={MenuStyles.buttonsContainer}>
+                            <MealButton 
+                                mealTitle="Almoço" 
+                                icon={<SunOutline />} 
+                                openHour="11:00" 
+                                closeHour="14:30" 
+                                onPress={openLunchModal}
+                            />
+                            <MealButton 
+                                mealTitle="Jantar" 
+                                icon={<MoonOutline />} 
+                                openHour="17:30" 
+                                closeHour="20:45"
+                                onPress={openDinnerModal}
+                            />
 
-                <View style={MenuStyles.ratingButtonContainer}>
-                    <RatingButton  onPress={openRatingModal}/>
-                 </View>
-            </View>
+                            <View style={MenuStyles.ratingButtonContainer}>
+                                <RatingButton  onPress={openRatingModal}/>
+                            </View>
+                        </View>
                 
-            <RatingModal 
-                visible={visibleRatingModal}
-                onClose={closeRatingModal}
-            />
+                        <RatingModal 
+                            visible={visibleRatingModal}
+                            onClose={closeRatingModal}
+                        />
 
-            <LunchModal 
-                visible={visbileLunchModal}
-                close={closeLunchModal}
-                menuItems={menu[selectedDay] && menu[selectedDay].lunch}
-            />
+                        <LunchModal 
+                            visible={visbileLunchModal}
+                            close={closeLunchModal}
+                            menuItems={menu[selectedDay] && menu[selectedDay].lunch}
+                        />
 
-            <DinnerModal 
-                visible={visibleDinnerModal}
-                close={closeDinnerModal}
-                menuItems={menu[selectedDay] && menu[selectedDay].dinner}
-            />
+                        <DinnerModal 
+                            visible={visibleDinnerModal}
+                            close={closeDinnerModal}
+                            menuItems={menu[selectedDay] && menu[selectedDay].dinner}
+                        />
+                    </>
+                )
+            }
+
+           
         </View>
     )
 }

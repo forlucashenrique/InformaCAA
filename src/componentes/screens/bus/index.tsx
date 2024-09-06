@@ -16,6 +16,7 @@ export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
     const [rightText, setRightText] = useState('CENTRO');
     const [isHourPressed, setIsHourPressed] = useState(true);
+    
 
     const [widthView, setWidthView] = useState(0);
     const [heightWiew, setHeightWiew] = useState(0);
@@ -102,7 +103,7 @@ export default function BusHours() {
             }}>
                 {
                     isHourPressed ?  
-                        leftText === 'UFPE' ? <ListHours hours={hours.campus}/> : <ListHours hours={hours.center}/> : (
+                        <ListHours type={leftText === 'UFPE' ? 'campus' : 'center'}/>  : (
                             <View style={{
                                 borderWidth: 0.5,
                                 flex: 1,
