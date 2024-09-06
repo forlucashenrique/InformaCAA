@@ -4,7 +4,7 @@
     "slug": "informaCAA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/iconApp.png",
+    "icon": "./assets/new-icon-preview.png",
     "userInterfaceStyle": "light",
     "scheme": "com.lucashenriqi.informaCAA",
     "splash": {

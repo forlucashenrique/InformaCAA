@@ -1,4 +1,4 @@
-import {  InteractionManager, Text, View } from "react-native";
+import {  InteractionManager, NativeScrollEvent, NativeSyntheticEvent, Text, View } from "react-native";
 import { CampusListHoursStyles } from "./styles";
 import WheelChair from "@/componentes/icons/Outline/WheelChair";
 import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
@@ -10,13 +10,14 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
 import Animated, { scrollTo, useAnimatedRef } from "react-native-reanimated";
+import { ScrollView } from "react-native-gesture-handler";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
 type CampusListHoursProps = {
-    hours: string[]
+    type: 'campus' | 'center'
 }
 
 const ItemTextDisabledStyle = {
@@ -37,9 +38,18 @@ const ItemContainerCurrentTime = {
 }
 
 
-export default function ListHours({hours} : CampusListHoursProps) {
+export default function ListHours({type} : CampusListHoursProps) {
+
+    console.log(type)
 
     const ref = useRef<Animated.FlatList<string>>(null);
+    const [previewRenderItems, setPreviewRenderItems] = useState<string[]>(hours[type].slice(0, 8))
+
+    function scrollRenderItems() {
+        const nextIndex = previewRenderItems.length
+        const nextItems = hours[type].slice(nextIndex, nextIndex + 6)
+        setPreviewRenderItems([...previewRenderItems, ...nextItems])
+    }
 
     function compareAfterHours(timeString: string) {
         const [hour, minute] = timeString.split(':').map(Number)
@@ -50,7 +60,7 @@ export default function ListHours({hours} : CampusListHoursProps) {
 
     function getNextBusTime() {
         const now = dayjs().utc(true).tz('America/Recife')
-        const nextBus = hours.find(hour => {
+        const nextBus = hours[type].find(hour => {
             const [hourSplit, minute] = hour.split(':').map(Number)
             const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hourSplit).minute(minute)
             return now.isBefore(formattedItemDate)
@@ -58,6 +68,13 @@ export default function ListHours({hours} : CampusListHoursProps) {
         return nextBus || ''
     }
    // const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
+
+   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent> ) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
+      scrollRenderItems();
+    }
+  };
 
     const ItemView = ( item: string, key: number ) => {
         const isAfter = compareAfterHours(item)
@@ -90,45 +107,48 @@ export default function ListHours({hours} : CampusListHoursProps) {
         )
     };
 
-     function scrollHandler () {
-        if (ref.current) {
-            ref.current.scrollToIndex({
-                index: 1,
-                animated: true,
-                viewPosition: 0.5
-            })
-        }
-     }
+    //  function scrollHandler () {
+    //     if (ref.current) {
+    //         ref.current.scrollToIndex({
+    //             index: 1,
+    //             animated: true,
+    //             viewPosition: 0.5
+    //         })
+    //     }
+    //  }
      
-     const ITEM_HEIGHT = 50;
+    //  const ITEM_HEIGHT = 50;
 
-     const getItemLayout = (data: any, index: number) => ({
-        length: ITEM_HEIGHT, // Altura de cada item
-        offset: ITEM_HEIGHT * index, // Posição do item
-        index, // Índice do item
-      });
+    //  const getItemLayout = (data: any, index: number) => ({
+    //     length: ITEM_HEIGHT, // Altura de cada item
+    //     offset: ITEM_HEIGHT * index, // Posição do item
+    //     index, // Índice do item
+    //   });
 
-     useEffect(() => {
-        scrollHandler()
-     }, [])
+    //  useEffect(() => {
+    //     scrollHandler()
+    //  }, [])
 
     return (
         <Animated.View
              style={CampusListHoursStyles.container}
         >
             <Animated.FlatList 
-            data={hours}
+            data={previewRenderItems}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => ItemView(item, index)}
-            initialScrollIndex={1}
+            //initialScrollIndex={1}
             ref={ref}
             contentContainerStyle={{
                 gap: 14,
             }}
-            getItemLayout={getItemLayout}
+
+            onEndReached={scrollRenderItems}
+            onEndReachedThreshold={0.1}
+            //getItemLayout={getItemLayout}
             
         >
-                <View 
+                {/* <View 
                     style={{
                         flex: 1,
                         gap: 14
@@ -137,9 +157,30 @@ export default function ListHours({hours} : CampusListHoursProps) {
                     {
                         hours.map(ItemView)
                     }
-                </View>
+                </View> */}
                
             </Animated.FlatList>
+
+            {/* <ScrollView style={{
+                    flex: 1,
+                    width: '100%',
+                    padding: 10,
+                    paddingTop: 0,
+                }}
+                onScroll={handleScroll}
+                scrollEventThrottle={10}
+                
+            >
+                <View style={{
+                    width: '100%',
+                    gap: 14
+                }}>
+                    {
+                        previewRenderItems.map(ItemView)
+                    }
+                </View>
+            
+            </ScrollView> */}
         </Animated.View>
         
     )

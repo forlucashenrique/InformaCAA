@@ -14,6 +14,7 @@ export const SearchLocationStyles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         padding: 20,
+      
     },
 
     topView: {
