@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -24,10 +24,7 @@ type RouteViewProps = {
 
 }
 
-export default function RouteViewCENTER({widthView, heightWiew} : RouteViewProps) {
-
-
-
+export const RouteViewCENTER = memo( function ({widthView, heightWiew} : RouteViewProps) {
     const translationX = useSharedValue(0);
     const translationY = useSharedValue(0);
     const prevTranslationX = useSharedValue(0);
@@ -40,8 +37,6 @@ export default function RouteViewCENTER({widthView, heightWiew} : RouteViewProps
         ],
       }));
     
-
-      
     const pan = Gesture.Pan()
       .minDistance(1)
       .onStart(() => {
@@ -77,7 +72,7 @@ export default function RouteViewCENTER({widthView, heightWiew} : RouteViewProps
             
         </GestureDetector>
     )
-}
+})
 
 const styles = StyleSheet.create({
     container: {

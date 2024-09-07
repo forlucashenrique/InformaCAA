@@ -7,10 +7,10 @@ import BuildingOutline from "@/componentes/icons/Outline/BuildingOutline";
 import BuildingFill from "@/componentes/icons/Filled/BuildingFill";
 import DegreeOutline from "@/componentes/icons/Outline/DegreeOutline";
 import { hours } from "@/data/busHours";
-import ListHours from "./ListHours";
+import {ListHours} from "./ListHours";
 
-import RouteViewCENTER from "./RouteViewCENTER";
-import RouteViewUFPE from "./RouteViewUFPE";
+import {RouteViewCENTER} from "./RouteViewCENTER";
+import {RouteViewUFPE} from "./RouteViewUFPE";
 
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
@@ -103,7 +103,7 @@ export default function BusHours() {
             }}>
                 {
                     isHourPressed ?  
-                        <ListHours type={leftText === 'UFPE' ? 'campus' : 'center'}/>  : (
+                        <ListHours hours={leftText === 'UFPE' ? hours['campus'] : hours['center']}/>  : (
                             <View style={{
                                 borderWidth: 0.5,
                                 flex: 1,

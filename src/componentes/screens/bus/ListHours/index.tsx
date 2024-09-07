@@ -1,23 +1,21 @@
-import {  InteractionManager, NativeScrollEvent, NativeSyntheticEvent, Text, View } from "react-native";
+import {  FlatList, NativeScrollEvent, NativeSyntheticEvent, Text, View } from "react-native";
 import { CampusListHoursStyles } from "./styles";
 import WheelChair from "@/componentes/icons/Outline/WheelChair";
 import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
 
 import { hours } from "@/data/busHours";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
-import Animated, { scrollTo, useAnimatedRef } from "react-native-reanimated";
-import { ScrollView } from "react-native-gesture-handler";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
 type CampusListHoursProps = {
-    type: 'campus' | 'center'
+    hours: string[]
 }
 
 const ItemTextDisabledStyle = {
@@ -38,18 +36,18 @@ const ItemContainerCurrentTime = {
 }
 
 
-export default function ListHours({type} : CampusListHoursProps) {
+export const ListHours = memo(function ({hours} : CampusListHoursProps) {
 
-    console.log(type)
+    //console.log(type)
 
-    const ref = useRef<Animated.FlatList<string>>(null);
-    const [previewRenderItems, setPreviewRenderItems] = useState<string[]>(hours[type].slice(0, 8))
+    const ref = useRef<FlatList<string>>(null);
+    //const [previewRenderItems, setPreviewRenderItems] = useState<string[]>(hours[type].slice(0, 8))
 
-    function scrollRenderItems() {
-        const nextIndex = previewRenderItems.length
-        const nextItems = hours[type].slice(nextIndex, nextIndex + 6)
-        setPreviewRenderItems([...previewRenderItems, ...nextItems])
-    }
+    // function scrollRenderItems() {
+    //     const nextIndex = previewRenderItems.length
+    //     const nextItems = hours[type].slice(nextIndex, nextIndex + 6)
+    //     setPreviewRenderItems([...previewRenderItems, ...nextItems])
+    // }
 
     function compareAfterHours(timeString: string) {
         const [hour, minute] = timeString.split(':').map(Number)
@@ -60,7 +58,7 @@ export default function ListHours({type} : CampusListHoursProps) {
 
     function getNextBusTime() {
         const now = dayjs().utc(true).tz('America/Recife')
-        const nextBus = hours[type].find(hour => {
+        const nextBus = hours.find(hour => {
             const [hourSplit, minute] = hour.split(':').map(Number)
             const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hourSplit).minute(minute)
             return now.isBefore(formattedItemDate)
@@ -69,14 +67,14 @@ export default function ListHours({type} : CampusListHoursProps) {
     }
    // const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
 
-   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent> ) => {
-    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
-    if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
-      scrollRenderItems();
-    }
-  };
+//    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent> ) => {
+//     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+//     if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
+//       scrollRenderItems();
+//     }
+//   };
 
-    const ItemView = ( item: string, key: number ) => {
+    const ItemView = useCallback(( item: string, key: number ) => {
         const isAfter = compareAfterHours(item)
         const isCurrentTime = getNextBusTime() === item
         return (
@@ -105,36 +103,36 @@ export default function ListHours({type} : CampusListHoursProps) {
                 </View>
             </View>
         )
-    };
+    }, []);
 
-    //  function scrollHandler () {
-    //     if (ref.current) {
-    //         ref.current.scrollToIndex({
-    //             index: 1,
-    //             animated: true,
-    //             viewPosition: 0.5
-    //         })
-    //     }
-    //  }
+     function scrollHandler () {
+        if (ref.current) {
+            ref.current.scrollToIndex({
+                index: 1,
+                animated: true,
+                viewPosition: 0.5
+            })
+        }
+     }
      
-    //  const ITEM_HEIGHT = 50;
+     const ITEM_HEIGHT = 50;
 
-    //  const getItemLayout = (data: any, index: number) => ({
-    //     length: ITEM_HEIGHT, // Altura de cada item
-    //     offset: ITEM_HEIGHT * index, // Posição do item
-    //     index, // Índice do item
-    //   });
+     const getItemLayout = (data: any, index: number) => ({
+        length: ITEM_HEIGHT, // Altura de cada item
+        offset: ITEM_HEIGHT * index, // Posição do item
+        index, // Índice do item
+      });
 
-    //  useEffect(() => {
-    //     scrollHandler()
-    //  }, [])
+     useEffect(() => {
+        scrollHandler()
+     }, [])
 
     return (
-        <Animated.View
+        <View
              style={CampusListHoursStyles.container}
         >
-            <Animated.FlatList 
-            data={previewRenderItems}
+            <FlatList 
+            data={hours}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => ItemView(item, index)}
             //initialScrollIndex={1}
@@ -142,24 +140,14 @@ export default function ListHours({type} : CampusListHoursProps) {
             contentContainerStyle={{
                 gap: 14,
             }}
-
-            onEndReached={scrollRenderItems}
-            onEndReachedThreshold={0.1}
-            //getItemLayout={getItemLayout}
+            initialNumToRender={6}
+           // onEndReached={scrollRenderItems}
+           // onEndReachedThreshold={0.1}
+            getItemLayout={getItemLayout}
             
         >
-                {/* <View 
-                    style={{
-                        flex: 1,
-                        gap: 14
-                    }}
-                >
-                    {
-                        hours.map(ItemView)
-                    }
-                </View> */}
-               
-            </Animated.FlatList>
+            
+            </FlatList>
 
             {/* <ScrollView style={{
                     flex: 1,
@@ -181,7 +169,7 @@ export default function ListHours({type} : CampusListHoursProps) {
                 </View>
             
             </ScrollView> */}
-        </Animated.View>
+        </View>
         
     )
-}
+})
