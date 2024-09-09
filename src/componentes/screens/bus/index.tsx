@@ -12,14 +12,45 @@ import {ListHours} from "./ListHours";
 import {RouteViewCENTER} from "./RouteViewCENTER";
 import {RouteViewUFPE} from "./RouteViewUFPE";
 
-import { View as MotiView } from 'moti';
+import { AnimatePresence, View as MotiView } from 'moti';
+
+
+function IconViewAnimated({children, translateX, x, duration}: {children: React.ReactNode, translateX: number, x?: number, duration?: number}) {
+    return (
+        <MotiView 
+            from={{
+                opacity: 0,
+                translateX: x || 0,
+                
+            }}
+            animate={{
+                opacity: 1,
+                translateX: 0,
+            }}
+            exit={{
+                opacity: 0,
+                translateX: translateX,
+            }}
+
+            transition={{
+                type: 'timing',
+                
+            }}
+        >
+            {children}
+        </MotiView>
+    )
+}
+
 
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
     const [rightText, setRightText] = useState('CENTRO');
     const [isHourPressed, setIsHourPressed] = useState(true);
     
-    const [isRoutePressed, setIsRoutePressed] = useState(false);
+    const [visibileFillIcon, setVisibleFillIcon] = useState(true);
+    const [visibleOutlineIcon, setVisibleOutlineIcon] = useState(true);
+    const [visibleArrow, setVisibleArrow] = useState(true);
     const [widthView, setWidthView] = useState(0);
     const [heightWiew, setHeightWiew] = useState(0);
 
@@ -28,11 +59,11 @@ export default function BusHours() {
         if (leftText === 'UFPE') {
             setLeftText('CENTRO');
             setRightText('UFPE');
-            setIsRoutePressed(!isRoutePressed);
+            
         } else {
             setLeftText('UFPE');
             setRightText('CENTRO');
-            setIsRoutePressed(!isRoutePressed);
+            
         }
     }
 
@@ -47,51 +78,86 @@ export default function BusHours() {
                         {`${leftText} / ${rightText}`}
                     </Text>
                 </View>
-
-                <View style={BusHoursStyles.fromTo}>
-                    <MotiView 
-                        style={BusHoursStyles.fromToIconContainer}
-                        from={{
-                            opacity: 1,
-                            translateX: 0,
-                            translateY: 0,
-                        }}
-                        animate={{
-                            opacity: isRoutePressed ? 0 : 1,
-                            translateX: isRoutePressed ? 100 : 0,
-                        }}
-                    >
-                        { leftText === 'UFPE' && <DegreeFill /> }
-                        { leftText === 'CENTRO' && <BuildingFill /> }
-                        <Text style={BusHoursStyles.textIcon}>{leftText}</Text>
-                    </MotiView>
-                    <ArrowRight />
-
-                    <MotiView 
-                        style={BusHoursStyles.fromToIconContainer}
-                        from={{
-                            opacity: 1,
-                            translateX: 0,
-                            translateY: 0,
-                        }}
+                <AnimatePresence exitBeforeEnter>
+                    <View style={BusHoursStyles.fromTo}>
+                        <MotiView 
+                            style={BusHoursStyles.fromToIconContainer}
                         
-                        animate={{
-                            opacity: isRoutePressed ? 0 : 1,
-                            translateX: isRoutePressed ? -100 : 0,
-                        }}
-                    >
-                        {rightText === 'CENTRO' &&  <BuildingOutline />}
-                        {rightText === 'UFPE' && <DegreeOutline />}
+                        >
+                            {visibileFillIcon && (
+                                <IconViewAnimated x={visibileFillIcon ? 100 : 0} translateX={visibileFillIcon ? 100 : -100} key='ufpe'>
+                                    <DegreeFill />
+                                </IconViewAnimated>
+                            )}
+                            {!visibileFillIcon && (
+                                <IconViewAnimated 
+                                    x={!visibileFillIcon ? 100 : 0} 
+                                    translateX={!visibileFillIcon ? 100 : 0} key='center'
+                            
+                                >
+                                    <BuildingFill />
+                                </IconViewAnimated>
+                            )}
+                            <Text style={BusHoursStyles.textIcon}>{leftText}</Text>
+                            
+                        </MotiView>
+                        {visibleArrow && (
+                            <MotiView
+                                from={{
+                                    opacity: 0,
+                            
+                                }}
+                                animate={{
+                                    opacity: 1,
+                                }}
+                            >
+                                <ArrowRight />
+                            </MotiView>
+                        )}
+                        {!visibleArrow && (
+                            <MotiView
+                                from={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 1,
+                                }}
+                                transition={{
+                                    type: 'timing',
+                                }}
+                            >
+                                <ArrowRight />
+                            </MotiView>
+                        )}
 
-                        <Text style={BusHoursStyles.textIcon}>{rightText}</Text>
-                    </MotiView>
-                </View>
+                        <MotiView 
+                            style={BusHoursStyles.fromToIconContainer}
+                        >
+                            {visibleOutlineIcon &&  (
+                                <IconViewAnimated x={visibleOutlineIcon ? -100 : 0} translateX={visibleOutlineIcon ? -100 : 100} key='ufpe2'>
+                                    <BuildingOutline />
+                                </IconViewAnimated>
+                            )}
+                            {!visibleOutlineIcon && (
+                                <IconViewAnimated x={!visibleOutlineIcon ? -100 : 0} translateX={!visibleOutlineIcon ? 100 : -100} key='center2'>
+                                    <DegreeOutline />
+                                </IconViewAnimated>
+                            )}
+                            <Text style={BusHoursStyles.textIcon}>{rightText}</Text>
+                        </MotiView>
+                    </View>
+                </AnimatePresence>
 
                 <View style={{
                     width: '100%',
                     alignItems: 'center',
                 }}>
-                    <Pressable style={BusHoursStyles.changeDirectionButton} onPress={changeDirection}>
+                    <Pressable style={BusHoursStyles.changeDirectionButton} onPress={() => {
+                        changeDirection();
+                        setVisibleFillIcon(!visibileFillIcon);
+                        setVisibleOutlineIcon(!visibleOutlineIcon);
+                        setVisibleArrow(!visibleArrow);
+                    }}>
                         <Text style={BusHoursStyles.changeDirectionButtonText}>Mudar sentido</Text>
                     </Pressable>
                 </View>
