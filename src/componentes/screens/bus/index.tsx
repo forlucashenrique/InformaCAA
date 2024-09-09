@@ -12,12 +12,14 @@ import {ListHours} from "./ListHours";
 import {RouteViewCENTER} from "./RouteViewCENTER";
 import {RouteViewUFPE} from "./RouteViewUFPE";
 
+import { View as MotiView } from 'moti';
+
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
     const [rightText, setRightText] = useState('CENTRO');
     const [isHourPressed, setIsHourPressed] = useState(true);
     
-
+    const [isRoutePressed, setIsRoutePressed] = useState(false);
     const [widthView, setWidthView] = useState(0);
     const [heightWiew, setHeightWiew] = useState(0);
 
@@ -26,9 +28,11 @@ export default function BusHours() {
         if (leftText === 'UFPE') {
             setLeftText('CENTRO');
             setRightText('UFPE');
+            setIsRoutePressed(!isRoutePressed);
         } else {
             setLeftText('UFPE');
             setRightText('CENTRO');
+            setIsRoutePressed(!isRoutePressed);
         }
     }
 
@@ -45,19 +49,42 @@ export default function BusHours() {
                 </View>
 
                 <View style={BusHoursStyles.fromTo}>
-                    <View style={BusHoursStyles.fromToIconContainer}>
+                    <MotiView 
+                        style={BusHoursStyles.fromToIconContainer}
+                        from={{
+                            opacity: 1,
+                            translateX: 0,
+                            translateY: 0,
+                        }}
+                        animate={{
+                            opacity: isRoutePressed ? 0 : 1,
+                            translateX: isRoutePressed ? 100 : 0,
+                        }}
+                    >
                         { leftText === 'UFPE' && <DegreeFill /> }
                         { leftText === 'CENTRO' && <BuildingFill /> }
                         <Text style={BusHoursStyles.textIcon}>{leftText}</Text>
-                    </View>
+                    </MotiView>
                     <ArrowRight />
 
-                    <View style={BusHoursStyles.fromToIconContainer}>
+                    <MotiView 
+                        style={BusHoursStyles.fromToIconContainer}
+                        from={{
+                            opacity: 1,
+                            translateX: 0,
+                            translateY: 0,
+                        }}
+                        
+                        animate={{
+                            opacity: isRoutePressed ? 0 : 1,
+                            translateX: isRoutePressed ? -100 : 0,
+                        }}
+                    >
                         {rightText === 'CENTRO' &&  <BuildingOutline />}
                         {rightText === 'UFPE' && <DegreeOutline />}
 
                         <Text style={BusHoursStyles.textIcon}>{rightText}</Text>
-                    </View>
+                    </MotiView>
                 </View>
 
                 <View style={{

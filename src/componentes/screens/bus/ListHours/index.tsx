@@ -36,18 +36,11 @@ const ItemContainerCurrentTime = {
 }
 
 
+
+
 export const ListHours = memo(function ({hours} : CampusListHoursProps) {
 
-    //console.log(type)
-
     const ref = useRef<FlatList<string>>(null);
-    //const [previewRenderItems, setPreviewRenderItems] = useState<string[]>(hours[type].slice(0, 8))
-
-    // function scrollRenderItems() {
-    //     const nextIndex = previewRenderItems.length
-    //     const nextItems = hours[type].slice(nextIndex, nextIndex + 6)
-    //     setPreviewRenderItems([...previewRenderItems, ...nextItems])
-    // }
 
     function compareAfterHours(timeString: string) {
         const [hour, minute] = timeString.split(':').map(Number)
@@ -65,32 +58,17 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
         })
         return nextBus || ''
     }
-   // const [scrollToIndex, setScrollToIndex] = useState(hours.indexOf(getNextBusTime()));
 
-//    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent> ) => {
-//     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
-//     if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
-//       scrollRenderItems();
-//     }
-//   };
-
-    const ItemView = useCallback(( item: string, key: number ) => {
-        const isAfter = compareAfterHours(item)
-        const isCurrentTime = getNextBusTime() === item
+    const ItemView = memo(function ( {hourText, index} : {hourText: string, index: number}) {
+        const isAfter = compareAfterHours(hourText)
+        const isCurrentTime = getNextBusTime() === hourText
         return (
             <View 
-                key={key} 
+                key={index} 
                 style={[CampusListHoursStyles.hourContainer, isCurrentTime ? ItemContainerCurrentTime : {}]}
-                // onLayout={(event) => {
-                //     const layout = event.nativeEvent.layout;
-            
-                //     if (scrollToIndex === key) {
-                //         setScrollToPosition(layout.y)
-                //     }
-                // }}    
             >
                 <Text style={[CampusListHoursStyles.hourText, isCurrentTime ? ItemTextCurrentTime : {}, isAfter ? ItemTextDisabledStyle :  {} ]}>
-                    {item}
+                    {hourText}
                 </Text>
 
                 <View style={CampusListHoursStyles.nextBusContainer}>
@@ -103,7 +81,10 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
                 </View>
             </View>
         )
-    }, []);
+        }, (prevProps, nextProps) => {
+            return prevProps.hourText === nextProps.hourText
+        });
+        
 
      function scrollHandler () {
         if (ref.current) {
@@ -134,41 +115,16 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
             <FlatList 
             data={hours}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => ItemView(item, index)}
+            renderItem={({ item, index }) => <ItemView hourText={item} index={index} />}
             //initialScrollIndex={1}
             ref={ref}
             contentContainerStyle={{
                 gap: 14,
             }}
             initialNumToRender={6}
-           // onEndReached={scrollRenderItems}
-           // onEndReachedThreshold={0.1}
-            getItemLayout={getItemLayout}
-            
+            getItemLayout={getItemLayout}   
         >
-            
             </FlatList>
-
-            {/* <ScrollView style={{
-                    flex: 1,
-                    width: '100%',
-                    padding: 10,
-                    paddingTop: 0,
-                }}
-                onScroll={handleScroll}
-                scrollEventThrottle={10}
-                
-            >
-                <View style={{
-                    width: '100%',
-                    gap: 14
-                }}>
-                    {
-                        previewRenderItems.map(ItemView)
-                    }
-                </View>
-            
-            </ScrollView> */}
         </View>
         
     )

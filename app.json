@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/iconApp.png"
+        "foregroundImage": "./assets/new-icon-preview.png"
       },
       "package": "com.lucashenriqi.informaCAA"
     },
