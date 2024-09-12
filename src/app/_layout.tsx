@@ -17,15 +17,13 @@ import { StatusBar } from 'expo-status-bar';
 
 import CustomDrawerHeader from '@/componentes/screens/layout/DrawerHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TutorialScreens from '@/componentes/tutorial';
 
 SplashScreen.preventAutoHideAsync()
 
 const pathPattern = /^\/[0-9]{1,7}$/
 
-
 export default function RootLayout () {
-
-    const [showTutorial, setShowTutorial] = useState(false)
 
     const [fontsLoaded, error] = useFonts({
         Montserrat_300Light,
@@ -60,9 +58,8 @@ export default function RootLayout () {
 
     }, [fontsLoaded, error])
 
-    if (!fontsLoaded && !error) {
-        return null
-    }
+
+    const [showTutorial, setShowTutorial] = useState(true)
 
     useEffect(() => {
         const checkIfTutorialSeen = async () => {
@@ -72,7 +69,21 @@ export default function RootLayout () {
           }
         };
         checkIfTutorialSeen();
-      }, []);
+    }, []);
+
+
+    const handleFinishTutorial = async () => {
+        await AsyncStorage.setItem('@tutorial_seen', 'true');
+        setShowTutorial(false);
+    };
+
+    if (showTutorial) {
+        return <TutorialScreens onFinish={handleFinishTutorial} />;
+    }
+
+    if (!fontsLoaded && !error) {
+        return null
+    }
 
     return (
 

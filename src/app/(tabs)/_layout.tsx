@@ -8,8 +8,10 @@ import MenuFill from '@/componentes/icons/Filled/MenuFill';
 import MenuOutline from '@/componentes/icons/Outline/MenuOutline';
 import { Tabs } from 'expo-router';
 
-export default function TabLayout() {
 
+export default function TabLayout() {
+    
+    
     return (
         <Tabs
             screenOptions={{

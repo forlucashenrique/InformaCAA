@@ -2,22 +2,27 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     Animated,
     Dimensions,
+   
+    Pressable,
 } from 'react-native';
 
 import PagerView, {
     PagerViewOnPageScrollEventData,
 } from 'react-native-pager-view';
 
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 import {
     ScalingDot,
-    SlidingBorder,
-    ExpandingDot,
-    SlidingDot,
 } from 'react-native-animated-pagination-dots';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Shadow } from 'react-native-shadow-2';
+
+type TutorialScreensProps = {
+    onFinish: () => void;
+}
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView);
 
@@ -50,12 +55,17 @@ const INTRO_DATA = [
 
 
 
-export default function TutorialScreens() {
+export default function TutorialScreens({onFinish}: TutorialScreensProps) {
 
     const width = Dimensions.get('window').width;
     const ref = useRef<PagerView>(null);
     const scrollOffsetAnimatedValue = useRef(new Animated.Value(0)).current;
     const positionAnimatedValue = useRef(new Animated.Value(0)).current;
+
+    const fadeIn = useRef(new Animated.Value(0)).current;
+
+ 
+
     const inputRange = [0, INTRO_DATA.length];
     const scrollX = Animated.add(
         scrollOffsetAnimatedValue,
@@ -65,9 +75,12 @@ export default function TutorialScreens() {
         outputRange: [0, INTRO_DATA.length * width],
     });
 
+  
+
     const onPageScroll = useMemo(
         () =>
           Animated.event<PagerViewOnPageScrollEventData>(
+            
             [
               {
                 nativeEvent: {
@@ -80,150 +93,156 @@ export default function TutorialScreens() {
               useNativeDriver: false,
             }
           ),
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []
       );
 
-    return (
-        <SafeAreaView testID="safe-area-view" style={styles.flex}>
-      <AnimatedPagerView
-        testID="pager-view"
-        initialPage={0}
-        ref={ref}
-        style={styles.PagerView}
-        onPageScroll={onPageScroll}
-      >
-        {INTRO_DATA.map(({ key }) => (
-          <View
-            testID={`pager-view-data-${key}`}
-            key={key}
-            style={styles.center}
-          >
-            <Text style={styles.text}>{`Page Index: ${key}`}</Text>
-          </View>
-        ))}
-      </AnimatedPagerView>
-      <View style={styles.dotsContainer}>
-        <View style={styles.dotContainer}>
-          <Text>Expanding Dot</Text>
-          <ExpandingDot
-            testID={'expanding-dot'}
-            data={INTRO_DATA}
-            expandingDotWidth={30}
-            //@ts-ignore
-            scrollX={scrollX}
-            inActiveDotOpacity={0.6}
-            dotStyle={{
-              width: 10,
-              height: 10,
-              backgroundColor: '#347af0',
-              borderRadius: 5,
-              marginHorizontal: 5,
-            }}
-            containerStyle={{
-              top: 30,
-            }}
-          />
-        </View>
-        <View style={styles.dotContainer}>
-          <Text>Scaling Dot</Text>
-          <ScalingDot
-            testID={'scaling-dot'}
-            data={INTRO_DATA}
-            //@ts-ignore
-            scrollX={scrollX}
-            containerStyle={{
-              top: 30,
-            }}
-          />
-        </View>
+      const onNextPage = () => {
+       
+      } 
 
-        <View style={styles.dotContainer}>
-          <Text>Sliding Border</Text>
-          <SlidingBorder
-            testID={'sliding-border'}
-            containerStyle={{ top: 30 }}
-            data={INTRO_DATA}
-            //@ts-ignore
-            scrollX={scrollX}
-            dotSize={24}
-          />
+      const [currentPage, setCurrentPage] = useState<number>(0);
+      const pagerRef = useRef<PagerView>(null);
+    
+      const [totalPages, setTotalPages] = useState<number>(3) ; // Total de páginas do tutorial
+    
+      const handleNextPage = () => {
+        //@ts-ignore
+        const nextPage = currentPage + 1;
+        const tempTotalPages = totalPages
+        const tempCurrentPage = currentPage
+
+        if (pagerRef.current && tempCurrentPage < tempTotalPages) {
+          pagerRef.current.setPage(nextPage);
+          setCurrentPage(nextPage);
+          fadeIn.setValue(0);
+
+
+          Animated.timing(fadeIn, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+
+
+        } 
+      };
+
+      useEffect(() => {
+        Animated.timing(fadeIn, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }).start();
+
+      }, [fadeIn])
+    
+      const handleSkipTutorial = () => {
+        onFinish();
+      };
+    
+     
+
+    return (
+        <View style={{
+            flex: 1,
+        }}>
+            <AnimatedPagerView 
+              style={{
+                flex: 1,
+              }} 
+              initialPage={0} 
+              ref={pagerRef}
+              onPageScroll={onPageScroll}  
+              onPageSelected={({nativeEvent}) => {
+                setCurrentPage(nativeEvent.position)
+              }}
+            >
+              {
+                INTRO_DATA.map(({key, title, description}) => (
+                    <Animated.View key={key} style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: 20,
+                        opacity: fadeIn,
+                    }}>
+                        <Text style={{
+                            fontSize: 30,
+                        }}>{`Page Index: ${key}`}</Text>
+                        <Text>{title}</Text>
+                        <Text>{description}</Text>
+                    </Animated.View>
+                ))
+              }
+            </AnimatedPagerView>
+            <View style={styles.dotContainer}>
+                <ScalingDot
+                  testID={'scaling-dot'}
+                  data={INTRO_DATA}
+                  //@ts-ignore
+                  scrollX={scrollX}
+                  containerStyle={{
+                    top: 30,
+                  }}
+                  // inActiveDotOpacity={0.4}
+                  activeDotColor='#0B3472'
+                  inActiveDotColor='#fff'
+                  dotStyle={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 20,
+                    borderColor: '#0B3472',
+                    borderWidth: 1.5,
+                  }}
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Pressable onPress={handleSkipTutorial}>
+                <Text style={styles.skipTextButton}>Pular tutorial</Text>
+              </Pressable>
+              <Shadow offset={[0, 4]} distance={4}>
+                <Pressable onPress={handleNextPage} style={styles.nextButton}>
+                  <AntDesign name="arrowright" size={24} color="white" />
+                </Pressable>
+              </Shadow>
+
+            </View>
         </View>
-        <View style={styles.dotContainer}>
-          <Text>Sliding Dot</Text>
-          <SlidingDot
-            testID={'sliding-dot'}
-            marginHorizontal={3}
-            containerStyle={{ top: 30 }}
-            data={INTRO_DATA}
-            //@ts-ignore
-            scrollX={scrollX}
-            dotSize={12}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    flex: {
-      flex: 1,
-    },
-    PagerView: {
-      flex: 1,
-    },
-    container: {
-      flexDirection: 'row',
-      backgroundColor: '#63a4ff',
-    },
-    progressContainer: { flex: 0.1, backgroundColor: '#63a4ff' },
-    center: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      alignContent: 'center',
-      padding: 20,
-    },
-    text: {
-      fontSize: 30,
-    },
-    separator: {
-      paddingVertical: 16,
-      paddingHorizontal: 10,
-    },
-    touchableTitle: {
-      textAlign: 'center',
-      color: '#000',
-    },
-    touchableTitleActive: {
-      color: '#fff',
-    },
-    dotsContainer: {
-      flex: 1,
-      justifyContent: 'space-evenly',
-    },
+
     dotContainer: {
+      width: '100%',
+      paddingVertical: 30,
       justifyContent: 'center',
       alignSelf: 'center',
     },
-    contentSlider: {
-      flex: 1,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-    },
-    dots: {
-      flex: 1,
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: 310,
+
+    buttonContainer: {
       flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      paddingVertical: 20,
+      width: '100%',
+    },
+
+    skipTextButton: {
+      color: '#0B3472',
+      fontSize: 16,
+      fontFamily: 'Montserrat_400Regular',
+    },
+
+    nextButton: {
+      width: 45,
+      height: 45,
+      borderRadius: 25,
+      backgroundColor: '#0B3472',
       justifyContent: 'center',
-    },
-    dot: {
-      width: 10,
-      height: 10,
-      borderRadius: 5,
-      margin: 5,
-    },
+      alignItems: 'center',
+    }
   });
