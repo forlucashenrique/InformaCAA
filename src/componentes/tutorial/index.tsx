@@ -19,6 +19,12 @@ import {
 } from 'react-native-animated-pagination-dots';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Shadow } from 'react-native-shadow-2';
+import TutorialOnePage from './pages/one';
+import TutorialTwoPage from './pages/two';
+import TutorialThreePage from './pages/three';
+import TutorialFourPage from './pages/four';
+import TutorialFivePage from './pages/five';
+
 
 type TutorialScreensProps = {
     onFinish: () => void;
@@ -26,31 +32,12 @@ type TutorialScreensProps = {
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView);
 
-const INTRO_DATA = [
-    {
-      key: '1',
-      title: 'App showcase ✨',
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      key: '2',
-      title: 'Introduction screen 🎉',
-      description:
-        "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. ",
-    },
-    {
-      key: '3',
-      title: 'And can be anything 🎈',
-      description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ',
-    },
-    {
-      key: '4',
-      title: 'And can be anything 🎈',
-      description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ',
-    },
+const PAGES = [
+    <TutorialOnePage />,
+    <TutorialTwoPage />,
+    <TutorialThreePage />,
+    <TutorialFourPage />,
+    <TutorialFivePage />
 ];
 
 
@@ -64,18 +51,15 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
 
     const fadeIn = useRef(new Animated.Value(0)).current;
 
- 
-
-    const inputRange = [0, INTRO_DATA.length];
+    const inputRange = [0, PAGES.length];
     const scrollX = Animated.add(
         scrollOffsetAnimatedValue,
         positionAnimatedValue
     ).interpolate({
         inputRange,
-        outputRange: [0, INTRO_DATA.length * width],
+        outputRange: [0, PAGES.length * width],
     });
 
-  
 
     const onPageScroll = useMemo(
         () =>
@@ -105,11 +89,17 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
       const [currentPage, setCurrentPage] = useState<number>(0);
       const pagerRef = useRef<PagerView>(null);
     
-      const [totalPages, setTotalPages] = useState<number>(3) ; // Total de páginas do tutorial
+      const [totalPages, setTotalPages] = useState<number>(4) ; // Total de páginas do tutorial
     
       const handleNextPage = () => {
         //@ts-ignore
         const nextPage = currentPage + 1;
+
+        if (nextPage > totalPages) {
+          onFinish();
+          return;
+        }
+
         const tempTotalPages = totalPages
         const tempCurrentPage = currentPage
 
@@ -121,10 +111,9 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
 
           Animated.timing(fadeIn, {
             toValue: 1,
-            duration: 2000,
+            duration: 800,
             useNativeDriver: true,
           }).start();
-
 
         } 
       };
@@ -132,7 +121,7 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
       useEffect(() => {
         Animated.timing(fadeIn, {
           toValue: 1,
-          duration: 1000,
+          duration: 500,
           useNativeDriver: true,
         }).start();
 
@@ -160,19 +149,12 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
               }}
             >
               {
-                INTRO_DATA.map(({key, title, description}) => (
-                    <Animated.View key={key} style={{
+                PAGES.map((page, index) => (
+                    <Animated.View key={index} style={{
                         flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: 20,
                         opacity: fadeIn,
                     }}>
-                        <Text style={{
-                            fontSize: 30,
-                        }}>{`Page Index: ${key}`}</Text>
-                        <Text>{title}</Text>
-                        <Text>{description}</Text>
+                        {page}
                     </Animated.View>
                 ))
               }
@@ -180,7 +162,7 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
             <View style={styles.dotContainer}>
                 <ScalingDot
                   testID={'scaling-dot'}
-                  data={INTRO_DATA}
+                  data={PAGES}
                   //@ts-ignore
                   scrollX={scrollX}
                   containerStyle={{
@@ -217,7 +199,7 @@ const styles = StyleSheet.create({
 
     dotContainer: {
       width: '100%',
-      paddingVertical: 30,
+      paddingVertical: 15,
       justifyContent: 'center',
       alignSelf: 'center',
     },

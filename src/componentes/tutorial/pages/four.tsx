@@ -4,11 +4,15 @@ import { useRef } from "react";
 import PlaneSVG from "./assets/PlaneSVG";
 import PlateSVG from "./assets/PlateSVG";
 import BurguerSVG from "./assets/BurguerSVG";
+import BusStopSVG from "./assets/BusStopSVG";
+import BusSVG from "./assets/BusSVG";
+import MapWideSVG from "./assets/MapWideSVG";
+import MapLineSVG from "./assets/MapLineSVG";
 
 const {width, height} = Dimensions.get('window');
 
 
-export default function TutorialTwoPage () {
+export default function TutorialFourPage () {
 
     return (
         <View style={styles.container}>
@@ -16,16 +20,16 @@ export default function TutorialTwoPage () {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 80,
+                marginTop: 90,
             }}>
-                <PlateSVG />
+                <MapWideSVG />
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.title}>Confira o cardápio do Restaurante Universitário.  </Text>
-                <Text style={styles.subtitle}>Avalie sua refeição diretamente pelo app. Sua opinião ajuda a melhorar o Restaurante Universitário!</Text>
+                <Text style={styles.title}>Precisa encontrar um lugar específico no campus? </Text>
+                <Text style={styles.subtitle}>Use o mapa e navegue com tranquilidade.</Text>
             </View>
             <View style={styles.containerBottonImage}>
-                <BurguerSVG style={styles.bottonImage} />
+                <MapLineSVG style={styles.bottonImage} />
             </View>
         </View>
     )

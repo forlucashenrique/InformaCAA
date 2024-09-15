@@ -4,11 +4,17 @@ import { useRef } from "react";
 import PlaneSVG from "./assets/PlaneSVG";
 import PlateSVG from "./assets/PlateSVG";
 import BurguerSVG from "./assets/BurguerSVG";
+import BusStopSVG from "./assets/BusStopSVG";
+import BusSVG from "./assets/BusSVG";
+import MapWideSVG from "./assets/MapWideSVG";
+import MapLineSVG from "./assets/MapLineSVG";
+import PhoneTouchSVG from "./assets/PhoneTouchSVG";
+import NetworkingSVG from "./assets/NetworkingSVG";
 
 const {width, height} = Dimensions.get('window');
 
 
-export default function TutorialTwoPage () {
+export default function TutorialFivePage () {
 
     return (
         <View style={styles.container}>
@@ -16,16 +22,16 @@ export default function TutorialTwoPage () {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 80,
+                marginTop: 30,
             }}>
-                <PlateSVG />
+                <PhoneTouchSVG />
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.title}>Confira o cardápio do Restaurante Universitário.  </Text>
-                <Text style={styles.subtitle}>Avalie sua refeição diretamente pelo app. Sua opinião ajuda a melhorar o Restaurante Universitário!</Text>
+                <Text style={styles.title}>Acesse o SigaA e o Pergamum sem complicações. </Text>
+                <Text style={styles.subtitle}>Tenha as principais ferramentas da UFPE direto no aplicativo.</Text>
             </View>
             <View style={styles.containerBottonImage}>
-                <BurguerSVG style={styles.bottonImage} />
+                <NetworkingSVG style={styles.bottonImage} />
             </View>
         </View>
     )

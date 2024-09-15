@@ -4,11 +4,13 @@ import { useRef } from "react";
 import PlaneSVG from "./assets/PlaneSVG";
 import PlateSVG from "./assets/PlateSVG";
 import BurguerSVG from "./assets/BurguerSVG";
+import BusStopSVG from "./assets/BusStopSVG";
+import BusSVG from "./assets/BusSVG";
 
 const {width, height} = Dimensions.get('window');
 
 
-export default function TutorialTwoPage () {
+export default function TutorialThreePage () {
 
     return (
         <View style={styles.container}>
@@ -16,16 +18,16 @@ export default function TutorialTwoPage () {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 80,
+                marginTop: 30,
             }}>
-                <PlateSVG />
+                <BusStopSVG />
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.title}>Confira o cardápio do Restaurante Universitário.  </Text>
-                <Text style={styles.subtitle}>Avalie sua refeição diretamente pelo app. Sua opinião ajuda a melhorar o Restaurante Universitário!</Text>
+                <Text style={styles.title}>Não perca seu transporte!   </Text>
+                <Text style={styles.subtitle}>Consulte os horários e itinerários dos ônibus que servem o campus pelo InformaCAA.</Text>
             </View>
             <View style={styles.containerBottonImage}>
-                <BurguerSVG style={styles.bottonImage} />
+                <BusSVG style={styles.bottonImage} />
             </View>
         </View>
     )
