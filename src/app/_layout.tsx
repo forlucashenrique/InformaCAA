@@ -10,17 +10,18 @@ import {
     Montserrat_600SemiBold, 
     Montserrat_300Light, 
     useFonts} from '@expo-google-fonts/montserrat';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomDrawerContent } from '@/componentes/screens/layout/DrawerContent';
 import { SafeAreaView, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import CustomDrawerHeader from '@/componentes/screens/layout/DrawerHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import TutorialScreens from '@/componentes/tutorial';
 
 SplashScreen.preventAutoHideAsync()
 
 const pathPattern = /^\/[0-9]{1,7}$/
-
 
 export default function RootLayout () {
 
@@ -56,6 +57,28 @@ export default function RootLayout () {
         }
 
     }, [fontsLoaded, error])
+
+
+    const [showTutorial, setShowTutorial] = useState(false)
+
+    useEffect(() => {
+        const checkIfTutorialSeen = async () => {
+          const tutorialSeen = Boolean(await AsyncStorage.getItem('@tutorial_seen'));
+          if (!tutorialSeen) {
+            setShowTutorial(true);
+          }
+        };
+        checkIfTutorialSeen();
+    }, []);
+
+    const handleFinishTutorial = async () => {
+        await AsyncStorage.setItem('@tutorial_seen', 'true');
+        setShowTutorial(false);
+    };
+
+    if (showTutorial) {
+        return <TutorialScreens onFinish={handleFinishTutorial} />;
+    }
 
     if (!fontsLoaded && !error) {
         return null
