@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
+import EventsButton from "./EventsButton/Index";
 
 
 type News = {
@@ -56,6 +57,18 @@ export default function Home () {
 
     const handleError = (e: any) => { console.log(e.nativeEvent.error); };
     return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <ScrollView 
+          style={{
+            flex: 1,
+          }}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
         <View
             style={HomeStyles.scrollViewContainer}
         >   
@@ -146,8 +159,13 @@ export default function Home () {
                   </View>
                 </>
               )
-            
+              
             }
-        </View>
+          </View>
+        </ScrollView>
+        <EventsButton />
+      </View>
+
+        
     )
 }

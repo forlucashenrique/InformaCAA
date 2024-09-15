@@ -59,18 +59,17 @@ export default function RootLayout () {
     }, [fontsLoaded, error])
 
 
-    const [showTutorial, setShowTutorial] = useState(true)
+    const [showTutorial, setShowTutorial] = useState(false)
 
     useEffect(() => {
         const checkIfTutorialSeen = async () => {
-          const tutorialSeen = await AsyncStorage.getItem('@tutorial_seen');
+          const tutorialSeen = Boolean(await AsyncStorage.getItem('@tutorial_seen'));
           if (!tutorialSeen) {
             setShowTutorial(true);
           }
         };
         checkIfTutorialSeen();
     }, []);
-
 
     const handleFinishTutorial = async () => {
         await AsyncStorage.setItem('@tutorial_seen', 'true');

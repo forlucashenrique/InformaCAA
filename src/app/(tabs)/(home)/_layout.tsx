@@ -41,9 +41,8 @@ export default function HomeLayout () {
                title: 'Sobre',
             }} />
 
-             
-           
-           
+            <Stack.Screen name='events' options={{}} />
+
         </Stack>
     )
 }

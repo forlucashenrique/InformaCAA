@@ -82,10 +82,6 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
         []
       );
 
-      const onNextPage = () => {
-       
-      } 
-
       const [currentPage, setCurrentPage] = useState<number>(0);
       const pagerRef = useRef<PagerView>(null);
     
