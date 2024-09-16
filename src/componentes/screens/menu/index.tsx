@@ -11,6 +11,7 @@ import { LunchModal } from "./LunchModal";
 import api from "@/service";
 import DinnerModal from "./DinnerModal";
 import RatingModal from "./RatingModal";
+import { Shadow } from "react-native-shadow-2";
 
 
 const daysLabel = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
@@ -116,24 +117,48 @@ export default function Menu () {
                 ) : (
                     <>
                         <View style={MenuStyles.buttonsContainer}>
-                            <MealButton 
-                                mealTitle="Almoço" 
-                                icon={<SunOutline />} 
-                                openHour="11:00" 
-                                closeHour="14:30" 
-                                onPress={openLunchModal}
-                            />
-                            <MealButton 
-                                mealTitle="Jantar" 
-                                icon={<MoonOutline />} 
-                                openHour="17:30" 
-                                closeHour="20:45"
-                                onPress={openDinnerModal}
-                            />
-
-                            <View style={MenuStyles.ratingButtonContainer}>
+                            <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                }}
+                                offset={[0, 4]}
+                                distance={4}
+                                startColor="#00000029"
+                            >
+                                <MealButton 
+                                    mealTitle="Almoço" 
+                                    icon={<SunOutline />} 
+                                    openHour="11:00" 
+                                    closeHour="14:30" 
+                                    onPress={openLunchModal}
+                                />
+                            </Shadow>
+                            <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                    marginBottom: 90
+                                }}
+                                offset={[0, 4]}
+                                distance={4}
+                                startColor="#00000029"
+                            >
+                                <MealButton 
+                                    mealTitle="Jantar" 
+                                    icon={<MoonOutline />} 
+                                    openHour="17:30" 
+                                    closeHour="20:45"
+                                    onPress={openDinnerModal}
+                                />
+                            </Shadow>
+                            <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                }}
+                                distance={5}
+                              
+                            >
                                 <RatingButton  onPress={openRatingModal}/>
-                            </View>
+                            </Shadow>
                         </View>
                 
                         <RatingModal 

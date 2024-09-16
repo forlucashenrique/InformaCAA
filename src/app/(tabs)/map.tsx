@@ -2,7 +2,6 @@ import MarkerPoint from "@/componentes/icons/Filled/MarkerPoint";
 import SearchLocation from "@/componentes/screens/map/search";
 import MapLibreGL, { Callout, CameraBounds } from "@maplibre/maplibre-react-native";
 import { StyleSheet, Text, View} from "react-native";
-import { useWindowDimensions } from "react-native";
 import { View as MotiView } from 'moti';
 import { useEffect, useRef, useState } from "react";
 import ListSearch from "@/componentes/screens/map/ListSearch";
@@ -19,9 +18,7 @@ const bounds: CameraBounds = {
     sw: [-35.98890222889023, -8.224892334544853],
 }
 
-
 export default function SettingsScreen () {
-    const { width, height } = useWindowDimensions();
     const [showLocationsList, setShowLocationsList] = useState<boolean>(false);
     const openListSearch = () => setShowLocationsList(true);
     const closeListSearch = () => setShowLocationsList(false);
@@ -41,6 +38,7 @@ export default function SettingsScreen () {
     return (
         <MotiView style={styles.page}>
             <MapLibreGL.MapView 
+                attributionEnabled={false}
                 style={styles.map} 
                 styleURL={styleUrl}            
                 onRegionDidChange={(event) => {

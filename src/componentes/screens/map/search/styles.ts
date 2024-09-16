@@ -14,7 +14,6 @@ export const SearchLocationStyles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         padding: 20,
-      
     },
 
     topView: {
@@ -34,7 +33,7 @@ export const SearchLocationStyles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 50,
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 25,
         color: '#0B3472',
     }
 })

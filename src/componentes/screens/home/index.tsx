@@ -7,6 +7,7 @@ import moment from "moment";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import EventsButton from "./EventsButton/Index";
+import { Shadow } from "react-native-shadow-2";
 
 
 type News = {
@@ -86,64 +87,79 @@ export default function Home () {
               ) : (
                 <>
                 <Text style={HomeStyles.newsTitles}>Últimas Novidades</Text>
-                <Link 
-                  asChild
-                  href={{
-                    pathname: '/[id]',
-                    params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
-
+                <Shadow
+                  style={{
+                    width: '100%',
+                    borderRadius: 12,
+                    height: 200,
+                    marginBottom: 40,
                   }}
+
+                  offset={[0, 24]}
+                  distance={5}
+                  startColor="#00000029"
+                 
                 >
-                  <Pressable 
-                    style={{
-                      width: '100%',
-                      height: 200,
-                      marginTop: 20,
-                      marginBottom: 30,
-                      borderRadius: 12,
-                      overflow: 'hidden',
-                      backgroundColor: '#f5f5f5',
-                      position: 'relative',
-                    }}> 
-                      <ImageBackground
-                        onError={handleError}
-                        source={{ uri: `http://www.ufpe.br${newsImage}`}}
-                        style={{
-                          flex: 1,
-                          overflow: 'hidden',           
-                        }}
-                        resizeMode="cover"
-                      
-                      >
-                        <LinearGradient
-                          colors={['transparent', '#0B3472', ]}
+                  <Link 
+                    asChild
+                    href={{
+                      pathname: '/[id]',
+                      params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
+                    }}
+                  >
+                  
+                    <Pressable 
+                      style={{
+                        width: '100%',
+                        height: 200,
+                        marginTop: 20,
+                        marginBottom: 30,
+                        borderRadius: 12,
+                        overflow: 'hidden',
+                        backgroundColor: '#f5f5f5',
+                        position: 'relative',
+                      }}> 
+                        <ImageBackground
+                          onError={handleError}
+                          source={{ uri: `http://www.ufpe.br${newsImage}`}}
                           style={{
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            height: 200,
-                          }}                        >
-                          
-                        </LinearGradient>
-                        <View style={{
-                          width: '100%',
-                          height: '100%',
-                          justifyContent: 'flex-end',
-                          padding: 10,
-                        }}>
-                          <Text 
-                              style={{
-                                color: 'white',
-                                fontFamily: 'Montserrat_700Bold',
-                                fontSize: 14,
-                              }}>
-                                {news[0].title}
-                          </Text>
-                        </View>
-                      </ImageBackground>
-                  </Pressable>
-                </Link>
+                            flex: 1,
+                            overflow: 'hidden',           
+                          }}
+                          resizeMode="cover"
+                        
+                        >
+                          <LinearGradient
+                            colors={['transparent', '#0B3472', ]}
+                            style={{
+                              position: 'absolute',
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              height: 200,
+                            }}                        >
+                            
+                          </LinearGradient>
+                          <View style={{
+                            width: '100%',
+                            height: '100%',
+                            justifyContent: 'flex-end',
+                            padding: 10,
+                          }}>
+                            <Text 
+                                style={{
+                                  color: 'white',
+                                  fontFamily: 'Montserrat_700Bold',
+                                  fontSize: 14,
+                                }}>
+                                  {news[0].title}
+                            </Text>
+                          </View>
+                        </ImageBackground>
+                      </Pressable>
+                  
+                    </Link>
+                  </Shadow>
                 
                   <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
 

@@ -13,6 +13,7 @@ import {RouteViewCENTER} from "./RouteViewCENTER";
 import {RouteViewUFPE} from "./RouteViewUFPE";
 
 import { AnimatePresence, View as MotiView } from 'moti';
+import { Shadow } from "react-native-shadow-2";
 
 
 function IconViewAnimated({children, translateX, x, duration}: {children: React.ReactNode, translateX: number, x?: number, duration?: number}) {
@@ -147,12 +148,18 @@ export default function BusHours() {
                         </MotiView>
                     </View>
                 </AnimatePresence>
-
-                <View style={{
-                    width: '100%',
-                    alignItems: 'center',
-                }}>
-                    <Pressable style={BusHoursStyles.changeDirectionButton} onPress={() => {
+                <Shadow
+                    style={{
+                        width: '100%',
+                        borderRadius: 10,
+                    }}
+                    distance={5}
+                    startColor="#00000029"
+                    
+                >
+                    <Pressable 
+                        style={BusHoursStyles.changeDirectionButton} 
+                        onPress={() => {
                         changeDirection();
                         setVisibleFillIcon(!visibileFillIcon);
                         setVisibleOutlineIcon(!visibleOutlineIcon);
@@ -160,34 +167,53 @@ export default function BusHours() {
                     }}>
                         <Text style={BusHoursStyles.changeDirectionButtonText}>Mudar sentido</Text>
                     </Pressable>
-                </View>
+                </Shadow>
 
                 <View style={BusHoursStyles.hourButtonContainer}>
-                    <Pressable 
-                        onPress={() => setIsHourPressed(true)}
-                        style={[BusHoursStyles.hourRouteButton, {
-                            backgroundColor: isHourPressed ? '#0B3472' : '#fff',
-                        }]} 
+                    <Shadow
+                        containerStyle={{
+                            borderRadius: 10,
+                        }}
+                        offset={[0, 4]}
+                        distance={5}
+                        startColor="#00000029"
                     >
-                        <Text style={[BusHoursStyles.hourRouteButtonText, {
-                            color: isHourPressed ? '#fff' : '#0B3472',
-                        }]}>Horários</Text>
-                    </Pressable>
+                        <Pressable 
+                            onPress={() => setIsHourPressed(true)}
+                            style={[BusHoursStyles.hourRouteButton, {
+                                backgroundColor: isHourPressed ? '#0B3472' : '#fff',
+                            }]} 
+                        >
+                            <Text style={[BusHoursStyles.hourRouteButtonText, {
+                                color: isHourPressed ? '#fff' : '#0B3472',
+                            }]}>Horários</Text>
+                        </Pressable>
+                    </Shadow>
 
-                    <Pressable 
-                        onPress={() => setIsHourPressed(false)} 
-                        style={[BusHoursStyles.hourRouteButton, {
-                            backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
-                        }]}
+                    <Shadow
+                        containerStyle={{
+                            borderRadius: 10,
+                        }}
+                        offset={[0, 4]}
+                        distance={5}
+                        startColor="#00000029"
                     >
-                        <Text 
-                            style={[BusHoursStyles.hourRouteButtonText, {
-                                color: !isHourPressed ? '#fff' : '#0B3472',
+                        <Pressable 
+                            onPress={() => setIsHourPressed(false)} 
+                            style={[BusHoursStyles.hourRouteButton, {
+                                backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
                             }]}
                         >
-                            Rota
-                        </Text>
-                    </Pressable>
+                            <Text 
+                                style={[BusHoursStyles.hourRouteButtonText, {
+                                    color: !isHourPressed ? '#fff' : '#0B3472',
+                                }]}
+                            >
+                                Rota
+                            </Text>
+                        </Pressable>
+                    </Shadow>
+                    
                 </View>
             </View>
             <View style={{

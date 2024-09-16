@@ -3,6 +3,7 @@ import { SearchLocationStyles } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from "react";
+import { Shadow } from "react-native-shadow-2";
 
 type SearchLocationProps = {
     handleOpenListSearch: () => void;
@@ -30,9 +31,8 @@ export default function SearchLocation ({handleOpenListSearch}: SearchLocationPr
                     name="search1" 
                     size={20} 
                     color="#0B3472"
-                    style={{position: 'absolute', right: 20, top: 14}}    
+                    style={{position: 'absolute', right: 25, top: 14}}    
                 />
-               
             </View>
         </View>
     )

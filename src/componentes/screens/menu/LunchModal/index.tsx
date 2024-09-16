@@ -1,6 +1,7 @@
 import XOutline from "@/componentes/icons/Outline/XOutline";
 import { Modal, Pressable, Text, View } from "react-native";
 import { LunchModalStyles } from "./styles";
+import { Shadow } from "react-native-shadow-2";
 
 type LunchModalProps = {
     visible: boolean
@@ -25,34 +26,41 @@ export function LunchModal({
                 style={LunchModalStyles.shadowContainer}
                 onPress={close}
             >
-                <View style={LunchModalStyles.modalContainer}>
-                    <View style={LunchModalStyles.headerContainer}>
-                        <Text style={LunchModalStyles.lunchTitle}>Almoço</Text>
-                        <Pressable
-                            style={{
-                                width: 35,
-                                height: 35,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                            onPress={close}
-                        >
-                        <XOutline/>
-                    </Pressable>
-                    </View>          
+                <Shadow 
+                    distance={5}
+                    startColor="#00000029"
+                    offset={[0, 4]}
+                >
+                    <View style={LunchModalStyles.modalContainer}>
+                        <View style={LunchModalStyles.headerContainer}>
+                            <Text style={LunchModalStyles.lunchTitle}>Almoço</Text>
+                            <Pressable
+                                style={{
+                                    width: 35,
+                                    height: 35,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                                onPress={close}
+                            >
+                            <XOutline/>
+                        </Pressable>
+                        </View>          
 
-                    <View style={LunchModalStyles.menuItemContainer}>
-                       {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
-                            <Text key={index} style={[
-                                LunchModalStyles.menuItem, 
-                                {
-                                    //backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
-                                    //color: index % 2 === 0 ? '#fff' : '#0B3472'
-                                }
-                            ]}>{item}</Text>
-                       ) )}
-                    </View>     
-                </View>
+                        <View style={LunchModalStyles.menuItemContainer}>
+                        {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
+                                <Text key={index} style={[
+                                    LunchModalStyles.menuItem, 
+                                    {
+                                        //backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
+                                        //color: index % 2 === 0 ? '#fff' : '#0B3472'
+                                    }
+                                ]}>{item}</Text>
+                        ) )}
+                        </View>     
+                    </View>
+                </Shadow>
+                
             </Pressable>
         </Modal>
     )

@@ -3,11 +3,11 @@ import { CampusListHoursStyles } from "./styles";
 import WheelChair from "@/componentes/icons/Outline/WheelChair";
 import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
 
-import { hours } from "@/data/busHours";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { memo,  useEffect, useRef, useState} from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 dayjs.extend(utc);
@@ -36,18 +36,8 @@ const ItemContainerCurrentTime = {
 }
 
 
-
-
 export const ListHours = memo(function ({hours} : CampusListHoursProps) {
-
-    const ref = useRef<FlatList<string>>(null);
-
-    function compareAfterHours(timeString: string) {
-        const [hour, minute] = timeString.split(':').map(Number)
-        const now = dayjs().utc(true).tz('America/Recife')
-        const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hour).minute(minute)
-        return now.isAfter(formattedItemDate)
-    }
+    const ref = useRef<FlatList<string>>(null)
 
     function getNextBusTime() {
         const now = dayjs().utc(true).tz('America/Recife')
@@ -59,9 +49,20 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
         return nextBus || ''
     }
 
+    const [indexToScroll, setIndexToScroll] = useState(hours.findIndex(hour => hour === getNextBusTime()))    
+
+    function compareAfterHours(timeString: string) {
+        const [hour, minute] = timeString.split(':').map(Number)
+        const now = dayjs().utc(true).tz('America/Recife')
+        const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hour).minute(minute)
+        return now.isAfter(formattedItemDate)
+    }
+
+   
     const ItemView = memo(function ( {hourText, index} : {hourText: string, index: number}) {
         const isAfter = compareAfterHours(hourText)
         const isCurrentTime = getNextBusTime() === hourText
+        
         return (
             <View 
                 key={index} 
@@ -89,7 +90,7 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
      function scrollHandler () {
         if (ref.current) {
             ref.current.scrollToIndex({
-                index: 1,
+                index: indexToScroll,
                 animated: true,
                 viewPosition: 0.5
             })
@@ -123,6 +124,7 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
                 }}
                 initialNumToRender={6}
                 getItemLayout={getItemLayout}   
+                
             >
             </FlatList>
         </View>
