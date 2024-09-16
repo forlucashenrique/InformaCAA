@@ -9,7 +9,10 @@ import {
     Montserrat_500Medium, 
     Montserrat_600SemiBold, 
     Montserrat_300Light, 
+
     useFonts} from '@expo-google-fonts/montserrat';
+import { Roboto_400Regular } from '@expo-google-fonts/roboto';
+
 import { useEffect, useState } from 'react';
 import { CustomDrawerContent } from '@/componentes/screens/layout/DrawerContent';
 import { SafeAreaView, View } from 'react-native';
@@ -32,6 +35,7 @@ export default function RootLayout () {
         Montserrat_600SemiBold,
         Montserrat_700Bold,
         Montserrat_800ExtraBold,
+        Roboto_400Regular   
     })
 
     const pathname = usePathname()
@@ -45,6 +49,8 @@ export default function RootLayout () {
             case '/about': 
                 return false
             case '/contacts':
+                return false
+            case '/events':
                 return false
             case pathPattern.test(path) ? path : '':
                 return false

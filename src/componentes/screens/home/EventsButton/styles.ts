@@ -1,11 +1,4 @@
 import { StyleSheet } from "react-native";
-
-import { Dimensions } from "react-native";
-
-const { width, height } = Dimensions.get('window');
-
-console.log(height, width)
-
 export const EventsButtonStyles = StyleSheet.create({
     shadowContainer: {
         position: 'absolute',

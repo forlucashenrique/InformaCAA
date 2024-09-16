@@ -41,7 +41,9 @@ export default function HomeLayout () {
                title: 'Sobre',
             }} />
 
-            <Stack.Screen name='events' options={{}} />
+            <Stack.Screen name='events' options={{
+                title: 'Calendário'
+            }} />
 
         </Stack>
     )
