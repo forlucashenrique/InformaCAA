@@ -5,6 +5,7 @@ export const LocationDetailsCardStyles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         backgroundColor: '#fff',
+        height: 85,
     },
 
     contentContainer: {

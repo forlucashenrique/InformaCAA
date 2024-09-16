@@ -1,20 +1,22 @@
 import { Image } from 'expo-image';
 import { View as MotiView, Text } from 'moti';
-import { Pressable, View } from 'react-native';
+import { LayoutChangeEvent, Pressable, View, ViewProps } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import { LocationDetailsCardStyles } from './styles';
 import { Key, useState } from 'react';
 import LocationOutline from '@/componentes/icons/Outline/LocationOutline';
 import * as Linking from 'expo-linking';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useMap } from '../provider/MapProvider';
 
 type LocationDetailsCardProps = {
     title: string;
     description: string;
     image: string;
     link: string;
+    coordinates: [number, number];
     handleCenterCoordinates: (latitude: number, longitude: number) => void;
-}
+} & ViewProps;
 
 type MappingImages = {
     [key: string]: any;
@@ -35,10 +37,21 @@ export default function LocationDetailsCard({
     description,
     image,
     link,
-    handleCenterCoordinates,
+    coordinates,
+    handleCenterCoordinates, 
+    ...props
 }: LocationDetailsCardProps) {
 
-    const [isExpanded, setIsExpanded] = useState(false);
+    const {
+        setCenterCoordinate,
+        setZoomValue,
+        closeListSearch,
+        selectedLocation,
+        setSelectedLocation,
+    } = useMap()
+
+
+    const [isExpanded, setIsExpanded] = useState(selectedLocation === title);
 
     return (
         <MotiView 
@@ -55,8 +68,11 @@ export default function LocationDetailsCard({
                 type: 'timing',
                 duration: 300,
             }}
+            {...props}
         >
-            <Pressable style={LocationDetailsCardStyles.contentContainer} onPress={() => setIsExpanded(!isExpanded)}>
+            <Pressable style={LocationDetailsCardStyles.contentContainer} onPress={() => {
+                setIsExpanded(!isExpanded)
+            }}>
                 <View style={{
                     flexDirection: 'row',
                     gap: 8,
@@ -106,9 +122,17 @@ export default function LocationDetailsCard({
 
                             </Pressable>
 
-                            <View style={{
-                                alignItems: 'center',
-                            }}>
+                            <Pressable 
+                                style={{
+                                    alignItems: 'center',
+                                }}
+                                onPress={() => {
+                                    setCenterCoordinate(coordinates)
+                                    setZoomValue(18)
+                                    closeListSearch()
+                                    setSelectedLocation(title)
+                                }}
+                            >
                                 <LocationOutline />
                                 <Text 
                                     style={{
@@ -118,7 +142,7 @@ export default function LocationDetailsCard({
                                     }}>
                                     Localização
                                 </Text>
-                            </View>
+                            </Pressable>
                         </View>
                     </View>
                 )

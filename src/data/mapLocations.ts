@@ -1,13 +1,15 @@
-type Location = {
+export type Location = {
+    id: string;
     title: string;
     description: string;
-    coordinates: number[]; // Longitude e Latitude
+    coordinates: [number, number]; // Longitude e Latitude
     link: string;
     image: string;
 }
 
 export const locations: Location[] = [
     {
+        id: '1',
         title: 'Auditório Mestre Vitalino',
         coordinates: [-35.98184430303580, -8.225231577647060],
         description: 'Local de eventos e palestras da universidade, localizado no Bloco de Comunicação.',
@@ -16,6 +18,7 @@ export const locations: Location[] = [
     },
     
     {
+        id: '2',
         title: 'Auditório Luiz Gonzaga',
         coordinates: [-35.984909310266900, -8.224893807125240],
         description: 'Local de eventos e palestras da universidade, localizado próximo dos Blocos de Física e Economia. ',
@@ -24,6 +27,7 @@ export const locations: Location[] = [
     },
 
     {
+        id: '3',
         title: 'Assistência Estudantil',
         coordinates: [-35.984065136523500, -8.22462830674169],
         description: 'Programas, auxílios e serviços da Assistência Estudantil.',
@@ -32,13 +36,15 @@ export const locations: Location[] = [
     },
 
     {
+        id: '4',
         title: 'Biblioteca do Agreste',
         coordinates: [-35.98351221925370, -8.224738504197040],
         description: 'Horário  de funcionamento: Segunda a sexta-feira, das 7h30 às 21h30, com horário de atendimento no balcão até às 21h15.',
         link: 'https://www.ufpe.br/caa/bibliotecas',
         image: 'biblioteca-do-agreste'
     },
-    {
+    {   
+        id: '5',
         title: 'Restaurante Universitário',
         coordinates: [-35.98390097146980, -8.225041439112980],
         description: 'Inaugurado em março de 2017, possui uma área física de 833,52 m² com capacidade de atendimento de 269 comensais sentados.',
@@ -47,6 +53,7 @@ export const locations: Location[] = [
     },
 
     {
+        id: '6',
         title: 'Quadra Poliesportiva',
         coordinates: [-35.9845253601383, -8.224464897137520],
         description: 'Local para prática de esportes e atividades físicas.',

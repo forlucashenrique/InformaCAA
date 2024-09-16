@@ -4,13 +4,16 @@ import { TextInput } from "react-native-gesture-handler";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from "react";
 import { Shadow } from "react-native-shadow-2";
+import { useMap } from "../provider/MapProvider";
 
-type SearchLocationProps = {
-    handleOpenListSearch: () => void;
-}
 
-export default function SearchLocation ({handleOpenListSearch}: SearchLocationProps) {
+
+export default function SearchLocation () {
     const [search, setSearch] = useState<string>('')
+
+    const {
+        openListSearch
+    } = useMap()
 
     return (
         <View style={SearchLocationStyles.container}>
@@ -25,7 +28,7 @@ export default function SearchLocation ({handleOpenListSearch}: SearchLocationPr
                             fontFamily: search ? 'Montserrat_700Bold' : 'Montserrat_400Regular',
                         }
                     ]}
-                    onFocus={handleOpenListSearch}
+                    onFocus={openListSearch}
                 />
                 <AntDesign 
                     name="search1" 
