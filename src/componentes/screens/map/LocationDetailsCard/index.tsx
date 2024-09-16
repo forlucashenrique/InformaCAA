@@ -57,13 +57,21 @@ export default function LocationDetailsCard({
             }}
         >
             <Pressable style={LocationDetailsCardStyles.contentContainer} onPress={() => setIsExpanded(!isExpanded)}>
-                <Image style={{
-                    width: 65,
-                    height: 65,
-                }}
-                    source={mappingImages[image]}
-                />      
-                <Text style={LocationDetailsCardStyles.titleText}>{title}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                    alignItems: 'center',
+                }}>
+                    <Image style={{
+                        width: 65,
+                        height: 65,
+                    }}
+                        source={mappingImages[image]}
+                    />  
+                    <Text style={LocationDetailsCardStyles.titleText}>{title}</Text>
+                </View>
+                    
+                
                 {
                     isExpanded ? (
                         <Entypo name="chevron-small-up" size={24} color="#0B3472" />

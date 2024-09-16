@@ -113,17 +113,17 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
              style={CampusListHoursStyles.container}
         >
             <FlatList 
-            data={hours}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => <ItemView hourText={item} index={index} />}
-            //initialScrollIndex={1}
-            ref={ref}
-            contentContainerStyle={{
-                gap: 14,
-            }}
-            initialNumToRender={6}
-            getItemLayout={getItemLayout}   
-        >
+                data={hours}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => <ItemView hourText={item} index={index} />}
+                //initialScrollIndex={1}
+                ref={ref}
+                contentContainerStyle={{
+                    gap: 14,
+                }}
+                initialNumToRender={6}
+                getItemLayout={getItemLayout}   
+            >
             </FlatList>
         </View>
         

@@ -1,4 +1,4 @@
-import { Modal, Text, View } from "react-native"
+import { Modal, Pressable, Text, View } from "react-native"
 import { DinnerModalStyles } from "./styles"
 import XOutline from "@/componentes/icons/Outline/XOutline"
 
@@ -17,11 +17,24 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
         transparent={true}
         onRequestClose={close}
     >
-        <View style={DinnerModalStyles.shadowContainer}>
+        <Pressable 
+            style={DinnerModalStyles.shadowContainer}
+            onPress={close}
+        >
             <View style={DinnerModalStyles.modalContainer}>
                 <View style={DinnerModalStyles.headerContainer}>
                     <Text style={DinnerModalStyles.dinnerTitle}>Jantar</Text>
-                    <XOutline onPress={close}/>
+                    <Pressable
+                        style={{
+                            width: 35,
+                            height: 35,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                        onPress={close}
+                    >
+                        <XOutline/>
+                    </Pressable>
                 </View>          
 
                 <View style={DinnerModalStyles.menuItemContainer}>
@@ -41,7 +54,7 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                    ) )}
                 </View>     
             </View>
-        </View>
+        </Pressable>
     </Modal>
     )
 }

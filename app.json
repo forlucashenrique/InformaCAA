@@ -4,11 +4,11 @@
     "slug": "informaCAA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/new-icon-preview.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "scheme": "com.lucashenriqi.informaCAA",
     "splash": {
-      "image": "./assets/splash-v2.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#0A3472"
     },
@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/new-icon-preview.png"
+        "foregroundImage": "./assets/adaptive-icon.png"
       },
       "package": "com.lucashenriqi.informaCAA"
     },

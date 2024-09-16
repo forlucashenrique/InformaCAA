@@ -7,6 +7,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import LocationDetailsCard from "../LocationDetailsCard";
 
 import { locations } from "@/data/mapLocations";
+import { useState } from "react";
 
 type ListSearchProps = {
     visible: boolean;
@@ -14,6 +15,8 @@ type ListSearchProps = {
 }
 
 export default function ListSearch({onClose, visible}: ListSearchProps) {
+    const [search, setSearch] = useState<string>('')
+
     return (
 
         <Modal
@@ -43,7 +46,11 @@ export default function ListSearch({onClose, visible}: ListSearchProps) {
                             <TextInput 
                                 placeholder="Pesquisar Local..."
                                 placeholderTextColor='#0B3472'
-                                style={ListSearchStyles.textInput}
+                                style={[ListSearchStyles.textInput, 
+                                    {
+                                        fontFamily: search ? 'Montserrat_700Bold' : 'Montserrat_400Regular',
+                                    }
+                                ]}
                             // onFocus={handleOpenListSearch}
                             />
                             <AntDesign 

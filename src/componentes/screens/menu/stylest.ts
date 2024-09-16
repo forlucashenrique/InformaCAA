@@ -5,6 +5,7 @@ export const MenuStyles = StyleSheet.create({
         flex: 1,
         padding: 20,
         gap: 174,
+        alignItems: 'center',
     },
 
     daysContainer: {
@@ -14,6 +15,7 @@ export const MenuStyles = StyleSheet.create({
         paddingBottom: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#0B3472',
+        alignSelf: 'stretch',
     },
 
     dayButton: {

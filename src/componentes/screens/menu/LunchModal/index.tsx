@@ -1,5 +1,5 @@
 import XOutline from "@/componentes/icons/Outline/XOutline";
-import { Modal, Text, View } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import { LunchModalStyles } from "./styles";
 
 type LunchModalProps = {
@@ -21,11 +21,24 @@ export function LunchModal({
             transparent={true}
             onRequestClose={close}
         >
-            <View style={LunchModalStyles.shadowContainer}>
+            <Pressable 
+                style={LunchModalStyles.shadowContainer}
+                onPress={close}
+            >
                 <View style={LunchModalStyles.modalContainer}>
                     <View style={LunchModalStyles.headerContainer}>
                         <Text style={LunchModalStyles.lunchTitle}>Almoço</Text>
-                        <XOutline onPress={close}/>
+                        <Pressable
+                            style={{
+                                width: 35,
+                                height: 35,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                            onPress={close}
+                        >
+                        <XOutline/>
+                    </Pressable>
                     </View>          
 
                     <View style={LunchModalStyles.menuItemContainer}>
@@ -40,7 +53,7 @@ export function LunchModal({
                        ) )}
                     </View>     
                 </View>
-            </View>
+            </Pressable>
         </Modal>
     )
 }

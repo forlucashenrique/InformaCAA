@@ -33,6 +33,6 @@ export const CampusListHoursStyles = StyleSheet.create({
     nextBusText: {
         color: '#fff',
         fontSize: 14,
-        //fontFamily: 'Montserrat_600SemiBold',
+        fontFamily: 'Montserrat_600SemiBold',
     }
 })
