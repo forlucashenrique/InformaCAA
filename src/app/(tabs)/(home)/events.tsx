@@ -61,7 +61,6 @@ export default function Events () {
 
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth())
     const [allEvents, setAllEvents] = useState<Event[]>([])
-    const [eventsInMonth, setEventsInMonth] = useState<Event[]>([])
     const [markedDates, setMarkedDates] = useState<MarkedDates>({})
     const [isLoading, setIsLoading] = useState(true)
 
@@ -175,6 +174,7 @@ export default function Events () {
                                     width: 6,
                                     height: 6,
                                     borderRadius: 3,
+                                    backgroundColor: '#0B3472',
                                 },
                                 
                                 textDayHeaderFontFamily: 'Roboto_400Regular',

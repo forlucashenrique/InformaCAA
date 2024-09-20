@@ -16,11 +16,11 @@ export const locations: Location[] = [
         link: 'https://www.ufpe.br/caa/eventoscaa',
         image: 'auditorio-mestre-vitalino'
     },
-    
+
     {
         id: '2',
         title: 'Auditório Luiz Gonzaga',
-        coordinates: [-35.984909310266900, -8.224893807125240],
+        coordinates: [-35.984862488867414, -8.224764234809543],
         description: 'Local de eventos e palestras da universidade, localizado próximo dos Blocos de Física e Economia. ',
         link: 'https://www.ufpe.br/caa/eventoscaa',
         image: 'auditorio-luiz-gonzaga'

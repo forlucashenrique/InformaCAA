@@ -17,12 +17,6 @@ export default function ListSearch() {
     const [search, setSearch] = useState<string>('')
     const [scrollViewRef, setScrollViewRef] = useState<ScrollView | null>(null)
 
-    const dinamicHeight = useRef(new Animated.Value(height * 0.6)).current
-
-    const changeHeight = () => {
-        
-    }
-
     const {
         showLocationsList,
         closeListSearch,
@@ -77,7 +71,6 @@ export default function ListSearch() {
             <GestureHandlerRootView style={{
                 flex: 1,
             }}>
-                <GestureDetector gesture={pan}>
                     <View style={ListSearchStyles.blurContainer} >
                         <Pressable 
                             style={{
@@ -87,12 +80,11 @@ export default function ListSearch() {
                             onPress={closeListSearch}
                         />
                     
-                        <Animated.View
-                            style={[ListSearchStyles.contentContainer, {
-                                height: dinamicHeight,
-                            }]}
+                        <View
+                            style={ListSearchStyles.contentContainer}
                             
                         >
+                        <GestureDetector gesture={pan}>
                             <View style={ListSearchStyles.inputContainer}>
                                 <Pressable style={ListSearchStyles.topView} onPress={closeListSearch}/>
                                 <View style={ListSearchStyles.textInputContainer}>
@@ -113,9 +105,10 @@ export default function ListSearch() {
                                         size={24} 
                                         color="#0B3472"
                                         style={{position: 'absolute', right: 15, top: 12}}    
-                                    />
+                                        />
                                 </View>
                             </View>
+                    </GestureDetector>
 
                             <ScrollView 
                                 style={{
@@ -144,10 +137,9 @@ export default function ListSearch() {
                                 </View>
                             
                             </ScrollView>
-                        </Animated.View>
+                        </View>
             
                     </View>
-                </GestureDetector>
                 
             </GestureHandlerRootView>
            

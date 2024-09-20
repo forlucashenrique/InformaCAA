@@ -30,7 +30,11 @@ export default function MapProvider({children}: MapProviderProps) {
     const [centerCoordinate, setCenterCoordinate] = useState<[number, number]>([-35.98413839613072, -8.22554021909894]);
     const [showLocationsList, setShowLocationsList] = useState<boolean>(false);
     const openListSearch = () => setShowLocationsList(true);
-    const closeListSearch = () => setShowLocationsList(false);
+    const closeListSearch = () => {
+        setShowLocationsList(false);
+        setSelectedLocation(null);
+        setScrollToIndex(0);
+    };
     const [zoomValue, setZoomValue] = useState<number>(15);
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 

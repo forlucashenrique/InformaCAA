@@ -20,8 +20,6 @@ const bounds: CameraBounds = {
     sw: [-35.98890222889023, -8.224892334544853],
 }
 
-
-
 export const MapView = () => {
     
     const {
@@ -34,7 +32,7 @@ export const MapView = () => {
         setSelectedLocation,
         selectedLocation,
     } = useMap()
-    
+
 
     const pan = Gesture.Pan()
         .onStart((event) => {})
@@ -116,12 +114,15 @@ export const MapView = () => {
                                     <>
                                         {
                                             zoomValue > 16 &&  <Text style={{
-                                                color: "#0B3472",
+                                                color: selectedLocation === location.title ? '#D61028' : '#0B3472',
                                                 fontSize: 12,
                                             }} >{location.title}</Text>
                                         }
                                     </>
-                                    <MarkerPoint fillColor="#0B3472" />
+                                    {
+                                        selectedLocation === location.title ? <MarkerPoint fillColor="#D61028" /> : <MarkerPoint fillColor="#0B3472" />
+                                    }
+                                    
                                 </View>
                                 
                             </MapLibreGL.SymbolLayer>
