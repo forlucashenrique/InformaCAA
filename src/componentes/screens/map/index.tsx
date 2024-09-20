@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import ListSearch from "@/componentes/screens/map/ListSearch";
 import { locations } from "@/data/mapLocations";
 import { useMap } from "./provider/MapProvider";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 
 const apiKey = '45213a8e-0145-4f0f-ae46-c6e933501eb1'
@@ -18,6 +19,7 @@ const bounds: CameraBounds = {
     ne: [ -35.97836004818691, -8.226336048879412],
     sw: [-35.98890222889023, -8.224892334544853],
 }
+
 
 
 export const MapView = () => {
@@ -33,6 +35,17 @@ export const MapView = () => {
         selectedLocation,
     } = useMap()
     
+
+    const pan = Gesture.Pan()
+        .onStart((event) => {})
+        .onUpdate((event) => {
+            console.log(event.translationY)
+
+            if (event.translationY < -100) {
+                openListSearch();
+            }
+        })
+        .runOnJS(true)
 
     const markerRef = useRef<MapLibreGL.PointAnnotationRef>(null);
 
@@ -118,12 +131,9 @@ export const MapView = () => {
                 
                 
             </MapLibreGL.MapView>
-
-            {
-                showLocationsList ? <ListSearch /> : <SearchLocation />
-            }
-
-            
+                    {
+                        showLocationsList ? <ListSearch /> : <SearchLocation />
+                    }
         </MotiView>
     )
 }
