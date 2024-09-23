@@ -14,6 +14,7 @@ import {RouteViewUFPE} from "./RouteViewUFPE";
 
 import { AnimatePresence, View as MotiView } from 'moti';
 import { Shadow } from "react-native-shadow-2";
+import { useHourBus } from "@/providers/HourBusProvider";
 
 
 function IconViewAnimated({children, translateX, x, duration}: {children: React.ReactNode, translateX: number, x?: number, duration?: number}) {
@@ -43,6 +44,9 @@ function IconViewAnimated({children, translateX, x, duration}: {children: React.
     )
 }
 
+const campusToCenterText = 'UFPE / CENTRO'
+const centerToCampusText = 'CENTRO / UFPE'
+
 
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
@@ -55,17 +59,23 @@ export default function BusHours() {
     const [widthView, setWidthView] = useState(0);
     const [heightWiew, setHeightWiew] = useState(0);
 
+    const {
+        fromToText,
+        handleFromToText,
+    } = useHourBus()
 
     function changeDirection() {
-        if (leftText === 'UFPE') {
+        if (fromToText === 'campus') {
+            handleFromToText('center');
             setLeftText('CENTRO');
-            setRightText('UFPE');
-            
         } else {
+            handleFromToText('campus');
             setLeftText('UFPE');
-            setRightText('CENTRO');
-            
         }
+        
+        setVisibleFillIcon(!visibileFillIcon);
+        setVisibleOutlineIcon(!visibleOutlineIcon);
+        setVisibleArrow(!visibleArrow);
     }
 
     return (
@@ -76,7 +86,7 @@ export default function BusHours() {
                         Sentido: 
                     </Text>
                     <Text style={[BusHoursStyles.fromToText, { fontFamily: 'Montserrat_400Regular'}]}>
-                        {`${leftText} / ${rightText}`}
+                        {fromToText === 'campus' ? campusToCenterText : centerToCampusText}
                     </Text>
                 </View>
                 <AnimatePresence exitBeforeEnter>
@@ -159,50 +169,40 @@ export default function BusHours() {
                 >
                     <Pressable 
                         style={BusHoursStyles.changeDirectionButton} 
-                        onPress={() => {
-                        changeDirection();
-                        setVisibleFillIcon(!visibileFillIcon);
-                        setVisibleOutlineIcon(!visibleOutlineIcon);
-                        setVisibleArrow(!visibleArrow);
-                    }}>
+                        onPress={changeDirection}>
                         <Text style={BusHoursStyles.changeDirectionButtonText}>Mudar sentido</Text>
                     </Pressable>
                 </Shadow>
-
+                
                 <View style={BusHoursStyles.hourButtonContainer}>
-                    <Shadow
-                        containerStyle={{
-                            borderRadius: 10,
-                        }}
-                        offset={[0, 4]}
-                        distance={5}
-                        startColor="#00000029"
-                    >
-                        <Pressable 
-                            onPress={() => setIsHourPressed(true)}
+                
+                    <Pressable 
+                        onPress={() => setIsHourPressed(true)}
                             style={[BusHoursStyles.hourRouteButton, {
                                 backgroundColor: isHourPressed ? '#0B3472' : '#fff',
                             }]} 
                         >
-                            <Text style={[BusHoursStyles.hourRouteButtonText, {
-                                color: isHourPressed ? '#fff' : '#0B3472',
-                            }]}>Horários</Text>
-                        </Pressable>
-                    </Shadow>
-
-                    <Shadow
+                        <Text style={[BusHoursStyles.hourRouteButtonText, {
+                            color: isHourPressed ? '#fff' : '#0B3472',
+                        }]}>Horários</Text>
+                    </Pressable>
+                    {/* <Shadow
                         containerStyle={{
                             borderRadius: 10,
+                            width: '48%'
                         }}
                         offset={[0, 4]}
                         distance={5}
                         startColor="#00000029"
                     >
-                        <Pressable 
-                            onPress={() => setIsHourPressed(false)} 
-                            style={[BusHoursStyles.hourRouteButton, {
-                                backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
-                            }]}
+                        
+                    </Shadow> */}
+
+                    <Pressable 
+                        onPress={() => setIsHourPressed(false)} 
+                        style={[BusHoursStyles.hourRouteButton, {
+                            backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
+                        }]}
                         >
                             <Text 
                                 style={[BusHoursStyles.hourRouteButtonText, {
@@ -211,8 +211,7 @@ export default function BusHours() {
                             >
                                 Rota
                             </Text>
-                        </Pressable>
-                    </Shadow>
+                    </Pressable>
                     
                 </View>
             </View>
@@ -222,7 +221,7 @@ export default function BusHours() {
             }}>
                 {
                     isHourPressed ?  
-                        <ListHours hours={leftText === 'UFPE' ? hours['campus'] : hours['center']}/>  : (
+                        <ListHours hours={hours[fromToText]}/>  : (
                             <View style={{
                                 borderWidth: 0.5,
                                 flex: 1,
@@ -251,7 +250,6 @@ export default function BusHours() {
                                 }
                             </View>
                         )
-                      
                 }
               
             </View>

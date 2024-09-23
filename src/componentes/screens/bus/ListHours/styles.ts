@@ -8,7 +8,6 @@ export const CampusListHoursStyles = StyleSheet.create({
     hourContainer: {
         width: '100%',
         height: 50,
-      
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

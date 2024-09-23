@@ -21,6 +21,7 @@ import { StatusBar } from 'expo-status-bar';
 import CustomDrawerHeader from '@/componentes/screens/layout/DrawerHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TutorialScreens from '@/componentes/tutorial';
+import HourBusProvider from '@/providers/HourBusProvider';
 
 SplashScreen.preventAutoHideAsync()
 
@@ -96,26 +97,28 @@ export default function RootLayout () {
             flex: 1,
         }}>
             <StatusBar style='light'/>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                <Drawer
-                    screenOptions={{
-                        // headerStyle: {
-                        //     backgroundColor: '#0B3472'
-                        // },
-                        // headerTitle: '',
-                        // headerTintColor: 'white',
-                            header: (props) => <CustomDrawerHeader {...props}/>
-                        }}
-                    
-                    drawerContent={(props) => <CustomDrawerContent {...props} />}
-                >
-                    <Drawer.Screen name='(tabs)' options={({route}) => ({
-                        headerShown: showHeader(pathname)
-                    }) }/>
+            <HourBusProvider>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <Drawer
+                        screenOptions={{
+                            // headerStyle: {
+                            //     backgroundColor: '#0B3472'
+                            // },
+                            // headerTitle: '',
+                            // headerTintColor: 'white',
+                                header: (props) => <CustomDrawerHeader {...props}/>
+                            }}
+                        
+                        drawerContent={(props) => <CustomDrawerContent {...props} />}
+                    >
+                        <Drawer.Screen name='(tabs)' options={({route}) => ({
+                            headerShown: showHeader(pathname)
+                        }) }/>
 
 
-                </Drawer>
-            </GestureHandlerRootView>
+                    </Drawer>
+                </GestureHandlerRootView>
+            </HourBusProvider>
         </SafeAreaView>
     )
 }

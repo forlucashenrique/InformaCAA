@@ -3,11 +3,14 @@ import { CampusListHoursStyles } from "./styles";
 import WheelChair from "@/componentes/icons/Outline/WheelChair";
 import WheelChairFill from "@/componentes/icons/Filled/WheelChairFill";
 
-import { memo,  useEffect, useRef, useState} from "react";
+import { memo,  useCallback,  useEffect, useRef, useState} from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { ScrollView } from "react-native-gesture-handler";
+import { useHourBus } from "@/providers/HourBusProvider";
+import { useFocusEffect } from "expo-router";
 
 
 dayjs.extend(utc);
@@ -39,30 +42,14 @@ const ItemContainerCurrentTime = {
 export const ListHours = memo(function ({hours} : CampusListHoursProps) {
     const ref = useRef<FlatList<string>>(null)
 
-    function getNextBusTime() {
-        const now = dayjs().utc(true).tz('America/Recife')
-        const nextBus = hours.find(hour => {
-            const [hourSplit, minute] = hour.split(':').map(Number)
-            const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hourSplit).minute(minute)
-            return now.isBefore(formattedItemDate)
-        })
-        return nextBus || ''
-    }
-
-    const [indexToScroll, setIndexToScroll] = useState(hours.findIndex(hour => hour === getNextBusTime()))    
-
-    function compareAfterHours(timeString: string) {
-        const [hour, minute] = timeString.split(':').map(Number)
-        const now = dayjs().utc(true).tz('America/Recife')
-        const formattedItemDate = dayjs().utc(true).tz('America/Recife').hour(hour).minute(minute)
-        return now.isAfter(formattedItemDate)
-    }
-
+    const {
+        nextBusTimeIndexOf,
+    } = useHourBus()
    
     const ItemView = memo(function ( {hourText, index} : {hourText: string, index: number}) {
-        const isAfter = compareAfterHours(hourText)
-        const isCurrentTime = getNextBusTime() === hourText
-        
+        const isAfter = nextBusTimeIndexOf > index
+        const isCurrentTime = index === nextBusTimeIndexOf
+
         return (
             <View 
                 key={index} 
@@ -77,7 +64,7 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
                         isCurrentTime && <Text style={CampusListHoursStyles.nextBusText}>Próximo ônibus</Text>
                     }
                     {
-                        isAfter ? <WheelChair /> : <WheelChairFill fill={isCurrentTime ? '#fff': "#0B3472"}/>
+                      isAfter ? <WheelChair /> : <WheelChairFill fill={isCurrentTime ? '#fff': "#0B3472"}/>
                     }
                 </View>
             </View>
@@ -86,11 +73,18 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
             return prevProps.hourText === nextProps.hourText
         });
         
+    const renderItem = useCallback(function ({item, index}: {item: string, index: number}) {
+        return <ItemView hourText={item} index={index} />
+    }, [])
+
+    const keyExtractor = useCallback(function (item: string, index: number) {
+        return index.toString()
+    }, [])
 
      function scrollHandler () {
         if (ref.current) {
             ref.current.scrollToIndex({
-                index: indexToScroll,
+                index: nextBusTimeIndexOf + 6,
                 animated: true,
                 viewPosition: 0.5
             })
@@ -105,9 +99,15 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
         index, // Índice do item
       });
 
-     useEffect(() => {
-        scrollHandler()
-     }, [])
+    //  useEffect(() => {
+    //     scrollHandler()
+    //  }, [])
+
+     useFocusEffect(
+        useCallback(() => {
+            scrollHandler()
+        }, [])
+     )
 
     return (
         <View
@@ -115,18 +115,23 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
         >
             <FlatList 
                 data={hours}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => <ItemView hourText={item} index={index} />}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
                 //initialScrollIndex={1}
                 ref={ref}
                 contentContainerStyle={{
                     gap: 14,
                 }}
                 initialNumToRender={6}
+                // maxToRenderPerBatch={6}
+                // windowSize={6}
+                // removeClippedSubviews={true}
                 getItemLayout={getItemLayout}   
                 
             >
             </FlatList>
+
+           
         </View>
         
     )
