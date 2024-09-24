@@ -2,6 +2,12 @@ import dayjs from "dayjs"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { hours } from "@/data/busHours"
 
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 type HourBusContextType = {
     nextBusTime: string
     fromToText: 'campus' | 'center',

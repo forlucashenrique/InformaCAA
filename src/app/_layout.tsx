@@ -28,6 +28,8 @@ SplashScreen.preventAutoHideAsync()
 const pathPattern = /^\/[0-9]{1,7}$/
 
 export default function RootLayout () {
+    
+    const [showTutorial, setShowTutorial] = useState(false)
 
     const [fontsLoaded, error] = useFonts({
         Montserrat_300Light,
@@ -38,7 +40,7 @@ export default function RootLayout () {
         Montserrat_800ExtraBold,
         Roboto_400Regular   
     })
-
+    
     const pathname = usePathname()
 
     function showHeader(path: string) {
@@ -58,6 +60,11 @@ export default function RootLayout () {
         }
     }
 
+    const handleFinishTutorial = async () => {
+        await AsyncStorage.setItem('@tutorial_seen', 'true');
+        setShowTutorial(false);
+    };
+
     useEffect(() => {
         if (fontsLoaded || error) {
             SplashScreen.hideAsync()
@@ -65,8 +72,6 @@ export default function RootLayout () {
 
     }, [fontsLoaded, error])
 
-
-    const [showTutorial, setShowTutorial] = useState(false)
 
     useEffect(() => {
         const checkIfTutorialSeen = async () => {
@@ -77,11 +82,6 @@ export default function RootLayout () {
         };
         checkIfTutorialSeen();
     }, []);
-
-    const handleFinishTutorial = async () => {
-        await AsyncStorage.setItem('@tutorial_seen', 'true');
-        setShowTutorial(false);
-    };
 
     if (showTutorial) {
         return <TutorialScreens onFinish={handleFinishTutorial} />;
