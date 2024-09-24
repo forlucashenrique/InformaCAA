@@ -43,7 +43,7 @@ export default function HourBusProvider({children}: HourBusProviderProps) {
         setNextBusTime(nextBus)
     }, [fromToText])
 
-    
+
     const contextValue = useMemo(() => ({
         nextBusTime,
         fromToText,
