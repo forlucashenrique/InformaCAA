@@ -186,18 +186,6 @@ export default function BusHours() {
                             color: isHourPressed ? '#fff' : '#0B3472',
                         }]}>Horários</Text>
                     </Pressable>
-                    {/* <Shadow
-                        containerStyle={{
-                            borderRadius: 10,
-                            width: '48%'
-                        }}
-                        offset={[0, 4]}
-                        distance={5}
-                        startColor="#00000029"
-                    >
-                        
-                    </Shadow> */}
-
                     <Pressable 
                         onPress={() => setIsHourPressed(false)} 
                         style={[BusHoursStyles.hourRouteButton, {

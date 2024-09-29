@@ -31,7 +31,9 @@ const ItemTextEnabledStyle = {
 }
 
 const ItemTextCurrentTime = {
-    color: '#fff'
+    color: '#fff',
+    fontFamily: 'Montserrat_700Bold'
+    
 }
 
 const ItemContainerCurrentTime = {

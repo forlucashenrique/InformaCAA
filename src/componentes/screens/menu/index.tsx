@@ -16,7 +16,13 @@ import { Shadow } from "react-native-shadow-2";
 
 const daysLabel = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 
-type Menu = {[key: string]: {lunch: string[], dinner: string[]}}
+
+export type Ingredients = {
+    [key: string]: string,
+}
+
+
+type Menu = {[key: string]: {lunch: Ingredients, dinner: Ingredients}}
 
 export default function Menu () {
     moment.locale('pt-br')  
@@ -57,6 +63,7 @@ export default function Menu () {
         return daysLabel.find(day => day.toLowerCase() === currentDay) || 'Seg'
     })
 
+
     function onSelectedDay(day: string) {
         setSelectedDay(day)
     }
@@ -64,7 +71,7 @@ export default function Menu () {
     async function getMenu() {
         try {
             const res = await api.get('/cardapio');      
-            const data = res.data.result;
+            const data = res.data.meals;
             setMenu(data);
 
         } catch(error) {

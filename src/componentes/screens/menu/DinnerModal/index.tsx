@@ -2,11 +2,12 @@ import { Modal, Pressable, Text, View } from "react-native"
 import { DinnerModalStyles } from "./styles"
 import XOutline from "@/componentes/icons/Outline/XOutline"
 import { Shadow } from "react-native-shadow-2"
+import { Ingredients } from ".."
 
 type DinnerModalProps = {
     visible: boolean
     close: () => void,
-    menuItems?: string[]
+    menuItems?: Ingredients
 }
 
 
@@ -44,7 +45,7 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                     </View>          
 
                     <View style={DinnerModalStyles.menuItemContainer}>
-                    {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
+                    {/* {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
                             <Text 
                                 key={index} 
                                 style={[
@@ -57,7 +58,39 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                                 ]}>
                                     {item}
                             </Text>
-                    ) )}
+                    ) )} */}
+
+                    {menuItems && Object.keys(menuItems).map((key, index) => (
+
+                        <View
+                            style={DinnerModalStyles.containerItem}
+                            key={index}
+                        >
+                            <Text 
+                                key={index} 
+                                style={[
+                                    DinnerModalStyles.menuItem, 
+                                    {
+                                        color: '#0B3472',
+                                        fontFamily: 'Montserrat_700Bold',
+                                    }
+                                ]}>
+
+                                {key}
+                            </Text>
+                            <Text
+                                 style={{
+                                    color: '#0B3472',
+                                    fontFamily: 'Montserrat_400Regular',
+                                    fontSize: 10,
+                                }}
+                            >
+                                {menuItems[key]}
+                            </Text>
+
+                        </View>
+                       
+                    ))}
                     </View>     
                 </View>
             </Shadow>

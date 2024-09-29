@@ -5,6 +5,7 @@ export const BusHoursStyles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
         paddingVertical: 28,
+        backgroundColor: 'white'
     },
 
     fromToContainer: {

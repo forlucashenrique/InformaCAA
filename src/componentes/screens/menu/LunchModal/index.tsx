@@ -2,11 +2,12 @@ import XOutline from "@/componentes/icons/Outline/XOutline";
 import { Modal, Pressable, Text, View } from "react-native";
 import { LunchModalStyles } from "./styles";
 import { Shadow } from "react-native-shadow-2";
+import { Ingredients } from "..";
 
 type LunchModalProps = {
     visible: boolean
     close: () => void,
-    menuItems?: string[]
+    menuItems?: Ingredients
 }
 
 export function LunchModal({
@@ -48,15 +49,37 @@ export function LunchModal({
                         </View>          
 
                         <View style={LunchModalStyles.menuItemContainer}>
-                        {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
-                                <Text key={index} style={[
+                        {menuItems && Object.keys(menuItems).map((key, index) => (
+
+                        <View
+                            style={LunchModalStyles.containerItem}
+                            key={index} 
+                        >
+                            <Text 
+                                
+                                style={[
                                     LunchModalStyles.menuItem, 
                                     {
-                                        //backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
-                                        //color: index % 2 === 0 ? '#fff' : '#0B3472'
+                                        color: '#0B3472',
+                                        fontFamily: 'Montserrat_700Bold',
                                     }
-                                ]}>{item}</Text>
-                        ) )}
+                                ]}>
+
+                                {key}
+                            </Text>
+                            <Text
+                                style={{
+                                    color: '#0B3472',
+                                    fontFamily: 'Montserrat_400Regular',
+                                    fontSize: 10,
+                                }}
+                            >
+                                {menuItems[key]}
+                            </Text>
+
+                        </View>
+                       
+                    ))}
                         </View>     
                     </View>
                 </Shadow>

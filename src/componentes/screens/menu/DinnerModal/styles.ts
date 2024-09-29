@@ -36,12 +36,19 @@ export const DinnerModalStyles = StyleSheet.create({
         gap: 10,
     },
 
+    containerItem: {
+        width: '100%',
+        justifyContent: 'center',
+        gap: 2,
+        marginBottom: 8,
+    },
+
+
     menuItem: {
         color: '#0B3472',
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: 'Montserrat_500Medium',
         borderRadius: 10,
         width: '100%',
-        padding: 4,
     }
 })
