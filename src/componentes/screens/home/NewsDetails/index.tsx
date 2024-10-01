@@ -114,15 +114,29 @@ export default function NewsDetails() {
                                 borderWidth: 0.4
                             }}
                         >   
-                            <Image 
-                                source={`http://www.ufpe.br/${imgPath}`}
-                                style={{
-                                    width: width - 20,
-                                    height: '100%',
-                                    marginBottom: 50,
-                                }}
-                                contentFit="cover"
-                            />
+                            {
+                                imgPath ? (
+                                    <Image 
+                                        source={`http://www.ufpe.br/${imgPath}`}
+                                        style={{
+                                            width: width - 20,
+                                            height: '100%',
+                                            marginBottom: 50,
+                                        }}
+                                        contentFit="cover"
+                                    />
+                                ) : (
+                                    <Image 
+                                        source={require('@/assets/screens/news/placeholder-news.png')}
+                                        style={{
+                                            width: width - 20,
+                                            height: '100%',
+                                            marginBottom: 50,
+                                        }}
+                                        contentFit="cover"
+                                    />
+                                )
+                            }
                         </View>
                         <HTMLView
                             value={newsContent.html}

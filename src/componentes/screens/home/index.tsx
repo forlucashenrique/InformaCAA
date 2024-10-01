@@ -8,6 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import EventsButton from "./EventsButton/Index";
 import { Shadow } from "react-native-shadow-2";
+import NewsImagePlaceholder from "./NewsImagePlaceholder";
 
 
 type News = {
@@ -20,7 +21,6 @@ type News = {
 
 export default function Home () {
 
-    const router = useRouter()
 
     const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -87,19 +87,21 @@ export default function Home () {
               ) : (
                 <>
                 <Text style={HomeStyles.newsTitles}>Últimas Novidades</Text>
-                <Shadow
-                  style={{
-                    width: '100%',
-                    borderRadius: 12,
-                    height: 200,
-                    marginBottom: 40,
-                  }}
+                {
+                  newsImage ? (
+                    <Shadow
+                      style={{
+                        width: '100%',
+                        borderRadius: 12,
+                        height: 200,
+                        marginBottom: 40,
+                      }}
 
-                  offset={[0, 24]}
-                  distance={5}
-                  startColor="#00000029"
-                 
-                >
+                      offset={[0, 24]}
+                      distance={5}
+                      startColor="#00000029"
+                    
+                    >
                   <Link 
                     asChild
                     href={{
@@ -107,7 +109,6 @@ export default function Home () {
                       params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
                     }}
                   >
-                  
                     <Pressable 
                       style={{
                         width: '100%',
@@ -159,7 +160,16 @@ export default function Home () {
                       </Pressable>
                   
                     </Link>
-                  </Shadow>
+                    </Shadow>
+                  ) : (
+                    <NewsImagePlaceholder 
+                      title={news[0].title}
+                      idNews={news[0].idNews}
+                      imgPath={newsImage}
+                    />
+                  )
+                }
+                
                 
                   <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
 
