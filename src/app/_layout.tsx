@@ -29,7 +29,7 @@ const pathPattern = /^\/[0-9]{1,7}$/
 
 export default function RootLayout () {
     
-    const [showTutorial, setShowTutorial] = useState(false)
+    const [showTutorial, setShowTutorial] = useState(true)
 
     const [fontsLoaded, error] = useFonts({
         Montserrat_300Light,

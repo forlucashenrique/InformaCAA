@@ -8,29 +8,33 @@ import BusStopSVG from "./assets/BusStopSVG";
 import BusSVG from "./assets/BusSVG";
 import MapWideSVG from "./assets/MapWideSVG";
 import MapLineSVG from "./assets/MapLineSVG";
+import PhoneTouchSVG from "./assets/PhoneTouchSVG";
+import NetworkingSVG from "./assets/NetworkingSVG";
+import CaledarSVG from "./assets/CalendarSVG";
+import CalendarDotsSVG from "./assets/CalendarDotsSVG";
 
 const {width, height} = Dimensions.get('window');
 
 
-export default function TutorialFourPage () {
+export default function TutorialSixPage () {
 
     return (
         <View style={styles.container}>
             <View style={{
                 width: '100%',
-                height: '70%',
+                height: '60%',
                 alignItems: 'center',
                 justifyContent: 'center',
-            
+                marginTop: 30,
             }}>
-                <MapWideSVG />
+                <CaledarSVG />
             </View>
             <View style={styles.containerText}>
-                <Text style={styles.title}>Precisa encontrar um lugar específico no campus? </Text>
-                <Text style={styles.subtitle}>Use o mapa e navegue com tranquilidade.</Text>
+                <Text style={styles.title}>Fique por dentro dos próximos eventos do campus!</Text>
+                <Text style={styles.subtitle}>Consulte o Calendário de Eventos e acesse a página oficial para mais detalhes.</Text>
             </View>
             <View style={styles.containerBottonImage}>
-                <MapLineSVG style={styles.bottonImage} />
+                <CalendarDotsSVG style={styles.bottonImage} />
             </View>
         </View>
     )
@@ -49,7 +53,9 @@ const styles = StyleSheet.create({
     containerText: {
         width: '100%',
         zIndex: 10,
+        marginTop: 10,
         position: 'absolute',
+    
         top: (height / 2),
     },
 
@@ -72,7 +78,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         marginRight: -40,
-        marginTop: -150,
     },
 
     bottonImage: {}

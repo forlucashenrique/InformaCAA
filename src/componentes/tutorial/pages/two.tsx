@@ -14,6 +14,7 @@ export default function TutorialTwoPage () {
         <View style={styles.container}>
             <View style={{
                 width: '100%',
+                height: '50%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginTop: 80,
@@ -44,10 +45,9 @@ const styles = StyleSheet.create({
     containerText: {
         width: '100%',
         zIndex: 10,
-        marginTop: 10,
         position: 'absolute',
     
-        top: (height / 2) - 80,
+        top: (height / 2),
     },
 
     title: {

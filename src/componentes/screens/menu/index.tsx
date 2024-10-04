@@ -157,15 +157,22 @@ export default function Menu () {
                                     onPress={openDinnerModal}
                                 />
                             </Shadow>
-                            <Shadow
+                            {/* <Shadow
                                 style={{
                                     borderRadius: 10,
                                 }}
                                 distance={5}
                               
                             >
-                                <RatingButton  onPress={openRatingModal}/>
-                            </Shadow>
+                                <RatingButton  
+                                    onPress={console.log}
+                                   // onPress={openRatingModal}
+                                />
+                            </Shadow> */}
+                            <RatingButton  
+                                //onPress={console.log}
+                                // onPress={openRatingModal}
+                            />
                         </View>
                 
                         <RatingModal 

@@ -22,7 +22,11 @@ type CampusListHoursProps = {
 }
 
 const ItemTextDisabledStyle = {
-    color: '#0b3472a0'
+    color: '#0b3472a0',
+}
+
+const ItemContainerDisabledStyle = {
+    backgroundColor: '#d9d9d97d'
 }
 
 
@@ -55,7 +59,7 @@ export const ListHours = memo(function ({hours} : CampusListHoursProps) {
         return (
             <View 
                 key={index} 
-                style={[CampusListHoursStyles.hourContainer, isCurrentTime ? ItemContainerCurrentTime : {}]}
+                style={[CampusListHoursStyles.hourContainer, isCurrentTime ? ItemContainerCurrentTime : {}, isAfter ? ItemContainerDisabledStyle : {}]}
             >
                 <Text style={[CampusListHoursStyles.hourText, isCurrentTime ? ItemTextCurrentTime : {}, isAfter ? ItemTextDisabledStyle :  {} ]}>
                     {hourText}
