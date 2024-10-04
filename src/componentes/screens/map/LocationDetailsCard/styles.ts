@@ -24,7 +24,8 @@ export const LocationDetailsCardStyles = StyleSheet.create({
     
     titleText: {
         color: '#0B3472',
-        fontSize: 14,
+        fontSize: 14,   
+        width: '70%',
         fontFamily: 'Montserrat_600SemiBold', 
     },
 

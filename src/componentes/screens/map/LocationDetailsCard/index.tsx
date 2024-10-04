@@ -27,9 +27,10 @@ const mappingImages: MappingImages = {
     'auditorio-mestre-vitalino': require('@/assets/maps/images/auditorio-mestre-vitalino.png'),
     'auditorio-luiz-gonzaga': require('@/assets/maps/images/auditorio-luiz-gonzaga.png'),
     'assistencia-estudantil': require('@/assets/maps/images/assistencia-estudantil.png'),
-    'biblioteca-do-agreste': require('@/assets/maps/images/biblioteca-do-agreste.png'),
+    'biblioteca-do-agreste': require('@/assets/maps/images/biblioteca-agreste.png'),
     'restaurante-universitario': require('@/assets/maps/images/restaurante-universitario.png'),
-    // 'quadra-poliesportiva': require('@/assets/maps/images/quadra-poliesportiva.png'),
+    'quadra-poliesportiva': require('@/assets/maps/images/quadra-poliesportiva.png'),
+    'lemape': require('@/assets/maps/images/lemape.png'),
 }
 
 export default function LocationDetailsCard({
@@ -76,6 +77,7 @@ export default function LocationDetailsCard({
                 <View style={{
                     flexDirection: 'row',
                     gap: 8,
+                    flex: 1,
                     alignItems: 'center',
                 }}>
                     <Image style={{
@@ -84,7 +86,11 @@ export default function LocationDetailsCard({
                     }}
                         source={mappingImages[image]}
                     />  
-                    <Text style={LocationDetailsCardStyles.titleText}>{title}</Text>
+                    <Text 
+                        style={LocationDetailsCardStyles.titleText}
+                    >
+                        {title}
+                    </Text>
                 </View>
                     
                 

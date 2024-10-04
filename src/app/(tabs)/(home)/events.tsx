@@ -1,13 +1,12 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { Calendar, DateData, LocaleConfig} from "react-native-calendars";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { Dimensions } from "react-native";
 import { useEffect, useState } from "react";
-import { DayState, MarkedDates } from "react-native-calendars/src/types";
+import {  MarkedDates } from "react-native-calendars/src/types";
 import api from "@/service";
-import { ScrollView } from "react-native-gesture-handler";
+import { Pressable, ScrollView } from "react-native-gesture-handler";
+import * as Linking from 'expo-linking';
 
-const { width, height } = Dimensions.get('window')
 
 const monthNames = [
     'JANEIRO', 
@@ -53,6 +52,7 @@ type Event = {
     title: string;
     idEvent: string;
     locale: string;
+    link: string;
     createdAt: string;
 }
 
@@ -70,7 +70,14 @@ export default function Events () {
         const day = event.createdAt.split(' ')[0].split('-')[2]
 
         return (
-            <View style={{
+            <Pressable
+                key={event.id}
+                style={{
+                    flex: 1,
+                }}
+                onPress={() => Linking.openURL(event.link)}
+            >
+                <View style={{
                 width: '100%',
                 borderRadius: 10,
                 marginVertical: 10,
@@ -79,9 +86,8 @@ export default function Events () {
                 borderBottomWidth: 1,
                 borderColor: '#D9D9D9',
             }}
-                key={event.id}
+                
             >   
-
                 <Text style={{
                     fontFamily: 'Montserrat_600SemiBold',
                     fontSize: 14,
@@ -99,7 +105,9 @@ export default function Events () {
                     fontSize: 14,
                     color: 'black',
                 }}>Saiba mais.</Text>
-            </View>
+                </View>
+            </Pressable>
+            
         )
     }
 
@@ -149,8 +157,6 @@ export default function Events () {
                             }}
                             onMonthChange={(date: DateData) => {
                                 const month = date.month - 1
-
-                                console.log(date)
                                 setCurrentMonth(month)
                             }}
                             customHeaderTitle={
@@ -190,11 +196,6 @@ export default function Events () {
                                 
                             }}
 
-                            // dayComponent={({date, state}) => {
-                            //     console.log(date)
-                            //    return renderDay(date, state)
-                            // }}
-
                             markedDates={markedDates}
                         />
 
@@ -230,8 +231,6 @@ export default function Events () {
                     
                 )
             }
-            
-            
        </View>
     )
 }

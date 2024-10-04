@@ -12,13 +12,15 @@ export default function CustomDrawerHeader (props: DrawerHeaderProps) {
         <View style={DrawerHeaderStyles.container}>
             <Pressable
                 style={{
-                    marginTop: 20,
                     width: 80,
-                    alignItems: 'center',
+                    height: 40,
+                    justifyContent: 'center',
+                    paddingLeft: 20,
+                    marginTop: 18,
                 }}
                 onPress={() => props.navigation.openDrawer()}
             >
-                <DrawerOutline />
+                    <DrawerOutline />
             </Pressable>
             
             <Logo style={{

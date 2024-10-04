@@ -68,9 +68,11 @@ export default function BusHours() {
         if (fromToText === 'campus') {
             handleFromToText('center');
             setLeftText('CENTRO');
+            setRightText('UFPE');
         } else {
             handleFromToText('campus');
             setLeftText('UFPE');
+            setRightText('CENTRO');
         }
         
         setVisibleFillIcon(!visibileFillIcon);
@@ -163,8 +165,9 @@ export default function BusHours() {
                         width: '100%',
                         borderRadius: 10,
                     }}
-                    distance={5}
-                    startColor="#00000029"
+                    distance={3}
+                    //offset={[0, 10]}
+                    //startColor="#00000029"
                     
                 >
                     <Pressable 

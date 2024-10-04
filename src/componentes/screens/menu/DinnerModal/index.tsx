@@ -45,25 +45,13 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                     </View>          
 
                     <View style={DinnerModalStyles.menuItemContainer}>
-                    {/* {menuItems && menuItems.length > 0 &&  menuItems.map((item, index) => (
-                            <Text 
-                                key={index} 
-                                style={[
-                                    DinnerModalStyles.menuItem, 
-                                    {
-                                    // backgroundColor: index % 2 === 0 ? '#002153c1' : '#DFEFFF',
-                                        // color: index % 2 === 0 ? '#fff' : '#0B3472'
-                                    
-                                    }
-                                ]}>
-                                    {item}
-                            </Text>
-                    ) )} */}
 
-                    {menuItems && Object.keys(menuItems).map((key, index) => (
+                    {menuItems && Object.keys(menuItems).filter((key, index) => {
+                        return Object.keys(menuItems).length - 1 !== index 
+                    }).map((key, index) => (
 
                         <View
-                            style={DinnerModalStyles.containerItem}
+                            style={[DinnerModalStyles.containerItem, ]}
                             key={index}
                         >
                             <Text 
@@ -82,15 +70,27 @@ export default function DinnerModal ({visible, close, menuItems}: DinnerModalPro
                                  style={{
                                     color: '#0B3472',
                                     fontFamily: 'Montserrat_400Regular',
-                                    fontSize: 10,
+                                    fontSize: 12,
                                 }}
                             >
-                                {menuItems[key]}
+                                {
+                                    menuItems[key] ? 
+                                        menuItems[key] : '-'
+                                }
                             </Text>
 
                         </View>
                        
                     ))}
+                        <Text 
+                             style={[
+                                DinnerModalStyles.menuItem, 
+                                {
+                                    color: '#0B3472',
+                                    fontFamily: 'Montserrat_700Bold',
+                                }
+                            ]}>*Cardápio sujeito a alterações
+                        </Text>
                     </View>     
                 </View>
             </Shadow>

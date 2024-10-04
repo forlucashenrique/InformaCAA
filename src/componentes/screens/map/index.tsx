@@ -1,13 +1,14 @@
 import MarkerPoint from "@/componentes/icons/Filled/MarkerPoint";
 import SearchLocation from "@/componentes/screens/map/search";
-import MapLibreGL, { Callout, CameraBounds } from "@maplibre/maplibre-react-native";
+import MapLibreGL, { CameraBounds } from "@maplibre/maplibre-react-native";
 import { StyleSheet, Text, View} from "react-native";
 import { View as MotiView } from 'moti';
 import { useEffect, useRef, useState } from "react";
 import ListSearch from "@/componentes/screens/map/ListSearch";
 import { locations } from "@/data/mapLocations";
 import { useMap } from "./provider/MapProvider";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { useNetInfo } from "@react-native-community/netinfo";
+import NetworkError from "@/componentes/errors/NetworkError";
 
 
 const apiKey = '45213a8e-0145-4f0f-ae46-c6e933501eb1'
@@ -33,17 +34,8 @@ export const MapView = () => {
         selectedLocation,
     } = useMap()
 
-
-    const pan = Gesture.Pan()
-        .onStart((event) => {})
-        .onUpdate((event) => {
-            console.log(event.translationY)
-
-            if (event.translationY < -100) {
-                openListSearch();
-            }
-        })
-        .runOnJS(true)
+    const netInfo = useNetInfo()
+    const [appConnected, setAppConnected] = useState(true)
 
     const markerRef = useRef<MapLibreGL.PointAnnotationRef>(null);
 
@@ -52,90 +44,107 @@ export const MapView = () => {
           markerRef.current.refresh();
         }
       }, [markerRef.current]);
-      
 
+    
+    useEffect(() => {
+        if (netInfo.isConnected) {
+            setAppConnected(true)
+        } else {
+            setAppConnected(false)
+        }
+    }, [netInfo])
+  
     return (
-        <MotiView style={styles.page}>
-            <MapLibreGL.MapView 
-                attributionEnabled={false}
-                style={styles.map} 
-                styleURL={styleUrl}            
-                onRegionDidChange={(event) => {
-                    const { zoomLevel } = event.properties;
 
-                    setZoomValue(zoomLevel);
-                }}
-            >
-              <MapLibreGL.Camera 
-                zoomLevel={zoomValue} 
-                centerCoordinate={centerCoordinate} 
-                maxZoomLevel={18} 
-                minZoomLevel={15} 
-                followZoomLevel={15} 
-                maxBounds={bounds}
+        <>
+            {
+                appConnected ? (
+                    <MotiView style={styles.page}>
+                        <MapLibreGL.MapView 
+                            attributionEnabled={false}
+                            style={styles.map} 
+                            styleURL={styleUrl}            
+                            onRegionDidChange={(event) => {
+                                const { zoomLevel } = event.properties;
 
-              />
-            
-                {
-                    locations.map((location, index) => (
-                        <MapLibreGL.PointAnnotation
-                            key={index}
-                            id={`pointAnnotation-${index}`}
-                            coordinate={location.coordinates}
-                            title={location.title}
-                            selected={selectedLocation === location.title}
-                            
-                            onSelected={() => {
-                                setSelectedLocation(location.title);
-                                openListSearch();
-                                setZoomValue(15);
-                                setScrollToIndex(index);
+                                setZoomValue(zoomLevel);
                             }}
-                            ref={markerRef}
                         >
-                            <MapLibreGL.SymbolLayer
-                                id={`marker-${index}`}
-                                style={{
-                                    iconImage: 'marker-15',
-                                    textSize: 12,
-                                    iconSize: 1.5,
-                                    textAllowOverlap: true,
-                                    iconKeepUpright: true,
-                                    textIgnorePlacement: true,
-                                    textAnchor: 'top',
-                                }}
-                                
-                            >
-                                <View style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: 8,
-                                }}>
-                                    <>
-                                        {
-                                            zoomValue > 16 &&  <Text style={{
-                                                color: selectedLocation === location.title ? '#D61028' : '#0B3472',
-                                                fontSize: 12,
-                                            }} >{location.title}</Text>
-                                        }
-                                    </>
-                                    {
-                                        selectedLocation === location.title ? <MarkerPoint fillColor="#D61028" /> : <MarkerPoint fillColor="#0B3472" />
-                                    }
-                                    
-                                </View>
-                                
-                            </MapLibreGL.SymbolLayer>
-                        </MapLibreGL.PointAnnotation>
-                    ))
-                }
-                
-                
-            </MapLibreGL.MapView>
-                    {
-                        showLocationsList ? <ListSearch /> : <SearchLocation />
-                    }
-        </MotiView>
+                        <MapLibreGL.Camera 
+                            zoomLevel={zoomValue} 
+                            centerCoordinate={centerCoordinate} 
+                            maxZoomLevel={18} 
+                            minZoomLevel={15} 
+                            followZoomLevel={15} 
+                            maxBounds={bounds}
+
+                        />
+                        
+                            {
+                                locations.map((location, index) => (
+                                    <MapLibreGL.PointAnnotation
+                                        key={index}
+                                        id={`pointAnnotation-${index}`}
+                                        coordinate={location.coordinates}
+                                        title={location.title}
+                                        selected={selectedLocation === location.title}
+                                        
+                                        onSelected={() => {
+                                            setSelectedLocation(location.title);
+                                            openListSearch();
+                                            setZoomValue(15);
+                                            setScrollToIndex(index);
+                                        }}
+                                        ref={markerRef}
+                                    >
+                                        <MapLibreGL.SymbolLayer
+                                            id={`marker-${index}`}
+                                            style={{
+                                                iconImage: 'marker-15',
+                                                textSize: 12,
+                                                iconSize: 1.5,
+                                                textAllowOverlap: true,
+                                                iconKeepUpright: true,
+                                                textIgnorePlacement: true,
+                                                textAnchor: 'top',
+                                            }}
+                                            
+                                        >
+                                            <View style={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                gap: 8,
+                                            }}>
+                                                <>
+                                                    {
+                                                        zoomValue > 16 &&  <Text style={{
+                                                            color: selectedLocation === location.title ? '#D61028' : '#0B3472',
+                                                            fontSize: 12,
+                                                        }} >{location.title}</Text>
+                                                    }
+                                                </>
+                                                {
+                                                    selectedLocation === location.title ? <MarkerPoint fillColor="#D61028" /> : <MarkerPoint fillColor="#0B3472" />
+                                                }
+                                                
+                                            </View>
+                                            
+                                        </MapLibreGL.SymbolLayer>
+                                    </MapLibreGL.PointAnnotation>
+                                ))
+                            }
+                            
+                            
+                        </MapLibreGL.MapView>
+                                {
+                                    showLocationsList ? <ListSearch /> : <SearchLocation />
+                                }
+                    </MotiView>
+                ) : (
+                    <NetworkError />
+                )
+            }
+        </>
     )
 }
 

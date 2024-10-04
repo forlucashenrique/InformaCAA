@@ -1,17 +1,14 @@
-import { Animated, Dimensions, Modal, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import {View as MotiView} from 'moti';
+import { Modal, Pressable, ScrollView, TextInput, View } from "react-native";
 import { ListSearchStyles } from "./styles";
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import LocationDetailsCard from "../LocationDetailsCard";
 
 import { Location, locations } from "@/data/mapLocations";
-import {  useRef, useState } from "react";
+import { useState } from "react";
 import { useMap } from "../provider/MapProvider";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 
-
-const { height }  = Dimensions.get('window')
 
 export default function ListSearch() {
     const [search, setSearch] = useState<string>('')

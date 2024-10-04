@@ -49,37 +49,50 @@ export function LunchModal({
                         </View>          
 
                         <View style={LunchModalStyles.menuItemContainer}>
-                        {menuItems && Object.keys(menuItems).map((key, index) => (
+                            {menuItems && Object.keys(menuItems).filter((key, index) => {
+                                return Object.keys(menuItems).length - 1 !== index 
+                            }).map((key, index) => (
 
-                        <View
-                            style={LunchModalStyles.containerItem}
-                            key={index} 
-                        >
-                            <Text 
-                                
-                                style={[
-                                    LunchModalStyles.menuItem, 
-                                    {
-                                        color: '#0B3472',
-                                        fontFamily: 'Montserrat_700Bold',
-                                    }
-                                ]}>
-
-                                {key}
-                            </Text>
-                            <Text
-                                style={{
-                                    color: '#0B3472',
-                                    fontFamily: 'Montserrat_400Regular',
-                                    fontSize: 10,
-                                }}
+                            <View
+                                style={LunchModalStyles.containerItem}
+                                key={index} 
                             >
-                                {menuItems[key]}
-                            </Text>
+                                <Text 
+                                    
+                                    style={[
+                                        LunchModalStyles.menuItem, 
+                                        {
+                                            color: '#0B3472',
+                                            fontFamily: 'Montserrat_700Bold',
+                                        }
+                                    ]}>
 
-                        </View>
-                       
-                    ))}
+                                    {key}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: '#0B3472',
+                                        fontFamily: 'Montserrat_400Regular',
+                                        fontSize: 12,
+                                    }}
+                                >
+                                    {
+                                        menuItems[key] ? 
+                                            menuItems[key] : '-'
+                                    }
+                                </Text>
+                            </View>
+                        
+                        ))}
+                       <Text 
+                             style={[
+                                LunchModalStyles.menuItem, 
+                                {
+                                    color: '#0B3472',
+                                    fontFamily: 'Montserrat_700Bold',
+                                }
+                            ]}>*Cardápio sujeito a alterações
+                        </Text>
                         </View>     
                     </View>
                 </Shadow>

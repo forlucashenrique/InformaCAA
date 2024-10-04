@@ -10,6 +10,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 //import * as WebBrowser from 'expo-web-browser';
 
 import * as Linking from 'expo-linking';
+import NetworkError from "@/componentes/errors/NetworkError";
 
 
 
@@ -59,14 +60,7 @@ function OpenUrlError({url}: {url: string | undefined}) {
 export default function CustomWebView({ url, ...props}: CustomWebViewProps) {
 
     const netInfo = useNetInfo()
-    //const [resultBrowser, setResultBrowser] = useState<WebBrowser.WebBrowserResult | null>(null)
     const [appConnected, setAppConnected] = useState(true)
-
-    // const _handleOpenWithWebBrowser = async () => {
-    //     let result = await WebBrowser.openBrowserAsync('https://www.google.com');
-    //     setResultBrowser(result)
-    // }
-
 
     useEffect(() => {
         if (netInfo.isConnected) {
@@ -88,15 +82,7 @@ export default function CustomWebView({ url, ...props}: CustomWebViewProps) {
                         renderError={() => <OpenUrlError url={url}/>}
                     />
                 ) : (
-                    <View style={CustomWebViewStyles.netWorkErrorContainer}>
-                        <View style={CustomWebViewStyles.networkMessageContainer}>
-                            <Feather name="wifi-off" size={32} color="#0A3472" />
-                            <Text style={CustomWebViewStyles.netWorkErrorText}>
-                                Sem conexão com a internet
-                            </Text>
-                            
-                        </View>
-                    </View>
+                    <NetworkError />
                 )
             }
         </>

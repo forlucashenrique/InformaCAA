@@ -53,12 +53,24 @@ export const locations: Location[] = [
     },
 
     {
+        id: '7',
+        title: 'LEMAPE - Laboratório de Ensino de Matemática do Agreste Pernambucano.',
+        coordinates: [-35.982089236344855, -8.225806926665907],
+        description: 'Local de ensino e pesquisa em Matemática.',
+        link: 'https://www.instagram.com/lemapeufpe/',
+        image: 'lemape'
+
+    },
+
+    {
         id: '6',
         title: 'Quadra Poliesportiva',
         coordinates: [-35.9845253601383, -8.224464897137520],
         description: 'Local para prática de esportes e atividades físicas.',
         link: 'https://www.ufpe.br/esportes',
-        image: '@/assets/maps/images/auditorio-mestre-vitalino.png'
+        image: 'quadra-poliesportiva'
     },
+
+    
     
 ]

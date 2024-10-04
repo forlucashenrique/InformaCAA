@@ -35,11 +35,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   ];
 
   const secondNavigationOptions = [
-    {
-        title: 'Configurações',
-        icon: <ConfigOutline />,
-        router: "/settings",
-    },
+    // {
+    //     title: 'Configurações',
+    //     icon: <ConfigOutline />,
+    //     router: "/settings",
+    // },
     {
         title: 'Sobre',
         icon: <InfoOutline />,

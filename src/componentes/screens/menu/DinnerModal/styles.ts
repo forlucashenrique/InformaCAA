@@ -30,10 +30,11 @@ export const DinnerModalStyles = StyleSheet.create({
 
     menuItemContainer: {
         width: '100%',
-        marginTop: 20,
-        justifyContent: 'center',
+        marginTop: 15,
+        justifyContent: 'space-between',
         alignItems: 'center',
         gap: 10,
+  
     },
 
     containerItem: {

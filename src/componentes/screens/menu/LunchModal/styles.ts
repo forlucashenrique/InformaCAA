@@ -30,9 +30,9 @@ export const LunchModalStyles = StyleSheet.create({
 
     menuItemContainer: {
         width: '100%',
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginTop: 15,
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         gap: 10,
     },
 

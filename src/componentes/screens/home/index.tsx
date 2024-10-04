@@ -2,13 +2,15 @@ import { Text, ScrollView, View, ActivityIndicator, ImageBackground, Pressable }
 import { HomeStyles } from "./styles";
 import NewsCard from "./NewsCard";
 import api from "@/service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import EventsButton from "./EventsButton/Index";
 import { Shadow } from "react-native-shadow-2";
 import NewsImagePlaceholder from "./NewsImagePlaceholder";
+import { useNetInfo } from "@react-native-community/netinfo";
+import NetworkError from "@/componentes/errors/NetworkError";
 
 
 type News = {
@@ -19,26 +21,83 @@ type News = {
   imgPath?: string;
 }
 
+
+
+
+
 export default function Home () {
-
-
     const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [textError, setTextError] = useState<string>('');
     const [isError, setIsError] = useState(false);
-    const [reload, setReload] = useState(false);
-
     const [newsImage, setNewsImage] = useState<string>('');
+
+    const netInfo = useNetInfo()
+    const [appConnected, setAppConnected] = useState(true)
+
+
+    function reloadNews() {
+      //setReload(!reload);
+      setIsError(false);
+      setIsLoading(true);
+      console.log('clicou')
+
+      getNews();
+    }
+
+    const ErrorMessage = useCallback(function() {
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 12,
+        }}>
+          <Text
+            style={{
+              fontFamily: 'Montserrat_500Medium',
+              fontSize: 16,
+              textAlign: 'center',
+              marginTop: 20,
+              color: '#0B3472',
+            }}
+          >
+            Não foi possível carregar as notícias.
+          </Text>
+          <Pressable 
+            style={{
+              backgroundColor: '#0B3472',
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              reloadNews();
+              console.log('pressed')
+            }}
+          >
+            <Text
+              style={{
+                color: 'white',
+                fontFamily: 'Montserrat_500Medium',
+              }}
+            >
+              Recarregar
+            </Text>
+          </Pressable>
+
+        
+        </View>
+      )
+    }, [])
 
     const getNews = async () => {
       try {
         const response = await api.get('/noticias');
         const data = response.data.result;
-      
         setNews(data);
         setNewsImage(data[0].imgPath);
       } catch (err) {
-        setTextError(`Não foi possível carregar`);
+        console.log('getNews', err)
         setIsError(true);
       } finally {
         setIsLoading(false);
@@ -53,148 +112,158 @@ export default function Home () {
 
     useEffect(() => {
       getNews();
-    }, [reload])
-    
+    }, [])
 
+    useEffect(() => {
+      if (netInfo.isConnected) {
+          setAppConnected(true)
+      } else {
+          setAppConnected(false)
+      }
+  }, [netInfo])
+  
     const handleError = (e: any) => { console.log(e.nativeEvent.error); };
 
-    const image =  require('@/assets/screens/news/blue-placeholder-image.png')
+    if (isLoading) {
+      return (
+        <View style={{
+          width: '100%',
+          marginTop: 20,
+        }}>
+          <ActivityIndicator size="large" color="#0B3472" />
+        </View>
+      )
+    }
+  
+    if (isError) {
+      return <ErrorMessage />
+    }
+    
+    if (!appConnected) {
+      return (
+        <NetworkError />
+      )
+    }
 
-    return (
+  return (
       <View
         style={{
           flex: 1,
         }}
       >
-        <ScrollView 
-          style={{
-            flex: 1,
-          }}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        >
-        <View
-            style={HomeStyles.scrollViewContainer}
-        >   
+      <ScrollView 
+        style={{
+          flex: 1,
+        }}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+      <View
+          style={HomeStyles.scrollViewContainer}
+      >   
+        <Text style={HomeStyles.newsTitles}>Última Novidade</Text>
             {
-              isLoading ? (
-                <View style={{
-                  width: '100%',
-                  marginTop: 20,
-                }}>
-                  <ActivityIndicator size="large" color="#0B3472" />
-                </View>
-              ) : (
-                <>
-                <Text style={HomeStyles.newsTitles}>Últimas Novidades</Text>
-                {
-                  newsImage ? (
-                    <Shadow
-                      style={{
-                        width: '100%',
-                        borderRadius: 12,
-                        height: 200,
-                        marginBottom: 40,
-                      }}
+              newsImage ? (
+                <Shadow
+                  style={{
+                    width: '100%',
+                    borderRadius: 12,
+                    height: 200,
+                    marginBottom: 40,
+                  }}
 
-                      offset={[0, 24]}
-                      distance={5}
-                      startColor="#00000029"
+                  offset={[0, 24]}
+                  distance={5}
+                  startColor="#00000029"
+                
+                >
+              <Link 
+                asChild
+                href={{
+                  pathname: '/[id]',
+                  params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
+                }}
+              >
+                <Pressable 
+                  style={{
+                    width: '100%',
+                    height: 200,
+                    marginTop: 20,
+                    marginBottom: 30,
+                    borderRadius: 12,
+                    overflow: 'hidden',
+                    backgroundColor: '#f5f5f5',
+                    position: 'relative',
+                  }}> 
+                    <ImageBackground
+                      onError={handleError}
+                      source={{ uri: `http://www.ufpe.br${newsImage}`}}
+                      style={{
+                        flex: 1,
+                        overflow: 'hidden',           
+                      }}
+                      resizeMode="cover"
                     
                     >
-                  <Link 
-                    asChild
-                    href={{
-                      pathname: '/[id]',
-                      params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
-                    }}
-                  >
-                    <Pressable 
-                      style={{
-                        width: '100%',
-                        height: 200,
-                        marginTop: 20,
-                        marginBottom: 30,
-                        borderRadius: 12,
-                        overflow: 'hidden',
-                        backgroundColor: '#f5f5f5',
-                        position: 'relative',
-                      }}> 
-                        <ImageBackground
-                          onError={handleError}
-                          source={{ uri: `http://www.ufpe.br${newsImage}`}}
-                          style={{
-                            flex: 1,
-                            overflow: 'hidden',           
-                          }}
-                          resizeMode="cover"
+                      <LinearGradient
+                        colors={['transparent', '#0B3472', ]}
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          height: 200,
+                        }}                        >
                         
-                        >
-                          <LinearGradient
-                            colors={['transparent', '#0B3472', ]}
+                      </LinearGradient>
+                      <View style={{
+                        width: '100%',
+                        height: '100%',
+                        justifyContent: 'flex-end',
+                        padding: 10,
+                      }}>
+                        <Text 
                             style={{
-                              position: 'absolute',
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              height: 200,
-                            }}                        >
-                            
-                          </LinearGradient>
-                          <View style={{
-                            width: '100%',
-                            height: '100%',
-                            justifyContent: 'flex-end',
-                            padding: 10,
-                          }}>
-                            <Text 
-                                style={{
-                                  color: 'white',
-                                  fontFamily: 'Montserrat_700Bold',
-                                  fontSize: 14,
-                                }}>
-                                  {news[0].title}
-                            </Text>
-                          </View>
-                        </ImageBackground>
-                      </Pressable>
-                  
-                    </Link>
-                    </Shadow>
-                  ) : (
-                    <NewsImagePlaceholder 
-                      title={news[0].title}
-                      idNews={news[0].idNews}
-                      imgPath={newsImage}
-                    />
-                  )
-                }
-                
-                
-                  <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
-
-                  <View style={HomeStyles.newsContainer}>
-                  {
-                    news.slice(1, news.length -1).map((news: News) => (
-                      <NewsCard 
-                        title={news.title} 
-                        date={formatDate(news.published)} 
-                        key={news.id} 
-                        idNews={news.idNews}
-                        />
-                    ))
-      
-                  }
-                  </View>
-                </>
-              )
+                              color: 'white',
+                              fontFamily: 'Montserrat_700Bold',
+                              fontSize: 14,
+                            }}>
+                              {news[0].title}
+                        </Text>
+                      </View>
+                    </ImageBackground>
+                  </Pressable>
               
+                </Link>
+                </Shadow>
+              ) : (
+                <NewsImagePlaceholder 
+                  title={news[0].title}
+                  idNews={news[0].idNews}
+                  imgPath={newsImage}
+                />
+              )
             }
-          </View>
-        </ScrollView>
-        <EventsButton />
-      </View>
+            
+            
+              <Text style={HomeStyles.newsSubTitle}>Todas as notícias</Text>
 
-        
-    )
+              <View style={HomeStyles.newsContainer}>
+              {
+                news.slice(1, news.length -1).map((news: News) => (
+                  <NewsCard 
+                    title={news.title} 
+                    date={formatDate(news.published)} 
+                    key={news.id} 
+                    idNews={news.idNews}
+                    />
+                ))
+
+              }
+            </View>
+        </View>
+      </ScrollView>
+      <EventsButton />
+    </View>     
+  )
 }
