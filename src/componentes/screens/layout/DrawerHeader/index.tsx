@@ -1,5 +1,5 @@
 import Logo from "@/assets/logo";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { DrawerHeaderStyles } from "./styles";
 import DrawerOutline from "@/componentes/icons/Outline/DrawerOutline";
 import { useRouter } from "expo-router";
@@ -10,16 +10,26 @@ export default function CustomDrawerHeader (props: DrawerHeaderProps) {
 
     return (
         <View style={DrawerHeaderStyles.container}>
-            <DrawerOutline 
+            <Pressable
                 style={{
-                    marginTop: 20,
+                    width: 80,
+                    height: 40,
+                    justifyContent: 'center',
+                    paddingLeft: 20,
+                    marginTop: 18,
                 }}
                 onPress={() => props.navigation.openDrawer()}
-            />
+            >
+                    <DrawerOutline />
+            </Pressable>
+            
             <Logo style={{
-                marginTop: 15,
+                marginTop: 12,
+                flex: 1,
             }}/>
-            <View />
+            <View  style={{
+                width: 80,
+            }}/>
         </View>
     )
 }

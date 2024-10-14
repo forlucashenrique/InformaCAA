@@ -16,6 +16,7 @@ export default function TutorialThreePage () {
         <View style={styles.container}>
             <View style={{
                 width: '100%',
+                height: '60%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginTop: 30,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         position: 'absolute',
     
-        top: (height / 2) - 80,
+        top: (height / 2),
     },
 
     title: {

@@ -5,6 +5,7 @@ export const LocationDetailsCardStyles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         backgroundColor: '#fff',
+        height: 85,
     },
 
     contentContainer: {
@@ -23,7 +24,8 @@ export const LocationDetailsCardStyles = StyleSheet.create({
     
     titleText: {
         color: '#0B3472',
-        fontSize: 14,
+        fontSize: 14,   
+        width: '70%',
         fontFamily: 'Montserrat_600SemiBold', 
     },
 

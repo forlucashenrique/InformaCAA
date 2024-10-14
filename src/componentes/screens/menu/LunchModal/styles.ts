@@ -30,18 +30,26 @@ export const LunchModalStyles = StyleSheet.create({
 
     menuItemContainer: {
         width: '100%',
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginTop: 15,
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         gap: 10,
     },
 
+    containerItem: {
+        width: '100%',
+        justifyContent: 'center',
+        //alignItems: 'center',
+        gap: 2,
+        marginBottom: 8,
+    },
+
+
     menuItem: {
         color: '#0B3472',
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: 'Montserrat_500Medium',
         width: '100%',
         borderRadius: 10,
-        padding: 4,
     }
 })

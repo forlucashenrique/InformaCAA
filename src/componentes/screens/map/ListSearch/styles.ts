@@ -51,8 +51,9 @@ export const ListSearchStyles = StyleSheet.create({
 
     textInput: {
         backgroundColor: '#fff',
-        borderRadius: 25,
-        padding: 10,
+        borderRadius: 50,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         color: '#0B3472',
     }
 })

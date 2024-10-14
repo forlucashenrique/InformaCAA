@@ -22,7 +22,7 @@ export default function ItemCard ({ item }: ItemCardProps) {
         
             {
                 item.tel ?  
-                    <Entypo name="phone" size={24} color="black" onPress={() => Linking.openURL(`tel:${item.tel}`)} /> : 
+                    <Entypo name="phone" size={24} color="#0B3472" onPress={() => Linking.openURL(`tel:${item.tel}`)} /> : 
                 (
                     <Entypo name="phone" size={24} color="#B3B3B3" />
                 ) 
@@ -33,7 +33,7 @@ export default function ItemCard ({ item }: ItemCardProps) {
                 <MaterialCommunityIcons 
                     name="email" 
                     size={24}
-                    color="#000" 
+                    color="#0B3472" 
                     onPress={() => Linking.openURL(`mailto:${item.email}`)} 
                 /> : 
                 <MaterialCommunityIcons 

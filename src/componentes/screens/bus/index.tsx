@@ -13,6 +13,8 @@ import {RouteViewCENTER} from "./RouteViewCENTER";
 import {RouteViewUFPE} from "./RouteViewUFPE";
 
 import { AnimatePresence, View as MotiView } from 'moti';
+import { Shadow } from "react-native-shadow-2";
+import { useHourBus } from "@/providers/HourBusProvider";
 
 
 function IconViewAnimated({children, translateX, x, duration}: {children: React.ReactNode, translateX: number, x?: number, duration?: number}) {
@@ -42,6 +44,9 @@ function IconViewAnimated({children, translateX, x, duration}: {children: React.
     )
 }
 
+const campusToCenterText = 'UFPE / CENTRO'
+const centerToCampusText = 'CENTRO / UFPE'
+
 
 export default function BusHours() {
     const [leftText, setLeftText] = useState('UFPE');
@@ -54,17 +59,25 @@ export default function BusHours() {
     const [widthView, setWidthView] = useState(0);
     const [heightWiew, setHeightWiew] = useState(0);
 
+    const {
+        fromToText,
+        handleFromToText,
+    } = useHourBus()
 
     function changeDirection() {
-        if (leftText === 'UFPE') {
+        if (fromToText === 'campus') {
+            handleFromToText('center');
             setLeftText('CENTRO');
             setRightText('UFPE');
-            
         } else {
+            handleFromToText('campus');
             setLeftText('UFPE');
             setRightText('CENTRO');
-            
         }
+        
+        setVisibleFillIcon(!visibileFillIcon);
+        setVisibleOutlineIcon(!visibleOutlineIcon);
+        setVisibleArrow(!visibleArrow);
     }
 
     return (
@@ -75,7 +88,7 @@ export default function BusHours() {
                         Sentido: 
                     </Text>
                     <Text style={[BusHoursStyles.fromToText, { fontFamily: 'Montserrat_400Regular'}]}>
-                        {`${leftText} / ${rightText}`}
+                        {fromToText === 'campus' ? campusToCenterText : centerToCampusText}
                     </Text>
                 </View>
                 <AnimatePresence exitBeforeEnter>
@@ -147,47 +160,50 @@ export default function BusHours() {
                         </MotiView>
                     </View>
                 </AnimatePresence>
-
-                <View style={{
-                    width: '100%',
-                    alignItems: 'center',
-                }}>
-                    <Pressable style={BusHoursStyles.changeDirectionButton} onPress={() => {
-                        changeDirection();
-                        setVisibleFillIcon(!visibileFillIcon);
-                        setVisibleOutlineIcon(!visibleOutlineIcon);
-                        setVisibleArrow(!visibleArrow);
-                    }}>
+                <Shadow
+                    style={{
+                        width: '100%',
+                        borderRadius: 10,
+                    }}
+                    distance={3}
+                    //offset={[0, 10]}
+                    //startColor="#00000029"
+                    
+                >
+                    <Pressable 
+                        style={BusHoursStyles.changeDirectionButton} 
+                        onPress={changeDirection}>
                         <Text style={BusHoursStyles.changeDirectionButtonText}>Mudar sentido</Text>
                     </Pressable>
-                </View>
-
+                </Shadow>
+                
                 <View style={BusHoursStyles.hourButtonContainer}>
+                
                     <Pressable 
                         onPress={() => setIsHourPressed(true)}
-                        style={[BusHoursStyles.hourRouteButton, {
-                            backgroundColor: isHourPressed ? '#0B3472' : '#fff',
-                        }]} 
-                    >
+                            style={[BusHoursStyles.hourRouteButton, {
+                                backgroundColor: isHourPressed ? '#0B3472' : '#fff',
+                            }]} 
+                        >
                         <Text style={[BusHoursStyles.hourRouteButtonText, {
                             color: isHourPressed ? '#fff' : '#0B3472',
                         }]}>Horários</Text>
                     </Pressable>
-
                     <Pressable 
                         onPress={() => setIsHourPressed(false)} 
                         style={[BusHoursStyles.hourRouteButton, {
                             backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
                         }]}
-                    >
-                        <Text 
-                            style={[BusHoursStyles.hourRouteButtonText, {
-                                color: !isHourPressed ? '#fff' : '#0B3472',
-                            }]}
                         >
-                            Rota
-                        </Text>
+                            <Text 
+                                style={[BusHoursStyles.hourRouteButtonText, {
+                                    color: !isHourPressed ? '#fff' : '#0B3472',
+                                }]}
+                            >
+                                Rota
+                            </Text>
                     </Pressable>
+                    
                 </View>
             </View>
             <View style={{
@@ -196,7 +212,7 @@ export default function BusHours() {
             }}>
                 {
                     isHourPressed ?  
-                        <ListHours hours={leftText === 'UFPE' ? hours['campus'] : hours['center']}/>  : (
+                        <ListHours hours={hours[fromToText]}/>  : (
                             <View style={{
                                 borderWidth: 0.5,
                                 flex: 1,
@@ -225,7 +241,6 @@ export default function BusHours() {
                                 }
                             </View>
                         )
-                      
                 }
               
             </View>

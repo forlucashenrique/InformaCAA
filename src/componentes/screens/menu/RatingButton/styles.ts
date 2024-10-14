@@ -5,7 +5,7 @@ export const RatingButtonStyles = StyleSheet.create({
         width: 350,
         height: 50,
         borderWidth: 2,
-        borderColor: '#0B3472',
+        borderColor: '#0B347280',
         borderRadius: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -16,7 +16,7 @@ export const RatingButtonStyles = StyleSheet.create({
     },
 
     text: {
-        color: '#0B3472',
+        color: '#0B347280',
         fontSize: 16,
         lineHeight: 18,
         fontFamily: 'Montserrat_700Bold'

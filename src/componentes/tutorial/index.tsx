@@ -24,6 +24,7 @@ import TutorialTwoPage from './pages/two';
 import TutorialThreePage from './pages/three';
 import TutorialFourPage from './pages/four';
 import TutorialFivePage from './pages/five';
+import TutorialSixPage from './pages/six';
 
 
 type TutorialScreensProps = {
@@ -37,7 +38,8 @@ const PAGES = [
     <TutorialTwoPage />,
     <TutorialThreePage />,
     <TutorialFourPage />,
-    <TutorialFivePage />
+    <TutorialFivePage />,
+    <TutorialSixPage />
 ];
 
 
@@ -45,7 +47,6 @@ const PAGES = [
 export default function TutorialScreens({onFinish}: TutorialScreensProps) {
 
     const width = Dimensions.get('window').width;
-    const ref = useRef<PagerView>(null);
     const scrollOffsetAnimatedValue = useRef(new Animated.Value(0)).current;
     const positionAnimatedValue = useRef(new Animated.Value(0)).current;
 
@@ -85,7 +86,7 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
       const [currentPage, setCurrentPage] = useState<number>(0);
       const pagerRef = useRef<PagerView>(null);
     
-      const [totalPages, setTotalPages] = useState<number>(4) ; // Total de páginas do tutorial
+      const [totalPages, setTotalPages] = useState<number>(5) ; // Total de páginas do tutorial
     
       const handleNextPage = () => {
         //@ts-ignore
@@ -113,6 +114,15 @@ export default function TutorialScreens({onFinish}: TutorialScreensProps) {
 
         } 
       };
+
+      const handlePreviousPage = () => {
+        //@ts-ignore
+        const prevPage = currentPage - 1;
+        if (pagerRef.current && prevPage >= 0) {
+          pagerRef.current.setPage(prevPage);
+          setCurrentPage(prevPage);
+        }
+      }
 
       useEffect(() => {
         Animated.timing(fadeIn, {

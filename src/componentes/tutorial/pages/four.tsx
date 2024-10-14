@@ -18,9 +18,10 @@ export default function TutorialFourPage () {
         <View style={styles.container}>
             <View style={{
                 width: '100%',
+                height: '70%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 90,
+            
             }}>
                 <MapWideSVG />
             </View>
@@ -48,10 +49,8 @@ const styles = StyleSheet.create({
     containerText: {
         width: '100%',
         zIndex: 10,
-        marginTop: 10,
         position: 'absolute',
-    
-        top: (height / 2) - 80,
+        top: (height / 2),
     },
 
     title: {
@@ -73,6 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         marginRight: -40,
+        marginTop: -150,
     },
 
     bottonImage: {}

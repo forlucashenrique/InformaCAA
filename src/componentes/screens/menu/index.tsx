@@ -11,11 +11,18 @@ import { LunchModal } from "./LunchModal";
 import api from "@/service";
 import DinnerModal from "./DinnerModal";
 import RatingModal from "./RatingModal";
+import { Shadow } from "react-native-shadow-2";
 
 
 const daysLabel = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 
-type Menu = {[key: string]: {lunch: string[], dinner: string[]}}
+
+export type Ingredients = {
+    [key: string]: string,
+}
+
+
+type Menu = {[key: string]: {lunch: Ingredients, dinner: Ingredients}}
 
 export default function Menu () {
     moment.locale('pt-br')  
@@ -56,6 +63,7 @@ export default function Menu () {
         return daysLabel.find(day => day.toLowerCase() === currentDay) || 'Seg'
     })
 
+
     function onSelectedDay(day: string) {
         setSelectedDay(day)
     }
@@ -63,7 +71,7 @@ export default function Menu () {
     async function getMenu() {
         try {
             const res = await api.get('/cardapio');      
-            const data = res.data.result;
+            const data = res.data.meals;
             setMenu(data);
 
         } catch(error) {
@@ -116,24 +124,55 @@ export default function Menu () {
                 ) : (
                     <>
                         <View style={MenuStyles.buttonsContainer}>
-                            <MealButton 
-                                mealTitle="Almoço" 
-                                icon={<SunOutline />} 
-                                openHour="11:00" 
-                                closeHour="14:30" 
-                                onPress={openLunchModal}
+                            <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                }}
+                                offset={[0, 4]}
+                                distance={4}
+                                startColor="#00000029"
+                            >
+                                <MealButton 
+                                    mealTitle="Almoço" 
+                                    icon={<SunOutline />} 
+                                    openHour="11:00" 
+                                    closeHour="14:30" 
+                                    onPress={openLunchModal}
+                                />
+                            </Shadow>
+                            <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                    marginBottom: 90
+                                }}
+                                offset={[0, 4]}
+                                distance={4}
+                                startColor="#00000029"
+                            >
+                                <MealButton 
+                                    mealTitle="Jantar" 
+                                    icon={<MoonOutline />} 
+                                    openHour="17:30" 
+                                    closeHour="20:45"
+                                    onPress={openDinnerModal}
+                                />
+                            </Shadow>
+                            {/* <Shadow
+                                style={{
+                                    borderRadius: 10,
+                                }}
+                                distance={5}
+                              
+                            >
+                                <RatingButton  
+                                    onPress={console.log}
+                                   // onPress={openRatingModal}
+                                />
+                            </Shadow> */}
+                            <RatingButton  
+                                //onPress={console.log}
+                                // onPress={openRatingModal}
                             />
-                            <MealButton 
-                                mealTitle="Jantar" 
-                                icon={<MoonOutline />} 
-                                openHour="17:30" 
-                                closeHour="20:45"
-                                onPress={openDinnerModal}
-                            />
-
-                            <View style={MenuStyles.ratingButtonContainer}>
-                                <RatingButton  onPress={openRatingModal}/>
-                            </View>
                         </View>
                 
                         <RatingModal 

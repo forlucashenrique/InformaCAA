@@ -1,4 +1,4 @@
-import {View, Text, Pressable} from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import styles from './styles'
 
 export default function ViewError(props){

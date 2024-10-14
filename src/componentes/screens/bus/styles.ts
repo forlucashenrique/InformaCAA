@@ -5,6 +5,7 @@ export const BusHoursStyles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
         paddingVertical: 28,
+        backgroundColor: 'white'
     },
 
     fromToContainer: {
@@ -67,6 +68,7 @@ export const BusHoursStyles = StyleSheet.create({
 
     hourRouteButton: {
         width: '48%',
+        elevation: 8,
         alignItems: 'center',
         borderWidth: 2,
         borderColor: '#0B3472',
