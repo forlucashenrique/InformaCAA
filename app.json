@@ -42,7 +42,8 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "@maplibre/maplibre-react-native"
+      "@maplibre/maplibre-react-native",
+      "./plugins/supported-screens.js"
     ]
   }
 }
