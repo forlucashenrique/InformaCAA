@@ -9,6 +9,9 @@ import {
     Montserrat_500Medium, 
     Montserrat_600SemiBold, 
     Montserrat_300Light, 
+    Montserrat_500Medium_Italic,
+    Montserrat_400Regular_Italic,
+
 
     useFonts} from '@expo-google-fonts/montserrat';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
@@ -38,6 +41,8 @@ export default function RootLayout () {
         Montserrat_600SemiBold,
         Montserrat_700Bold,
         Montserrat_800ExtraBold,
+        Montserrat_500Medium_Italic,
+        Montserrat_400Regular_Italic,
         Roboto_400Regular   
     })
     

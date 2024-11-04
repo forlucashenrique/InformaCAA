@@ -30,7 +30,7 @@ export default function Home () {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [newsImage, setNewsImage] = useState<string>('');
-
+    const [loadImageError, setLoadImageError] = useState(false);
     const netInfo = useNetInfo()
     const [appConnected, setAppConnected] = useState(true)
 
@@ -38,8 +38,7 @@ export default function Home () {
     function reloadNews() {
       //setReload(!reload);
       setIsError(false);
-      setIsLoading(true);
-      console.log('clicou')
+      setIsLoading(true)
 
       getNews();
     }
@@ -72,7 +71,6 @@ export default function Home () {
             }}
             onPress={() => {
               reloadNews();
-              console.log('pressed')
             }}
           >
             <Text
@@ -122,7 +120,9 @@ export default function Home () {
       }
   }, [netInfo])
   
-    const handleError = (e: any) => { console.log(e.nativeEvent.error); };
+    const handleError = (e: any) => { 
+      setLoadImageError(true);
+     };
 
     if (isLoading) {
       return (
@@ -163,7 +163,7 @@ export default function Home () {
       >   
         <Text style={HomeStyles.newsTitles}>Última Novidade</Text>
             {
-              newsImage ? (
+              !loadImageError ? (
                 <Shadow
                   style={{
                     width: '100%',
@@ -234,7 +234,7 @@ export default function Home () {
                     </ImageBackground>
                   </Pressable>
               
-                </Link>
+                  </Link>
                 </Shadow>
               ) : (
                 <NewsImagePlaceholder 
