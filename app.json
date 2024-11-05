@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "com.lucashenriqi.informaCAA",
+    "scheme": "com.informa.informaCAA",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -25,7 +25,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png"
       },
-      "package": "com.lucashenriqi.informaCAA"
+      "package": "com.informa.informaCAA"
     },
     "web": {
       "favicon": "./assets/favicon.png"
