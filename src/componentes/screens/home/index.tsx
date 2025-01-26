@@ -1,4 +1,4 @@
-import { Text, ScrollView, View, ActivityIndicator, ImageBackground, Pressable } from "react-native";
+import { Text, ScrollView, View, ActivityIndicator, ImageBackground, Pressable, TouchableOpacity } from "react-native";
 import { HomeStyles } from "./styles";
 import NewsCard from "./NewsCard";
 import api from "@/service";
@@ -20,9 +20,6 @@ type News = {
   idNews: string;
   imgPath?: string;
 }
-
-
-
 
 
 export default function Home () {
@@ -184,7 +181,7 @@ export default function Home () {
                   params: { id: news[0].idNews, imgPath: newsImage, title: news[0].title }
                 }}
               >
-                <Pressable 
+                <TouchableOpacity 
                   style={{
                     width: '100%',
                     height: 200,
@@ -232,7 +229,7 @@ export default function Home () {
                         </Text>
                       </View>
                     </ImageBackground>
-                  </Pressable>
+                  </TouchableOpacity>
               
                   </Link>
                 </Shadow>

@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { NewsCardStyles } from "./styles";
 import { Link, useRouter } from "expo-router";
 
@@ -26,7 +26,7 @@ export default function NewsCard ({ title, date, idNews }: NewsCardProps) {
                 }
             }}
         >
-            <Pressable onPress={() => router.navigate(`/${idNews}`)}>
+            <TouchableOpacity onPress={() => router.navigate(`/${idNews}`)}>
                 <View style={NewsCardStyles.container} >
                     <Text style={NewsCardStyles.newsTitle}>{title}</Text>
 
@@ -35,7 +35,7 @@ export default function NewsCard ({ title, date, idNews }: NewsCardProps) {
                         <Text style={NewsCardStyles.footerRightText}>{date}</Text>
                     </View>
                 </View>
-            </Pressable>
+            </TouchableOpacity>
 
         </Link>
         

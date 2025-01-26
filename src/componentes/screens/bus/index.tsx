@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { BusHoursStyles } from "./styles";
 import { useState } from "react";
 import DegreeFill from "@/componentes/icons/Filled/DegreeFill";
@@ -170,16 +170,16 @@ export default function BusHours() {
                     //startColor="#00000029"
                     
                 >
-                    <Pressable 
+                    <TouchableOpacity 
                         style={BusHoursStyles.changeDirectionButton} 
                         onPress={changeDirection}>
                         <Text style={BusHoursStyles.changeDirectionButtonText}>Mudar sentido</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </Shadow>
                 
                 <View style={BusHoursStyles.hourButtonContainer}>
                 
-                    <Pressable 
+                    <TouchableOpacity 
                         onPress={() => setIsHourPressed(true)}
                             style={[BusHoursStyles.hourRouteButton, {
                                 backgroundColor: isHourPressed ? '#0B3472' : '#fff',
@@ -188,8 +188,8 @@ export default function BusHours() {
                         <Text style={[BusHoursStyles.hourRouteButtonText, {
                             color: isHourPressed ? '#fff' : '#0B3472',
                         }]}>Horários</Text>
-                    </Pressable>
-                    <Pressable 
+                    </TouchableOpacity>
+                    <TouchableOpacity 
                         onPress={() => setIsHourPressed(false)} 
                         style={[BusHoursStyles.hourRouteButton, {
                             backgroundColor: !isHourPressed ? '#0B3472'  : '#fff'
@@ -202,7 +202,7 @@ export default function BusHours() {
                             >
                                 Rota
                             </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                     
                 </View>
             </View>

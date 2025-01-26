@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import { NewsImagePlaceholderStyle } from "./styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -23,7 +23,7 @@ export default function NewsImagePlaceholder ({ title, idNews, imgPath }: NewsIm
                 params: { id: idNews, imgPath: imgPath, title: title }
               }}
         >
-            <Pressable style={{
+            <TouchableOpacity style={{
                 width: '100%',
                 height: 180,
                 marginTop: 20,
@@ -69,7 +69,7 @@ export default function NewsImagePlaceholder ({ title, idNews, imgPath }: NewsIm
             </Text>
            
            
-        </Pressable>
+        </TouchableOpacity>
         </Link>
         
     )
