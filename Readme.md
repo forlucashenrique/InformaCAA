@@ -1,10 +1,7 @@
 # InformaCAA
 
-[Tela Inicial](/assets/appImages/InitialScreen.jpeg "tela Inicial")
 
-[Menu Lateral](/assets/appImages/sideMenu.jpeg "Menu Lateral")
-
-<a href="https://play.google.com/store/apps/details?id=com.lucashenriqi.informaCAA"><img src="https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white"/></a>
+<a href="https://play.google.com/store/search?q=informa%20CAA&c=apps"><img src="https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white"/></a>
 
 #### Objetivo
 
